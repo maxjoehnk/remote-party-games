@@ -19,17 +19,23 @@ routes.set('/lobby', {
 export function navigate(url) {
     log(`[Router] Opening URL ${url}...`);
     currentRoute = url;
-    renderCurrentRoute();
+    const route = getCurrentRoute();
+    renderRoute(route);
+    window.history.pushState(null, route.title, currentRoute);
+}
+
+function getCurrentRoute() {
+    const url = new URL(currentRoute, window.location.origin);
+    return routes.get(url.pathname);
 }
 
 export function renderCurrentRoute() {
-    const url = new URL(currentRoute, window.location.origin);
-    const route = routes.get(url.pathname);
+    const route = getCurrentRoute();
     renderRoute(route);
 }
 
+
 function renderRoute(route) {
     log(`[Router] Rendering route ${route.title}`);
-    window.history.pushState(null, route.title, currentRoute);
     route.render(container);
 }

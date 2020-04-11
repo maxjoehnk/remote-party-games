@@ -1,17 +1,19 @@
 import express from 'express';
 import { createServer } from 'http';
 import { createLobby, getLobby } from './lobby-store.js';
+import { loggingMiddleware } from './middleware/logging.js';
+import { setupSocketServer } from './socket.js';
 import { asyncHandler } from './util.js';
-import WebSocket from 'ws';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const clientFolder = join(dirname(fileURLToPath(import.meta.url)), '../client')
 
 const port = 8090;
 
 const app = express();
-const loggingMiddleware = (req, res, next) => {
-    console.log(`[HTTP] ${req.method} ${req.url}`);
-    next();
-};
 app.use(loggingMiddleware);
+app.use(express.static(clientFolder));
 app.get('/api/lobby/:code', (req, res) => {
     const code = req.params.code;
     console.log(`[Lobby] Fetching Lobby ${code}`);
@@ -25,14 +27,10 @@ app.post('/api/lobby', asyncHandler(async (req, res) => {
 
     return res.json(lobby);
 }));
+app.get('*', (req, res) => {
+    res.sendFile('index.html', { root: clientFolder });
+})
 
 const server = createServer(app);
-const wss = new WebSocket.Server({ server });
-wss.on('connection', ws => {
-    ws.on('message', data => {
-        const msg = JSON.parse(data);
-        console.log('[Socket] Received message', msg);
-    });
-});
-
+setupSocketServer(server);
 server.listen(port, () => console.log(`[HTTP] Listening on ${port}...`));
