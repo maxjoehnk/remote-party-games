@@ -11,8 +11,8 @@ routes.set('/', {
     title: 'Activity',
     render: renderHome
 });
-routes.set('/lobby/new', {
-    title: 'New Lobby',
+routes.set('/lobby', {
+    title: 'Lobby',
     render: renderLobby
 });
 
@@ -23,7 +23,8 @@ export function navigate(url) {
 }
 
 export function renderCurrentRoute() {
-    const route = routes.get(currentRoute);
+    const url = new URL(currentRoute, window.location.origin);
+    const route = routes.get(url.pathname);
     renderRoute(route);
 }
 

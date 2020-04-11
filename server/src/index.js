@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { createLobby, getLobby } from './lobby-store.js';
 import { asyncHandler } from './util.js';
+import WebSocket from 'ws';
 
 const port = 8090;
 
@@ -26,5 +27,12 @@ app.post('/api/lobby', asyncHandler(async (req, res) => {
 }));
 
 const server = createServer(app);
+const wss = new WebSocket.Server({ server });
+wss.on('connection', ws => {
+    ws.on('message', data => {
+        const msg = JSON.parse(data);
+        console.log('[Socket] Received message', msg);
+    });
+});
 
 server.listen(port, () => console.log(`[HTTP] Listening on ${port}...`));
