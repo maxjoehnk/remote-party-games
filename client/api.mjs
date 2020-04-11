@@ -18,3 +18,10 @@ export function joinLobby(code) {
         code
     });
 }
+
+export function updateUsername(username) {
+    emit({
+        type: 'user/username',
+        username
+    });
+}

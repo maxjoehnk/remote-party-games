@@ -1,6 +1,6 @@
 const subscribers = new Map();
 
-export function subscribe(topic, callback) {
+export function subscribeToMessage(topic, callback) {
     const subscriberList = subscribers.get(topic);
     if (subscriberList == null) {
         subscribers.set(topic, [callback]);
@@ -9,7 +9,7 @@ export function subscribe(topic, callback) {
     }
 }
 
-export function emit(topic, data) {
+export function emitMessage(topic, data) {
     setTimeout(() => {
         const subscriberList = subscribers.get(topic);
         if (subscriberList == null) {

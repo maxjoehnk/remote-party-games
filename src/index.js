@@ -3,6 +3,7 @@ import { createServer } from 'http';
 import { createLobby, getLobby } from './lobby-store.js';
 import { loggingMiddleware } from './middleware/logging.js';
 import { setupSocketServer } from './socket.js';
+import { setupSubscribers } from './subscribers/index.js';
 import { asyncHandler } from './util.js';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -29,8 +30,9 @@ app.post('/api/lobby', asyncHandler(async (req, res) => {
 }));
 app.get('*', (req, res) => {
     res.sendFile('index.html', { root: clientFolder });
-})
+});
 
 const server = createServer(app);
 setupSocketServer(server);
+setupSubscribers();
 server.listen(port, () => console.log(`[HTTP] Listening on ${port}...`));

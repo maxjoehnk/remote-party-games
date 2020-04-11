@@ -11,6 +11,14 @@ export function getLobby(code) {
     return lobbies.get(code);
 }
 
+export function getLobbyForPlayer(playerId) {
+    const lobby = players.get(playerId);
+    if (lobby && lobbies.has(lobby)) {
+        return lobby;
+    }
+    return null;
+}
+
 export async function createLobby() {
     const bytes = await randomBytes(CODE_BYTES);
     const code = bytes.toString('base64');
@@ -20,10 +28,10 @@ export async function createLobby() {
     return lobby;
 }
 
-export function joinLobby(playerId, lobbyCode) {
-    players.set(playerId, lobbyCode);
+export function joinLobby(player, lobbyCode) {
+    players.set(player.id, lobbyCode);
     const lobby = getLobby(lobbyCode);
-    lobby.players.push(playerId);
+    lobby.players.push(player);
 }
 
 function createEmptyLobby(code) {
