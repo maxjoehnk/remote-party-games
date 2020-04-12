@@ -2,20 +2,20 @@ import { html, render } from 'https://unpkg.com/lit-html?module';
 import { createLobby, updateUsername } from '../api.mjs';
 import { link } from '../components/link.mjs';
 import { navigate } from '../router.mjs';
+import { state } from '../store.mjs';
 
 export const renderHome = (container) => {
     let code = null;
-    let username = null;
 
-    const draw = () => render(home({ code, setCode, username, setUsername }), container);
+    const draw = () => render(home({ code, setCode, username: state.username, setUsername }), container);
 
     const setCode = c => {
         code = c.trim() == '' ? null : c;
         draw();
     };
 
-    const setUsername = u => {
-        username = u;
+    const setUsername = username => {
+        state.username = username;
         updateUsername(username);
         draw();
     };

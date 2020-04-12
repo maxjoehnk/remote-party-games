@@ -1,4 +1,5 @@
 import { log } from './logging.mjs';
+import { renderGame } from './routes/game.mjs';
 import { renderHome } from './routes/home.mjs';
 import { renderLobby } from './routes/lobby.mjs';
 
@@ -14,6 +15,10 @@ routes.set('/', {
 routes.set('/lobby', {
     title: 'Lobby',
     render: renderLobby
+});
+routes.set('/game', {
+    title: 'In-Game',
+    render: renderGame
 });
 
 export function navigate(url) {

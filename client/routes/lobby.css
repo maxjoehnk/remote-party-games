@@ -13,3 +13,11 @@
     height: 500px;
     margin: 16px;
 }
+
+.lobby__player-list {
+    padding: 0;
+}
+
+.lobby__player-list-item {
+    list-style: none;
+}
