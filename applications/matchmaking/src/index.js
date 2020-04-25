@@ -5,10 +5,12 @@ import { loggingMiddleware } from './middleware/logging.js';
 import { getOpenConnectionCount, setupSocketServer } from './socket.js';
 import { setupSubscribers } from './subscribers/index.js';
 import { asyncHandler } from './util.js';
+import helmet from 'helmet';
 
 const port = 8090;
 
 const app = express();
+app.use(helmet());
 app.use(loggingMiddleware);
 app.get('/api/lobby/:code', (req, res) => {
     const code = req.params.code;
