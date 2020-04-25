@@ -48,6 +48,7 @@ export function joinLobby(player, lobbyCode) {
     players.set(player.id, lobbyCode);
     lobby.players.push(player);
     joinTeamWhenAvailable(lobby, player.id);
+    return games.get(lobbyCode);
 }
 
 function joinTeamWhenAvailable(lobby, playerId) {
