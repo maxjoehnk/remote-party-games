@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "node proxy.js"
+    "start": "node proxy.js",
+    "build": "parcel build src/index.html"
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.7",

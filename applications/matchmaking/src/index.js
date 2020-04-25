@@ -23,9 +23,6 @@ app.post('/api/lobby', asyncHandler(async (req, res) => {
 
     return res.json(lobby);
 }));
-app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: clientFolder });
-});
 
 const server = createServer(app);
 setupSocketServer(server);

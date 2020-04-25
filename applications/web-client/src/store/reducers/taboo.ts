@@ -2,7 +2,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import { tabooGameUpdate } from '../actions/taboo';
 import { TabooGameState } from '../../contracts/taboo-game-configuration';
 
-
 export const tabooReducer = createReducer<TabooGameState>({
     currentCard: null,
     teamOne: {

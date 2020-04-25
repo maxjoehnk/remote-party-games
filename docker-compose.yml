@@ -1,0 +1,23 @@
+version: '3'
+services:
+    web-client:
+        restart: on-failure
+        build: applications/web-client
+        image: party-games/web-client:latest
+    matchmaking:
+        restart: on-failure
+        build: applications/matchmaking
+        image: party-games/matchmaking:latest
+    proxy:
+        restart: on-failure
+        build: applications/proxy
+        depends_on:
+          - web-client
+          - matchmaking
+        image: party-games/proxy:latest
+        ports:
+          - 8000:80
+        labels:
+          traefik.enable: "true"
+          traefik.frontend.rule: "Host:party.maxjoehnk.me"
+          traefik.port: "80"
