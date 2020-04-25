@@ -54,7 +54,7 @@ export function broadcastToLobby(lobbyCode, msg) {
 }
 
 export function broadcastMessage(msg, clientFilter = () => true) {
-    console.log('[Socket] Broadcasting message', msg);
+    // console.log('[Socket] Broadcasting message', msg);
     wss.clients.forEach(ws => {
         if (ws.readyState !== WebSocket.OPEN) {
             return;

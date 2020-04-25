@@ -21,7 +21,8 @@ export interface TabooGameState {
 export enum TabooView {
     Explaining = 0,
     Guessing = 1,
-    Observing = 2
+    Observing = 2,
+    Continue = 3
 }
 
 export interface TabooTeamState {

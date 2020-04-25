@@ -4,13 +4,15 @@ import { loadCards } from './card-loader.js';
 const TabooActionTypes = {
     Timer: 'taboo/timer',
     Guess: 'taboo/guess',
-    SkipCard: 'taboo/skip'
+    SkipCard: 'taboo/skip',
+    Continue: 'taboo/continue'
 };
 
 const TabooView = {
     Explaining: 0,
     Guessing: 1,
-    Observing: 2
+    Observing: 2,
+    Continue: 3
 };
 
 let cards = [
@@ -46,6 +48,7 @@ class TabooGame {
         this.handlers.set(TabooActionTypes.Timer, this._handleTimer);
         this.handlers.set(TabooActionTypes.SkipCard, this._nextCard);
         this.handlers.set(TabooActionTypes.Guess, this._guess);
+        this.handlers.set(TabooActionTypes.Continue, this._continueGame);
         this.teamOnePoints = 0;
         this.teamTwoPoints = 0;
         this.currentTeam = 1;
@@ -77,6 +80,13 @@ class TabooGame {
     }
 
     start() {
+        this._startTimer();
+    }
+
+    _startTimer() {
+        if (this.timer != null) {
+            return;
+        }
         this.timer = setInterval(() => {
             this.execute({
                 actionType: TabooActionTypes.Timer
@@ -97,12 +107,19 @@ class TabooGame {
     _handleTimer = () => {
         this.timeLeft--;
         if (this.timeLeft < 0) {
-            this._handleTimesOver();
+            this._stopTimer();
+            this._nextPlayer();
         }
     }
 
-    _handleTimesOver = () => {
+    _stopTimer() {
+        clearTimeout(this.timer);
+        this.timer = null;
+    }
+
+    _nextPlayer = () => {
         this.timeLeft = this.config.timer;
+        console.log(this.currentTeam, this.teamOnePlayer, this.config.teamOne.length, this.teamTwoPlayer, this.config.teamTwo.length);
         if (this.currentTeam === 1) {
             this.teamOnePlayer++;
             if (this.teamOnePlayer >= this.config.teamOne.length) {
@@ -115,7 +132,12 @@ class TabooGame {
             }
         }
         this.currentTeam = this.currentTeam === 1 ? 2 : 1;
+        console.log(this.currentTeam, this.teamOnePlayer, this.config.teamOne.length, this.teamTwoPlayer, this.config.teamTwo.length);
         this._nextCard();
+    }
+
+    _continueGame = () => {
+        this._startTimer();
     }
 
     _guess = () => {
@@ -133,9 +155,27 @@ class TabooGame {
     }
 
     _broadcast = () => {
+        if (this.timer == null) {
+            this._broadcastToNextPlayer(this.state);
+            return;
+        }
         this._broadcastToExplaining(this.state);
         this._broadcastToGuessing(this.state);
         this._broadcastToObserving(this.state);
+    }
+
+    _broadcastToNextPlayer = (state) => {
+        const msg = {
+            type: 'taboo/update',
+            gameState: {
+                teamOne: state.teamOne,
+                teamTwo: state.teamTwo,
+                currentRound: state.currentRound,
+                view: TabooView.Continue,
+                currentCard: state.currentCard
+            }
+        };
+        broadcastMessage(msg, c => c.playerId === state.currentRound.activePlayer);
     }
 
     _broadcastToExplaining = (state) => {

@@ -10,7 +10,7 @@ export function subscribeToMessage(topic, callback) {
 }
 
 export function emitMessage(topic, data) {
-    console.log(`[Broker] Emitting Message ${topic}`, data);
+    // console.log(`[Broker] Emitting Message ${topic}`, data);
     setTimeout(() => {
         const subscriberList = subscribers.get(topic);
         if (subscriberList == null) {

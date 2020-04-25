@@ -5,6 +5,7 @@ import TabooExplaining from './states/explaining.component';
 import TabooGuessing from './states/guessing.component';
 import TabooObserving from './states/observing.component';
 import { TabooView } from '../../../contracts/taboo-game-configuration';
+import TabooContinue from './states/continue.component';
 
 const TabooGameArea = () => {
     const view = useSelector(selectTabooView);
@@ -13,6 +14,7 @@ const TabooGameArea = () => {
         {view === TabooView.Explaining && <TabooExplaining/>}
         {view === TabooView.Guessing && <TabooGuessing/>}
         {view === TabooView.Observing && <TabooObserving/>}
+        {view === TabooView.Continue && <TabooContinue/>}
     </div>
 };
 
