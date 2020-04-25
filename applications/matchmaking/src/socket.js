@@ -66,3 +66,6 @@ export function broadcastMessage(msg, clientFilter = () => true) {
     });
 }
 
+export function sendMessage(ws, msg) {
+    ws.send(JSON.stringify(msg));
+}
