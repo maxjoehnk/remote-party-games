@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'http';
-import { createLobby, getLobby } from './lobby-store.js';
+import { createLobby, getLobby, getLobbyMetrics } from './lobby-store.js';
 import { loggingMiddleware } from './middleware/logging.js';
-import { setupSocketServer } from './socket.js';
+import { getOpenConnectionCount, setupSocketServer } from './socket.js';
 import { setupSubscribers } from './subscribers/index.js';
 import { asyncHandler } from './util.js';
 
@@ -23,6 +23,18 @@ app.post('/api/lobby', asyncHandler(async (req, res) => {
 
     return res.json(lobby);
 }));
+
+app.get('/api/metrics', (req, res) => {
+    const connectedPlayers = getOpenConnectionCount();
+    const lobbyMetrics = getLobbyMetrics();
+
+    res.json({
+        openSockets: connectedPlayers,
+        lobbies: lobbyMetrics.lobbyCount,
+        games: lobbyMetrics.gameCount,
+        players: lobbyMetrics.playerCount
+    });
+})
 
 const server = createServer(app);
 setupSocketServer(server);

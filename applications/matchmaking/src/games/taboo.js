@@ -84,6 +84,10 @@ class TabooGame {
         this._startTimer();
     }
 
+    destroy() {
+        this._stopTimer();
+    }
+
     _startTimer() {
         if (this.timer != null) {
             return;
@@ -114,6 +118,9 @@ class TabooGame {
     }
 
     _stopTimer() {
+        if (this.timer == null) {
+            return;
+        }
         clearTimeout(this.timer);
         this.timer = null;
     }

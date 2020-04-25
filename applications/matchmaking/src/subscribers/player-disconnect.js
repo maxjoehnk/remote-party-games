@@ -1,6 +1,6 @@
 import { playerDisconnectBrokerMsg } from '../contracts/broker-messages.js';
 import { lobbyChangedSocketMsg } from '../contracts/socket-messages.js';
-import { getLobbyCodeForPlayer, leaveLobby } from '../lobby-store.js';
+import { getLobbyCodeForPlayer, disconnectPlayer } from '../lobby-store.js';
 import { emitMessage, subscribeToMessage } from '../message-broker.js';
 
 export function lobbyPlayersChangedSubscriber(player) {
@@ -8,7 +8,7 @@ export function lobbyPlayersChangedSubscriber(player) {
     if (code == null) {
         return;
     }
-    leaveLobby(player, code);
+    disconnectPlayer(player, code);
     emitMessage(lobbyChangedSocketMsg, code);
 }
 

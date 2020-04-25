@@ -66,16 +66,29 @@ function joinTeamWhenAvailable(lobby, playerId) {
     team.players.push(playerId);
 }
 
-export function leaveLobby(player, lobbyCode) {
-    console.log(`[Lobby] ${player.name} (${player.id}) is leaving ${lobbyCode}`);
+export function disconnectPlayer(player, lobbyCode) {
+    console.log(`[Lobby] ${player.name} (${player.id}) is disconnected`);
+    players.delete(player.id);
     const lobby = getLobby(lobbyCode);
     lobby.players = lobby.players.filter(p => p.id !== player.id);
     removePlayerFromTeam(lobby.teams, player.id);
+    removeEmptyLobby(lobby);
 }
 
 function removePlayerFromTeam(teams, playerId) {
     for (const team of teams) {
         team.players = team.players.filter(id => id !== playerId);
+    }
+}
+
+function removeEmptyLobby(lobby) {
+    if (lobby.players.length === 0) {
+        lobbies.delete(lobby.code);
+    }
+    const game = games.get(lobby.code);
+    if (game != null) {
+        game.destroy();
+        games.delete(lobby.code);
     }
 }
 
@@ -125,5 +138,17 @@ function createEmptyLobby(code) {
             name: 'Team 2',
             players: []
         }]
+    };
+}
+
+export function getLobbyMetrics() {
+    const lobbyCount = lobbies.size;
+    const playerCount = players.size;
+    const gameCount = games.size;
+
+    return {
+        lobbyCount,
+        playerCount,
+        gameCount
     };
 }
