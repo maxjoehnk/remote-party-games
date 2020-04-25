@@ -1,4 +1,5 @@
-const ws = new WebSocket(`ws://${window.location.host}/api/matchmaking`);
+const isSecure = window.location.protocol === 'https:';
+const ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`);
 
 const queue = [];
 
