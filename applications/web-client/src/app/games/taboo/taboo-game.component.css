@@ -1,0 +1,45 @@
+.game-taboo {
+    display: grid;
+    grid-template-areas: 'time-left score' 'player-list game-area';
+    grid-template-columns: 250px 1fr;
+    grid-gap: 16px;
+    padding: 16px;
+    height: 100%;
+}
+
+.game-taboo__time-left {
+    grid-area: time-left;
+}
+
+.game-taboo__player-list {
+    grid-area: player-list;
+}
+
+.game-taboo__score {
+    grid-area: score;
+    font-size: 2rem;
+    letter-spacing: 1rem;
+    text-align: center;
+}
+
+.game-taboo__game-area {
+    grid-area: game-area;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-taboo__actions {
+    display: flex;
+    flex-direction: row;
+    padding: 8px 0;
+}
+
+.game-taboo__actions :first-child {
+    margin-right: 8px;
+}
+
+.game-taboo__actions * {
+    flex: 1;
+}

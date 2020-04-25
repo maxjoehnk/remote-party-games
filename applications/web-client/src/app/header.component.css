@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.header__title {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.header__player-name {
+    opacity: 0.87;
+}

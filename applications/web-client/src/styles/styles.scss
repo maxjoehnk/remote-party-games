@@ -1,0 +1,57 @@
+@import "clearfix";
+@import 'font';
+
+:root {
+    --border-radius: 2px;
+    --color-default: #e5e5e5;
+    --color-primary: #8BC34A;
+    --text-color-default: rgba(0, 0, 0, 0.9);
+    --text-color-primary: rgba(255, 255, 255, 0.9);
+    --card-background: white;
+    --default-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    --page-background: #ddd;
+    --control-padding: 8px;
+    --font-size: 12px;
+}
+
+.body {
+    background: var(--page-background);
+}
+
+.button {
+    padding: var(--control-padding);
+    border-radius: var(--border-radius);
+    border: none;
+    background: var(--color-default);
+    color: var(--text-color-default);
+    cursor: pointer;
+    font-size: var(--font-size);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.button--primary {
+    background-color: var(--color-primary);
+    color: var(--text-color-primary);
+}
+
+.button:disabled,
+.button--disabled {
+    cursor: not-allowed;
+    opacity: 0.54;
+    pointer-events: none;
+}
+
+.input {
+    padding: var(--control-padding);
+    border-radius: var(--border-radius);
+    background: var(--color-default);
+    border: none;
+}
+
+.card {
+    padding: 16px;
+    background: var(--card-background);
+    box-shadow: var(--default-shadow);
+    border-radius: var(--border-radius);
+}

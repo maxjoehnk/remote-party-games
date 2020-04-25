@@ -1,0 +1,27 @@
+.taboo-card {
+    background: var(--color-default);
+    border-radius: 4px;
+    width: 200px;
+    height: 300px;
+}
+
+.taboo-card__term {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: var(--color-primary);
+    color: var(--text-color-primary);
+    padding: 8px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.taboo-card__taboo-words {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.taboo-card__taboo-word {
+    padding: 8px;
+    text-transform: uppercase;
+}

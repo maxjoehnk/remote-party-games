@@ -1,0 +1,11 @@
+.player-editor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 64px;
+}
+
+.player-editor__card {
+    display: flex;
+    flex-direction: column;
+}

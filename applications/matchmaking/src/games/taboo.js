@@ -1,0 +1,189 @@
+import { broadcastMessage } from '../socket.js';
+import { loadCards } from './card-loader.js';
+
+const TabooActionTypes = {
+    Timer: 'taboo/timer',
+    Guess: 'taboo/guess',
+    SkipCard: 'taboo/skip'
+};
+
+const TabooView = {
+    Explaining: 0,
+    Guessing: 1,
+    Observing: 2
+};
+
+let cards = [
+    {
+        term: 'Valentines Day',
+        taboo: [
+            'February',
+            'Heart',
+            'Hallmark',
+            'Cards',
+            'Flowers'
+        ]
+    }
+];
+
+loadCards((err, c) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    cards = c;
+})
+
+class TabooGame {
+    constructor(teams) {
+        this.config = {
+            timer: 60,
+            teamOne: teams[0],
+            teamTwo: teams[1]
+        };
+        this.type = 'taboo';
+        this.handlers = new Map();
+        this.handlers.set(TabooActionTypes.Timer, this._handleTimer);
+        this.handlers.set(TabooActionTypes.SkipCard, this._nextCard);
+        this.handlers.set(TabooActionTypes.Guess, this._guess);
+        this.teamOnePoints = 0;
+        this.teamTwoPoints = 0;
+        this.currentTeam = 1;
+        this.teamOnePlayer = 0;
+        this.teamTwoPlayer = 0;
+        this.timeLeft = this.config.timer;
+        this._nextCard();
+    }
+
+    get state() {
+        return {
+            teamOne: {
+                players: this.config.teamOne.players,
+                points: this.teamOnePoints
+            },
+            teamTwo: {
+                players: this.config.teamTwo.players,
+                points: this.teamTwoPoints
+            },
+            currentRound: {
+                team: this.currentTeam,
+                activePlayer: this.currentTeam === 1 ?
+                    this.config.teamOne.players[this.teamOnePlayer] :
+                    this.config.teamTwo.players[this.teamTwoPlayer],
+                timeLeft: this.timeLeft
+            },
+            currentCard: this.currentCard
+        };
+    }
+
+    start() {
+        this.timer = setInterval(() => {
+            this.execute({
+                actionType: TabooActionTypes.Timer
+            });
+        }, 1000);
+    }
+
+    execute(action) {
+        const handler = this.handlers.get(action.actionType);
+        if (handler == null) {
+            console.warn(`[Taboo] No action handler for ${action.actionType}`);
+            return;
+        }
+        handler(action);
+        this._broadcast();
+    }
+
+    _handleTimer = () => {
+        this.timeLeft--;
+        if (this.timeLeft < 0) {
+            this._handleTimesOver();
+        }
+    }
+
+    _handleTimesOver = () => {
+        this.timeLeft = this.config.timer;
+        if (this.currentTeam === 1) {
+            this.teamOnePlayer++;
+            if (this.teamOnePlayer >= this.config.teamOne.length) {
+                this.teamOnePlayer = 0;
+            }
+        }else {
+            this.teamTwoPlayer++;
+            if (this.teamTwoPlayer >= this.config.teamTwo.length) {
+                this.teamTwoPlayer = 0;
+            }
+        }
+        this.currentTeam = this.currentTeam === 1 ? 2 : 1;
+        this._nextCard();
+    }
+
+    _guess = () => {
+        if (this.currentTeam === 1) {
+            this.teamOnePoints++;
+        }else {
+            this.teamTwoPoints++;
+        }
+        this._nextCard();
+    }
+
+    _nextCard = () => {
+        const nextCardIndex = Math.floor(Math.random() * Math.floor(cards.length - 1));
+        this.currentCard = cards[nextCardIndex];
+    }
+
+    _broadcast = () => {
+        this._broadcastToExplaining(this.state);
+        this._broadcastToGuessing(this.state);
+        this._broadcastToObserving(this.state);
+    }
+
+    _broadcastToExplaining = (state) => {
+        const msg = {
+            type: 'taboo/update',
+            gameState: {
+                teamOne: state.teamOne,
+                teamTwo: state.teamTwo,
+                currentRound: state.currentRound,
+                view: TabooView.Explaining,
+                currentCard: state.currentCard
+            }
+        };
+        broadcastMessage(msg, c => c.playerId === state.currentRound.activePlayer);
+    }
+
+    _broadcastToGuessing = (state) => {
+        const msg = {
+            type: 'taboo/update',
+            gameState: {
+                teamOne: state.teamOne,
+                teamTwo: state.teamTwo,
+                currentRound: state.currentRound,
+                view: TabooView.Guessing,
+                currentCard: null
+            }
+        };
+        const currentTeam = state.currentRound.team === 1 ? state.teamOne.players : state.teamTwo.players;
+        const allGuessingPlayers = currentTeam.filter(playerId => playerId !== state.currentRound.activePlayer);
+        broadcastMessage(msg, c => allGuessingPlayers.includes(c.playerId));
+    }
+
+    _broadcastToObserving = (state) => {
+        const msg = {
+            type: 'taboo/update',
+            gameState: {
+                teamOne: state.teamOne,
+                teamTwo: state.teamTwo,
+                currentRound: state.currentRound,
+                view: TabooView.Observing,
+                currentCard: state.currentCard
+            }
+        };
+        const otherTeam = state.currentRound.team !== 1 ? state.teamOne.players : state.teamTwo.players;
+        broadcastMessage(msg, c => otherTeam.includes(c.playerId));
+    }
+}
+
+export function createGame(config) {
+    return new TabooGame(config);
+}

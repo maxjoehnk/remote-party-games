@@ -5,16 +5,11 @@ import { loggingMiddleware } from './middleware/logging.js';
 import { setupSocketServer } from './socket.js';
 import { setupSubscribers } from './subscribers/index.js';
 import { asyncHandler } from './util.js';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const clientFolder = join(dirname(fileURLToPath(import.meta.url)), '../client')
 
 const port = 8090;
 
 const app = express();
 app.use(loggingMiddleware);
-app.use(express.static(clientFolder));
 app.get('/api/lobby/:code', (req, res) => {
     const code = req.params.code;
     console.log(`[Lobby] Fetching Lobby ${code}`);
