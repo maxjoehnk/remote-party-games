@@ -43,6 +43,7 @@ class TabooGame {
             teamOne: teams[0],
             teamTwo: teams[1]
         };
+        this.pastWords = [];
         this.type = 'taboo';
         this.handlers = new Map();
         this.handlers.set(TabooActionTypes.Timer, this._handleTimer);
@@ -150,8 +151,21 @@ class TabooGame {
     }
 
     _nextCard = () => {
-        const nextCardIndex = Math.floor(Math.random() * Math.floor(cards.length - 1));
-        this.currentCard = cards[nextCardIndex];
+        if (this.currentCard != null) {
+            this.pastWords.push(this.currentCard.term);
+        }
+        const availableCards = this._getAvailableCards();
+        const nextCardIndex = Math.floor(Math.random() * Math.floor(availableCards.length - 1));
+        this.currentCard = availableCards[nextCardIndex];
+    }
+
+    _getAvailableCards() {
+        const availableCards = cards.filter(c => !this.pastWords.includes(c.term));
+        if (availableCards.length === 0) {
+            this.pastWords = [];
+            return cards;
+        }
+        return availableCards;
     }
 
     _broadcast = () => {
