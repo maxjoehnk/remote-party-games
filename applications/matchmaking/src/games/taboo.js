@@ -120,20 +120,18 @@ class TabooGame {
 
     _nextPlayer = () => {
         this.timeLeft = this.config.timer;
-        console.log(this.currentTeam, this.teamOnePlayer, this.config.teamOne.players.length, this.teamTwoPlayer, this.config.teamTwo.players.length);
         if (this.currentTeam === 1) {
             this.teamOnePlayer++;
             if (this.teamOnePlayer >= this.config.teamOne.players.length) {
                 this.teamOnePlayer = 0;
             }
-        }else {
+        } else {
             this.teamTwoPlayer++;
             if (this.teamTwoPlayer >= this.config.teamTwo.players.length) {
                 this.teamTwoPlayer = 0;
             }
         }
         this.currentTeam = this.currentTeam === 1 ? 2 : 1;
-        console.log(this.currentTeam, this.teamOnePlayer, this.config.teamOne.players.length, this.teamTwoPlayer, this.config.teamTwo.players.length);
         this._nextCard();
     }
 
