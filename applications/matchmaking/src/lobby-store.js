@@ -67,7 +67,7 @@ function joinTeamWhenAvailable(lobby, playerId) {
     team.players.push(playerId);
 }
 
-export function disconnectPlayer(player, lobbyCode) {
+export function leaveLobby(player, lobbyCode) {
     console.log(`[Lobby] ${player.name} (${player.id}) is disconnected`);
     players.delete(player.id);
     const lobby = getLobby(lobbyCode);
