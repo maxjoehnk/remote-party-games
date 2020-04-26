@@ -78,6 +78,10 @@
             "minLength": 1,
             "pattern": "(?=.*?\\$\\{0\\})"
         },
+        "Reconnected": {
+            "type": "string",
+            "minLength": 1
+        },
         "Room Code": {
             "type": "string",
             "minLength": 1
@@ -170,6 +174,7 @@
         "Player setup",
         "Players",
         "Playing as ${0}",
+        "Reconnected",
         "Room Code",
         "Save",
         "Start Game",

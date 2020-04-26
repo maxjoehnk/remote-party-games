@@ -15,16 +15,19 @@ import {
 import TabooGame from './games/taboo/taboo-game.component';
 import { NotificationContainer, useNotification } from './ui-elements/notification';
 import i18n from 'es2015-i18n-tag';
-import { onSocketClose } from '../socket';
+import { onSocketClose, onSocketOpen } from '../socket';
+
+let clearNotification;
 
 const SocketListener = ({ children }) => {
     const history = useHistory();
-    const notify = useNotification();
+    const showPermanentNotification = useNotification(0);
+    const showNotification = useNotification(3000);
 
     useEffect(() => {
         const subscription = subscribeLobbyClosed(() => {
             history.push('/');
-            notify(i18n`Lobby was closed`);
+            showNotification(i18n`Lobby was closed`);
         });
 
         return () => subscription.unsubscribe();
@@ -49,7 +52,18 @@ const SocketListener = ({ children }) => {
     useEffect(() => {
         const subscription = onSocketClose(() => {
             history.push('/');
-            notify(i18n`Disconnected`);
+            clearNotification = showPermanentNotification(i18n`Disconnected`);
+        });
+
+        return () => subscription.unsubscribe();
+    });
+
+    useEffect(() => {
+        const subscription = onSocketOpen(() => {
+            if (clearNotification != null) {
+                clearNotification();
+                showNotification(i18n`Reconnected`);
+            }
         });
 
         return () => subscription.unsubscribe();

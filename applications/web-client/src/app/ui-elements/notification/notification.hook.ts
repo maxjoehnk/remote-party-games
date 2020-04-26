@@ -8,21 +8,30 @@ export function useNotification(timeout = 5000): NotificationCallback {
 
     const context = useContext(NotificationContext);
 
+    const dismiss = () => {
+        context.removeNotification(state);
+        setState(null);
+    };
+
     useEffect(() => {
         if (state == null) {
             return;
         }
         context.addNotification(state);
-        const timeoutId = setTimeout(() => {
-            context.removeNotification(state);
-            setState(null);
-        }, timeout);
+        if (timeout == 0) {
+            return () => dismiss();
+        }
+        const timeoutId = setTimeout(() => dismiss(), timeout);
 
         return () => {
             clearTimeout(timeoutId);
-            context.removeNotification(state);
+            dismiss();
         };
     }, [state]);
 
-    return content => setState(content);
+    return content => {
+        setState(content);
+
+        return () => dismiss();
+    };
 }

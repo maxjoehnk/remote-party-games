@@ -27,9 +27,6 @@ ws.addEventListener('message', event => {
     console.log('[Socket] Received message', msg);
 });
 
-ws.addEventListener('close', event => console.log('close', event));
-ws.addEventListener('error', event => console.log('error', event));
-
 export function emit(msg) {
     console.log('[Socket] Sending message', msg);
     const serialized = JSON.stringify(msg);
