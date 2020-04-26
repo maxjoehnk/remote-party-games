@@ -9,8 +9,12 @@
         "You're observing": "You're observing",
         "${0}s left": "${0}s left"
     },
+    "Change name": "Change name",
     "Playing as ${0}": "Playing as ${0}",
+    "Copied to Clipboard!": "Copied to Clipboard!",
+    "Copy": "Copy",
     "Game": "Game",
+    "Link": "Link",
     "Lobby Settings": "Lobby Settings",
     "Room Code": "Room Code",
     "Start Game": "Start Game",
@@ -22,8 +26,8 @@
     "Save": "Save",
     "Username": "Username",
     "Connect to Lobby": "Connect to Lobby",
-    "Create a Game": "Create a Game",
+    "Create a Lobby": "Create a Lobby",
     "Enter Room Code": "Enter Room Code",
-    "Join a Game": "Join a Game",
+    "Join a Lobby": "Join a Lobby",
     "or": "or"
 }

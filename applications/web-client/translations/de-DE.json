@@ -9,8 +9,12 @@
         "You're observing": "Du beobachtest",
         "${0}s left": "${0}s verbleiben"
     },
+    "Change name": "Namen ändern",
     "Playing as ${0}": "Benutzername: ${0}",
+    "Copied to Clipboard!": "Kopiert!",
+    "Copy": "Kopieren",
     "Game": "Spiel",
+    "Link": "Link",
     "Lobby Settings": "Lobby Einstellungen",
     "Room Code": "Raumcode",
     "Start Game": "Spiel starten",
@@ -22,8 +26,8 @@
     "Save": "Speichern",
     "Username": "Benutzername",
     "Connect to Lobby": "Mit Lobby verbinden",
-    "Create a Game": "Spiel erstellen",
+    "Create a Lobby": "Lobby erstellen",
     "Enter Room Code": "Raumcode eingeben",
-    "Join a Game": "Spiel beitreten",
+    "Join a Lobby": "Lobby beitreten",
     "or": "oder"
 }

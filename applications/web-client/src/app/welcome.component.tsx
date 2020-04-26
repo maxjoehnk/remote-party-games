@@ -22,7 +22,7 @@ const Welcome = () => {
         <div className="home">
             <div className="home__card card">
                 <h2 className="subtitle">{i18n`Connect to Lobby`}</h2>
-                <Button onClick={() => createAndOpenLobby()} primary>{i18n`Create a Game`}</Button>
+                <Button onClick={() => createAndOpenLobby()} primary>{i18n`Create a Lobby`}</Button>
                 <span>{i18n`or`}</span>
                 <div className="home__join-game">
                     <input
@@ -33,7 +33,7 @@ const Welcome = () => {
                     <Link
                         to={`/lobby/${(code || '').trim()}`}
                         className={`button ${code == null ? 'button--disabled' : ''}`}
-                    >{i18n`Join a Game`}</Link>
+                    >{i18n`Join a Lobby`}</Link>
                 </div>
             </div>
         </div>

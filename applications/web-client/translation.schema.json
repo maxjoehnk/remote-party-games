@@ -9,11 +9,23 @@
             "minLength": 1,
             "pattern": "(?=.*?\\$\\{0\\})"
         },
+        "Change name": {
+            "type": "string",
+            "minLength": 1
+        },
         "Connect to Lobby": {
             "type": "string",
             "minLength": 1
         },
-        "Create a Game": {
+        "Copied to Clipboard!": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Copy": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Create a Lobby": {
             "type": "string",
             "minLength": 1
         },
@@ -29,7 +41,11 @@
             "type": "string",
             "minLength": 1
         },
-        "Join a Game": {
+        "Join a Lobby": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Link": {
             "type": "string",
             "minLength": 1
         },
@@ -125,12 +141,16 @@
     },
     "required": [
         "${0} (You)",
+        "Change name",
         "Connect to Lobby",
-        "Create a Game",
+        "Copied to Clipboard!",
+        "Copy",
+        "Create a Lobby",
         "Enter Room Code",
         "Game",
         "Join Team",
-        "Join a Game",
+        "Join a Lobby",
+        "Link",
         "Lobby Settings",
         "Player setup",
         "Players",
