@@ -1,0 +1,19 @@
+{
+  "name": "@party-games/image",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "STORAGE_PATH=.storage nodemon --watch"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "on-response": "^1.0.1",
+    "prom-client": "^12.0.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
