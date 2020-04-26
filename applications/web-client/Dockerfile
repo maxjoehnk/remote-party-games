@@ -9,6 +9,7 @@ RUN yarn
 
 COPY ./tsconfig.json ./
 COPY ./src ./src
+COPY ./translations ./translations
 
 RUN yarn build
 
