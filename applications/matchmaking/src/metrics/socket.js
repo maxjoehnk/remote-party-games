@@ -1,7 +1,7 @@
 import prometheus from 'prom-client';
 
 const openSocketGauge = new prometheus.Gauge({
-    name: 'websocket_open_connectons',
+    name: 'websocket_open_connections',
     help: 'Count of open socket connections'
 });
 const socketRecvMessageCounter = new prometheus.Counter({
