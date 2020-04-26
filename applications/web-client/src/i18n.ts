@@ -10,7 +10,7 @@ export const locales = {
 };
 
 export function setupInternationalization() {
-    setLocale('de-DE');
+    setLocale(currentLanguage);
 }
 
 export function setLocale(locale: string) {
