@@ -1,8 +1,10 @@
 import { subscribeLobbyChanges } from '../../app/matchmaking/matchmaking.api';
 import { lobbyUpdated } from '../actions/lobby';
+import { Store } from 'redux';
+import { ApplicationState } from '../index';
 
-export function updateLobbySubscriber(dispatch: (action) => void) {
+export function updateLobbySubscriber(store: Store<ApplicationState>) {
     subscribeLobbyChanges(msg => {
-        dispatch(lobbyUpdated(msg));
+        store.dispatch(lobbyUpdated(msg));
     });
 }

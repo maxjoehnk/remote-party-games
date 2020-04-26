@@ -1,5 +1,9 @@
+import ReconnectingWebSocket from 'reconnecting-websocket';
+
 const isSecure = window.location.protocol === 'https:';
-const ws = new WebSocket(`${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`);
+const wsUrl = `${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`;
+
+const ws = new ReconnectingWebSocket(wsUrl);
 
 const queue = [];
 
@@ -15,6 +19,9 @@ ws.addEventListener('message', event => {
     const msg = JSON.parse(event.data);
     console.log('[Socket] Received message', msg);
 });
+
+ws.addEventListener('close', event => console.log('close', event));
+ws.addEventListener('error', event => console.log('error', event));
 
 export function emit(msg) {
     console.log('[Socket] Sending message', msg);
@@ -37,5 +44,21 @@ export function onMessage(type, callback) {
 
     return {
         unsubscribe: () => ws.removeEventListener('message', listener)
+    };
+}
+
+export function onSocketOpen(callback) {
+    ws.addEventListener('open', callback);
+
+    return {
+        unsubscribe: () => ws.removeEventListener('open', callback)
+    };
+}
+
+export function onSocketClose(callback) {
+    ws.addEventListener('close', callback);
+
+    return {
+        unsubscribe: () => ws.removeEventListener('close', callback)
     };
 }
