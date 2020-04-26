@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectPlayerList, selectTeams } from '../../store/selectors/lobby';
+import { selectPlayerList, selectTeams } from '../../../store/selectors/lobby';
 import './player-list.component.css';
 import i18n from 'es2015-i18n-tag';
-import { selectPlayer } from '../../store/selectors/player';
-import { switchTeam } from './matchmaking.api';
+import { selectPlayer } from '../../../store/selectors/player';
+import { switchTeam } from '../matchmaking.api';
 
 export interface PlayerListProps {
     canChangeTeam: boolean;

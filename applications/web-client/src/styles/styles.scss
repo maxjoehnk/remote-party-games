@@ -54,6 +54,7 @@
     background: var(--card-background);
     box-shadow: var(--default-shadow);
     border-radius: var(--border-radius);
+    box-sizing: border-box;
 }
 
 .dialog {

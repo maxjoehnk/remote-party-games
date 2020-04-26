@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerList from '../../matchmaking/player-list.component';
+import PlayerList from '../../matchmaking/player-list/player-list.component';
 import './taboo-game.component.css';
 import { useSelector } from 'react-redux';
 import { selectTabooScore, selectTabooTimeLeft } from '../../../store/selectors/taboo';

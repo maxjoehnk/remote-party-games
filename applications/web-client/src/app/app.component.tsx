@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
-import GameLobby from './matchmaking/lobby.component';
+import GameLobby from './matchmaking/lobby/lobby.component';
 import Welcome from './welcome.component';
 import store from '../store';
 import { selectPlayer } from '../store/selectors/player';
@@ -10,6 +10,7 @@ import Header from './header.component';
 import { subscribeGameStarted, subscribeLobbyClosed } from './matchmaking/matchmaking.api';
 import TabooGame from './games/taboo/taboo-game.component';
 import { onSocketClose } from '../socket';
+import { NotificationContainer } from './ui-elements/notification';
 
 const SocketListener = ({ children }) => {
     const history = useHistory();
@@ -69,12 +70,14 @@ const PlayerSetup = ({ children }) => {
 
 const App = () => (
     <Provider store={store}>
-        <Router>
-            <PlayerSetup>
-                <Header />
-                <ApplicationRoutes />
-            </PlayerSetup>
-        </Router>
+        <NotificationContainer>
+            <Router>
+                <PlayerSetup>
+                    <Header />
+                    <ApplicationRoutes />
+                </PlayerSetup>
+            </Router>
+        </NotificationContainer>
     </Provider>
 );
 
