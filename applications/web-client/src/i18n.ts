@@ -20,13 +20,3 @@ export function setLocale(locale: string) {
     });
     currentLanguage = locale;
 }
-
-export function setLocaleForGroup(group: string, locale: string) {
-    i18nConfig({
-        locales: locale,
-        translations: {
-            ...locales[currentLanguage],
-            [group]: locales[locale][group]
-        }
-    });
-}
