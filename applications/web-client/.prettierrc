@@ -1,0 +1,18 @@
+{
+    "singleQuote": true,
+    "proseWrap": "always",
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "semi": true,
+    "arrowParens": "avoid",
+    "tabWidth": 4,
+    "printWidth": 100,
+    "overrides": [
+        {
+            "files": ".stylelintrc",
+            "options": {
+                "parser": "json"
+            }
+        }
+    ]
+}

@@ -18,7 +18,7 @@ const PlayerList = ({ canChangeTeam, className }: PlayerListProps) => {
     const isTeamBased = teams.length > 0;
 
     return <div className={`card ${className}`}>
-        <h2 className="subtitle">Players</h2>
+        <h2 className="subtitle">{i18n`Players`}</h2>
         {isTeamBased ? <TeamList canChangeTeam={canChangeTeam} teams={teams} players={players}/> : <Players players={players}/>}
     </div>;
 };
@@ -47,7 +47,12 @@ const Players = ({ players }) => {
     const user = useSelector(selectPlayer);
 
     return <ul className="player-list__player-list">
-        {players.map(p => <li key={p.id} className={`player-list__player-list-item ${user.id === p.id ? 'player-list__player-list-item--self' : ''}`}>{p.name}</li>)}
+        {players.map(p => {
+            if (user.id === p.id) {
+                return <li key={p.id} className={`player-list__player-list-item`}>{i18n`${p.name} (You)`}</li>;
+            }
+            return <li key={p.id} className={`player-list__player-list-item`}>{p.name}</li>;
+        })}
     </ul>;
 };
 

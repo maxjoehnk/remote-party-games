@@ -25,7 +25,7 @@ const TabooCountdown = () => {
     const timeLeft = useSelector(selectTabooTimeLeft);
 
     return <div className="game-taboo__time-left">
-        {i18n`${timeLeft}s left`}
+        {i18n('taboo')`${timeLeft}s left`}
     </div>;
 }
 

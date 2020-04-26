@@ -1,0 +1,147 @@
+{
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "${0} (You)": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "Connect to Lobby": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Create a Game": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Enter Room Code": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Game": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Join Team": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Join a Game": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Lobby Settings": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Player setup": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Players": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Playing as ${0}": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "Room Code": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Save": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Start Game": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Taboo": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Username": {
+            "type": "string",
+            "minLength": 1
+        },
+        "or": {
+            "type": "string",
+            "minLength": 1
+        },
+        "taboo": {
+            "type": "object",
+            "properties": {
+                "${0}s left": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "(?=.*?\\$\\{0\\})"
+                },
+                "Guessed": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Skip": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Start": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "You're explaining": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "You're guessing": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "You're next": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "You're observing": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            },
+            "required": [
+                "${0}s left",
+                "Guessed",
+                "Skip",
+                "Start",
+                "You're explaining",
+                "You're guessing",
+                "You're next",
+                "You're observing"
+            ]
+        }
+    },
+    "required": [
+        "${0} (You)",
+        "Connect to Lobby",
+        "Create a Game",
+        "Enter Room Code",
+        "Game",
+        "Join Team",
+        "Join a Game",
+        "Lobby Settings",
+        "Player setup",
+        "Players",
+        "Playing as ${0}",
+        "Room Code",
+        "Save",
+        "Start Game",
+        "Taboo",
+        "Username",
+        "or",
+        "taboo"
+    ],
+    "additionalProperties": false
+}

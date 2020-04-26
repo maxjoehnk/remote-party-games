@@ -1,0 +1,29 @@
+{
+    "taboo": {
+        "Start": "Start",
+        "You're next": "Du bist als nächstes dran",
+        "Guessed": "Erraten",
+        "Skip": "Nächste",
+        "You're explaining": "Du musst erklären",
+        "You're guessing": "Du musst raten",
+        "You're observing": "Du beobachtest",
+        "${0}s left": "${0}s verbleiben"
+    },
+    "Playing as ${0}": "Benutzername: ${0}",
+    "Game": "Spiel",
+    "Lobby Settings": "Lobby Einstellungen",
+    "Room Code": "Raumcode",
+    "Start Game": "Spiel starten",
+    "Taboo": "Tabu",
+    "${0} (You)": "${0} (Du)",
+    "Join Team": "Team beitreten",
+    "Players": "Spieler",
+    "Player setup": "Spieler einrichten",
+    "Save": "Speichern",
+    "Username": "Benutzername",
+    "Connect to Lobby": "Mit Lobby verbinden",
+    "Create a Game": "Spiel erstellen",
+    "Enter Room Code": "Raumcode eingeben",
+    "Join a Game": "Spiel beitreten",
+    "or": "oder"
+}

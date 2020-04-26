@@ -4,7 +4,7 @@ import i18n from "es2015-i18n-tag";
 
 const TabooObserving = () => {
     return <div>
-        <span>{i18n`You're observing`}</span>
+        <span>{i18n('taboo')`You're observing`}</span>
         <TabooCard/>
     </div>;
 };
