@@ -15,6 +15,7 @@ import {
 import TabooGame from './games/taboo/taboo-game.component';
 import { NotificationContainer, useNotification } from './ui-elements/notification';
 import i18n from 'es2015-i18n-tag';
+import { onSocketClose } from '../socket';
 
 const SocketListener = ({ children }) => {
     const history = useHistory();
@@ -45,6 +46,14 @@ const SocketListener = ({ children }) => {
         return () => subscription.unsubscribe();
     });
 
+    useEffect(() => {
+        const subscription = onSocketClose(() => {
+            history.push('/');
+            notify(i18n`Disconnected`);
+        });
+
+        return () => subscription.unsubscribe();
+    });
     return children;
 };
 

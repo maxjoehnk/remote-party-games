@@ -33,6 +33,10 @@
             "type": "string",
             "minLength": 1
         },
+        "Disconnected": {
+            "type": "string",
+            "minLength": 1
+        },
         "Enter Room Code": {
             "type": "string",
             "minLength": 1
@@ -155,6 +159,7 @@
         "Copied to Clipboard!",
         "Copy",
         "Create a Lobby",
+        "Disconnected",
         "Enter Room Code",
         "Game",
         "Join Team",

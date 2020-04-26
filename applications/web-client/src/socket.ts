@@ -1,9 +1,18 @@
+import ReconnectingWebSocket from 'reconnecting-websocket';
+
 const isSecure = window.location.protocol === 'https:';
 const wsUrl = `${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`;
 
-const ws = new WebSocket(wsUrl);
+const ws = new ReconnectingWebSocket(wsUrl);
 
 const queue = [];
+let closeListeners = [];
+
+window.addEventListener('beforeunload', () => {
+    for (const listener of closeListeners) {
+        ws.removeEventListener('close', listener);
+    }
+});
 
 ws.addEventListener('open', () => {
     let msg = queue.shift();
@@ -54,9 +63,13 @@ export function onSocketOpen(callback) {
 }
 
 export function onSocketClose(callback) {
+    closeListeners.push(callback);
     ws.addEventListener('close', callback);
 
     return {
-        unsubscribe: () => ws.removeEventListener('close', callback)
+        unsubscribe: () => {
+            ws.removeEventListener('close', callback);
+            closeListeners = closeListeners.filter(c => c !== callback);
+        }
     };
 }
