@@ -32,7 +32,7 @@
     text-transform: uppercase;
     background: none;
     cursor: pointer;
-    transition: 0.1s all ease-in-out;
+    transition: var(--default-transition);
     color: rgba(0, 0, 0, 0.54);
 }
 
@@ -41,5 +41,9 @@
 }
 
 .lobby__start-game-btn {
+    width: 100%;
+}
+
+.lobby__game-selection {
     width: 100%;
 }

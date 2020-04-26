@@ -1,4 +1,4 @@
-const copyText = (text) => {
+const copyText = text => {
     const inputElement = document.createElement('input');
     inputElement.value = text;
     inputElement.style.position = 'absolute';
@@ -17,5 +17,5 @@ const copyText = (text) => {
 export function useClipboard() {
     return {
         copy: copyText
-    }
+    };
 }

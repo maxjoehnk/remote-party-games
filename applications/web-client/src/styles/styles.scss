@@ -12,6 +12,8 @@
     --page-background: #ddd;
     --control-padding: 8px;
     --font-size: 12px;
+    --default-transition: 0.1s ease-in-out all;
+    --border-width: 2px;
 }
 
 .body {
@@ -42,11 +44,17 @@
     pointer-events: none;
 }
 
-.input {
-    padding: var(--control-padding);
+.input,
+.select {
+    padding: calc(var(--control-padding) - var(--border-width));
     border-radius: var(--border-radius);
     background: var(--color-default);
-    border: none;
+    border: var(--border-width) solid transparent;
+    transition: var(--default-transition);
+
+    &:hover {
+        border-color: var(--color-primary);
+    }
 }
 
 .card {

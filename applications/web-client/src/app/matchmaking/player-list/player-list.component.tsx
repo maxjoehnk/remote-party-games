@@ -5,13 +5,16 @@ import './player-list.component.css';
 import i18n from 'es2015-i18n-tag';
 import { selectPlayer } from '../../../store/selectors/player';
 import { switchTeam } from '../matchmaking.api';
+import { PlayerModel } from '../../../contracts/player.model';
+import { TeamModel } from '../../../contracts/team.model';
 
 export interface PlayerListProps {
     canChangeTeam: boolean;
     className?: string;
+    children?: (text: string, player: PlayerModel, team?: TeamModel) => any;
 }
 
-const PlayerList = ({ canChangeTeam, className }: PlayerListProps) => {
+const PlayerList = ({ canChangeTeam, className, ...props }: PlayerListProps) => {
     const players = useSelector(selectPlayerList);
     const teams = useSelector(selectTeams);
 
@@ -21,15 +24,20 @@ const PlayerList = ({ canChangeTeam, className }: PlayerListProps) => {
         <div className={`card ${className}`}>
             <h2 className="subtitle">{i18n`Players`}</h2>
             {isTeamBased ? (
-                <TeamList canChangeTeam={canChangeTeam} teams={teams} players={players} />
+                <TeamList
+                    canChangeTeam={canChangeTeam}
+                    teams={teams}
+                    players={players}
+                    {...props}
+                />
             ) : (
-                <Players players={players} />
+                <Players players={players} {...props} />
             )}
         </div>
     );
 };
 
-const TeamList = ({ teams, players, canChangeTeam }) => {
+const TeamList = ({ teams, players, canChangeTeam, ...props }) => {
     const user = useSelector(selectPlayer);
 
     return (
@@ -40,14 +48,23 @@ const TeamList = ({ teams, players, canChangeTeam }) => {
                     team={t}
                     players={players}
                     canChangeTeam={canChangeTeam && !t.players.includes(user.id)}
+                    {...props}
                 />
             ))}
         </div>
     );
 };
 
-const Team = ({ team, players, canChangeTeam }) => {
+interface TeamProps {
+    team: TeamModel;
+    players: PlayerModel[];
+    canChangeTeam: boolean;
+    children?: (text: string, player: PlayerModel, team: TeamModel) => any;
+}
+
+const Team = ({ team, players, canChangeTeam, children }: TeamProps) => {
     const playerList = team.players.map(playerId => players.find(p => playerId === p.id));
+    const enhancedChildren = (text, player) => children(text, player, team);
 
     return (
         <div>
@@ -60,28 +77,31 @@ const Team = ({ team, players, canChangeTeam }) => {
                     >{i18n`Join Team`}</button>
                 )}
             </h3>
-            <Players players={playerList} />
+            <Players players={playerList} children={children && enhancedChildren} />
         </div>
     );
 };
 
-const Players = ({ players }) => {
+interface PlayersProps {
+    players: PlayerModel[];
+    children?: (text: string, player: PlayerModel) => any;
+}
+
+const Players = ({ players, children }: PlayersProps) => {
     const user = useSelector(selectPlayer);
 
     return (
         <ul className="player-list__player-list">
             {players.map(p => {
-                if (user.id === p.id) {
-                    return (
-                        <li
-                            key={p.id}
-                            className={`player-list__player-list-item`}
-                        >{i18n`${p.name} (You)`}</li>
-                    );
+                const text = user.id === p.id ? i18n`${p.name} (You)` : p.name;
+
+                if (children) {
+                    return children(text, p);
                 }
+
                 return (
                     <li key={p.id} className={`player-list__player-list-item`}>
-                        {p.name}
+                        {text}
                     </li>
                 );
             })}

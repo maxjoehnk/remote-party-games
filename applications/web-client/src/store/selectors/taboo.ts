@@ -20,3 +20,8 @@ export const selectTabooTimeLeft = createSelector(
     (state: ApplicationState) => state.taboo,
     taboo => taboo.currentRound.timeLeft
 );
+
+export const selectTabooCurrentRound = createSelector(
+    (state: ApplicationState) => state.taboo,
+    taboo => taboo.currentRound
+);
