@@ -6,6 +6,9 @@ import { broadcastToLobby } from '../socket.js';
 
 export function lobbyChangedSubscriber(code) {
     const lobby = getLobby(code);
+    if (lobby == null) {
+        return;
+    }
     broadcastToLobby(code, {
         type: lobbyChangedSocketMsg,
         players: lobby.players,
