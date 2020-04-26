@@ -1,16 +1,33 @@
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 8px;
+    padding: 4px;
 }
 
 .header__title {
+    font-size: 16px;
+    flex: 1;
+    padding: 4px;
+}
+
+.header__change-name,
+.header__player-name {
+    padding: 4px;
     font-size: 14px;
-    margin: 0;
-    padding: 0;
 }
 
 .header__player-name {
     opacity: 0.87;
+}
+
+.header__change-name {
+    opacity: 0.54;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: 0.1s ease-in-out all;
+}
+
+.header__change-name:hover {
+    opacity: 1;
 }

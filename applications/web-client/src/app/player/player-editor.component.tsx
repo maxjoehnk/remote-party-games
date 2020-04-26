@@ -6,24 +6,28 @@ import { selectPlayer } from '../../store/selectors/player';
 import Button from '../ui-elements/button/button.component';
 import { updatePlayerName } from '../../store/actions/player';
 
-const PlayerEditor = ({ dispatch }) => {
+const PlayerEditor = ({ dispatch, onSave }) => {
     const player = useSelector(selectPlayer);
     const [state, setState] = useState(player || { name: '' });
 
     const setUsername = (name: string) => setState({ ...state, name });
+    const onSubmit = () => {
+        dispatch(updatePlayerName(state.name));
+        if (onSave) {
+            onSave();
+        }
+    };
 
     return (
         <div className="player-editor">
-            <form
-                className="card player-editor__card"
-                onSubmit={() => dispatch(updatePlayerName(state.name))}
-            >
+            <form className="card player-editor__card" onSubmit={onSubmit}>
                 <h2 className="subtitle">{i18n`Player setup`}</h2>
                 <input
                     autoFocus
                     className="input"
                     placeholder={i18n`Username`}
-                    onInput={e => setUsername(e.target.value)}
+                    value={state.name}
+                    onChange={e => setUsername(e.target.value)}
                 />
                 <Button type="submit" primary>{i18n`Save`}</Button>
             </form>

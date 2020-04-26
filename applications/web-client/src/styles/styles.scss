@@ -55,3 +55,13 @@
     box-shadow: var(--default-shadow);
     border-radius: var(--border-radius);
 }
+
+.dialog {
+    background: var(--page-background);
+    top: 32px;
+    bottom: 32px;
+    left: 32px;
+    right: 32px;
+    position: absolute;
+    border-radius: var(--border-radius);
+}

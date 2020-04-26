@@ -10,6 +10,7 @@
         "format": "prettier --write '{src/**/*,*}.{ts,tsx,scss,css,json,js,prettierrc,html}'"
     },
     "devDependencies": {
+        "@types/react-modal": "^3.10.5",
         "@types/react-redux": "^7.1.7",
         "@types/react-router-dom": "^5.1.4",
         "glob": "^7.1.6",
