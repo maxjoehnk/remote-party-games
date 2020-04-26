@@ -88,7 +88,7 @@ function removeEmptyLobby(lobby) {
     }
     const game = games.get(lobby.code);
     if (game != null) {
-        game.destroy();
+        game.stop();
         games.delete(lobby.code);
     }
 }
@@ -103,6 +103,17 @@ export function startGameInLobby(lobbyCode) {
     games.set(lobbyCode, game);
     game.start();
     return game;
+}
+
+export function stopGameInLobby(lobbyCode) {
+    console.log(`[Lobby] Stopping game in lobby ${lobbyCode}`);
+    const lobby = getLobby(lobbyCode);
+    if (lobby == null) {
+        throw new Error(`Unknown Lobby ${lobbyCode}`);
+    }
+    const game = getGame(lobbyCode);
+    game.stop();
+    games.delete(lobbyCode);
 }
 
 export function switchTeam(lobbyCode, player, teamId) {

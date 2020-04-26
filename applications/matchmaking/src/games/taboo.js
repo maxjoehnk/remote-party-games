@@ -84,7 +84,7 @@ class TabooGame {
         this._startTimer();
     }
 
-    destroy() {
+    stop() {
         this._stopTimer();
     }
 

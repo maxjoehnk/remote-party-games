@@ -7,7 +7,11 @@ import store from '../store';
 import { selectPlayer } from '../store/selectors/player';
 import PlayerEditor from './player/player-editor.component';
 import Header from './header.component';
-import { subscribeGameStarted, subscribeLobbyClosed } from './matchmaking/matchmaking.api';
+import {
+    subscribeGameStarted,
+    subscribeGameStopped,
+    subscribeLobbyClosed
+} from './matchmaking/matchmaking.api';
 import TabooGame from './games/taboo/taboo-game.component';
 import { onSocketClose } from '../socket';
 import { NotificationContainer } from './ui-elements/notification';
@@ -26,6 +30,14 @@ const SocketListener = ({ children }) => {
     useEffect(() => {
         const subscription = subscribeGameStarted(msg => {
             history.push('/play/taboo');
+        });
+
+        return () => subscription.unsubscribe();
+    });
+
+    useEffect(() => {
+        const subscription = subscribeGameStopped(msg => {
+            history.push(`/lobby/${msg.code}`);
         });
 
         return () => subscription.unsubscribe();

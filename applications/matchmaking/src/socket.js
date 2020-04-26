@@ -6,6 +6,7 @@ import { emitMessage } from './message-broker.js';
 import { gameActionHandler } from './socket-handlers/game-action.js';
 import { joinLobbySocketHandler } from './socket-handlers/join-lobby.js';
 import { startGameHandler } from './socket-handlers/start-game.js';
+import { stopGameHandler } from './socket-handlers/stop-game.js';
 import { switchTeamSocketHandler } from './socket-handlers/switch-team.js';
 import { updateUsernameHandler } from './socket-handlers/update-username.js';
 import { getSocketMetrics } from './metrics/socket.js';
@@ -18,6 +19,7 @@ const handlers = new Map();
 handlers.set('lobby/join', joinLobbySocketHandler);
 handlers.set('user/username', updateUsernameHandler);
 handlers.set('lobby/start-game', startGameHandler);
+handlers.set('lobby/stop-game', stopGameHandler);
 handlers.set('lobby/switch-team', switchTeamSocketHandler);
 handlers.set('game/action', gameActionHandler);
 

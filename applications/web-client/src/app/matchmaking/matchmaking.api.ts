@@ -16,9 +16,14 @@ export interface LobbyChangedMessage {
 }
 
 export interface GameStartedMessage {
-    type: 'lobby/game-start';
+    type: 'lobby/game-started';
     game: 'taboo';
     gameState: TabooGameState;
+}
+
+export interface GameStoppedMessage {
+    type: 'lobby/game-stopped';
+    code: string;
 }
 
 export interface GameConfigurationChangedMessage {
@@ -52,6 +57,12 @@ export function startGame() {
     });
 }
 
+export function stopGame() {
+    emit({
+        type: 'lobby/stop-game'
+    });
+}
+
 export function updateGameConfiguration(configuration: TabooGameConfiguration) {
     emit({
         type: 'lobby/update-game-config',
@@ -76,6 +87,10 @@ export function subscribeLobbyClosed(callback: (msg: LobbyChangedMessage) => voi
 
 export function subscribeGameStarted(callback: (msg: GameStartedMessage) => void) {
     return onMessage('lobby/game-started', callback);
+}
+
+export function subscribeGameStopped(callback: (msg: GameStoppedMessage) => void) {
+    return onMessage('lobby/game-stopped', callback);
 }
 
 export function subscribeGameConfigurationChanged(
