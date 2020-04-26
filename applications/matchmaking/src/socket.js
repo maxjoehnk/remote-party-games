@@ -8,6 +8,9 @@ import { joinLobbySocketHandler } from './socket-handlers/join-lobby.js';
 import { startGameHandler } from './socket-handlers/start-game.js';
 import { switchTeamSocketHandler } from './socket-handlers/switch-team.js';
 import { updateUsernameHandler } from './socket-handlers/update-username.js';
+import { getSocketMetrics } from './metrics/socket.js';
+
+const metrics = getSocketMetrics();
 
 let wss;
 
@@ -22,17 +25,19 @@ export function setupSocketServer(httpServer) {
     wss = new WebSocket.Server({ server: httpServer });
 
     wss.on('connection', ws => {
+        metrics.openSocketGauge.inc();
         ws.playerId = uuid.v4();
         console.log(`[Socket] Player ${ws.playerId} joined`);
 
-        ws.send(JSON.stringify({
+        sendMessage(ws, {
             type: 'user/initial-configuration',
             configuration: {
                 id: ws.playerId
             }
-        }));
+        });
 
         ws.on('message', data => {
+            metrics.socketRecvMessageCounter.inc();
             const msg = JSON.parse(data);
             console.log('[Socket] Received message', msg);
             const handler = handlers.get(msg.type);
@@ -43,6 +48,7 @@ export function setupSocketServer(httpServer) {
             handler(ws, msg);
         });
         ws.on('close', () => {
+            metrics.openSocketGauge.dec();
             emitMessage(playerDisconnectBrokerMsg, { id: ws.playerId, name: ws.playerName });
         });
     });
@@ -56,17 +62,18 @@ export function broadcastToLobby(lobbyCode, msg) {
 export function broadcastMessage(msg, clientFilter = () => true) {
     // console.log('[Socket] Broadcasting message', msg);
     wss.clients.forEach(ws => {
-        if (ws.readyState !== WebSocket.OPEN) {
-            return;
-        }
         if (!clientFilter(ws)) {
             return;
         }
-        ws.send(JSON.stringify(msg));
+        sendMessage(ws, msg);
     });
 }
 
 export function sendMessage(ws, msg) {
+    if (ws.readyState !== WebSocket.OPEN) {
+        return;
+    }
+    metrics.socketSentMessageCounter.inc();
     ws.send(JSON.stringify(msg));
 }
 

@@ -1,12 +1,7 @@
 import prometheus from 'prom-client';
-import { getLobbyMetrics } from './lobby-store.js';
-import { getOpenConnectionCount } from './socket.js';
+import { getLobbyMetrics } from '../lobby-store.js';
 
 prometheus.collectDefaultMetrics();
-const connectedPlayerGauge = new prometheus.Gauge({
-    name: 'matchmaking_open_sockets',
-    help: 'Count of currently open sockets'
-});
 const lobbyGauge = new prometheus.Gauge({
     name: 'matchmaking_lobbies',
     help: 'Count of open lobbies'
@@ -21,8 +16,6 @@ const gameGauge = new prometheus.Gauge({
 });
 
 export function getMetrics() {
-    const connectedPlayers = getOpenConnectionCount();
-    connectedPlayerGauge.set(connectedPlayers);
     const lobbyMetrics = getLobbyMetrics();
     lobbyGauge.set(lobbyMetrics.lobbyCount);
     playerGauge.set(lobbyMetrics.playerCount);

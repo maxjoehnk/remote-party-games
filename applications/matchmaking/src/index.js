@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { createLobby, getLobby } from './lobby-store.js';
-import { getMetrics } from './metrics.js';
+import { getMetrics } from './metrics/index.js';
 import { loggingMiddleware } from './middleware/logging.js';
 import { metricMiddleware } from './middleware/metric.js';
 import { setupSocketServer } from './socket.js';
