@@ -13,8 +13,8 @@ const LobbyLoader = ({ dispatch }) => {
     const { code } = useParams();
     dispatch(joinLobby(code));
 
-    return <GameLobby/>;
-}
+    return <GameLobby />;
+};
 
 const GameLobby = () => {
     const code = useSelector(selectLobbyCode);
@@ -22,8 +22,12 @@ const GameLobby = () => {
         <div className="lobby">
             <div className="lobby__card lobby__card--settings card">
                 <h2 className="subtitle">{i18n`Lobby Settings`}</h2>
-                <p><b>{i18n`Room Code`}: </b> {code}</p>
-                <p><b>Link:</b> {`${window.location.origin}/lobby/${code}`}</p>
+                <p>
+                    <b>{i18n`Room Code`}: </b> {code}
+                </p>
+                <p>
+                    <b>Link:</b> {`${window.location.origin}/lobby/${code}`}
+                </p>
                 <p>
                     <b>{i18n`Game`}: </b>
                     <select>
@@ -31,11 +35,14 @@ const GameLobby = () => {
                     </select>
                 </p>
 
-                <Button onClick={() => startGame()} className="button button--primary">{i18n`Start Game`}</Button>
+                <Button
+                    onClick={() => startGame()}
+                    className="button button--primary"
+                >{i18n`Start Game`}</Button>
             </div>
-            <PlayerList className="lobby__card" canChangeTeam={true}/>
+            <PlayerList className="lobby__card" canChangeTeam={true} />
         </div>
     );
-}
+};
 
 export default connect()(LobbyLoader);

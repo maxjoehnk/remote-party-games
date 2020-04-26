@@ -8,8 +8,10 @@ export interface ButtonProps {
     type?: 'button' | 'submit';
 }
 
-const Button = ({children, className, primary, ...props}: ButtonProps) => <button className={`button ${primary ? 'button--primary' : ''} ${className}`} {...props}>
-    { children }
-</button>;
+const Button = ({ children, className, primary, ...props }: ButtonProps) => (
+    <button className={`button ${primary ? 'button--primary' : ''} ${className}`} {...props}>
+        {children}
+    </button>
+);
 
 export default Button;

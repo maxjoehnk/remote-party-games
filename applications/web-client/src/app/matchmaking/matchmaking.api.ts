@@ -56,7 +56,7 @@ export function updateGameConfiguration(configuration: TabooGameConfiguration) {
     emit({
         type: 'lobby/update-game-config',
         configuration
-    })
+    });
 }
 
 export function switchTeam(teamId: string) {
@@ -78,6 +78,8 @@ export function subscribeGameStarted(callback: (msg: GameStartedMessage) => void
     return onMessage('lobby/game-started', callback);
 }
 
-export function subscribeGameConfigurationChanged(callback: (msg: GameConfigurationChangedMessage) => void) {
+export function subscribeGameConfigurationChanged(
+    callback: (msg: GameConfigurationChangedMessage) => void
+) {
     return onMessage('lobby/game-configuration-changed', callback);
 }

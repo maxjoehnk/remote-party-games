@@ -4,7 +4,9 @@ import { updatePlayerName } from './actions/player';
 
 function getStoredPlayer(): PlayerState | null {
     const serializedPlayerState = localStorage.getItem('player');
-    const playerState: PlayerState = serializedPlayerState ? JSON.parse(serializedPlayerState) : null;
+    const playerState: PlayerState = serializedPlayerState
+        ? JSON.parse(serializedPlayerState)
+        : null;
 
     return playerState;
 }
@@ -18,4 +20,4 @@ export const loadStoredState = store => {
     if (player != null) {
         store.dispatch(updatePlayerName(player.name));
     }
-}
+};

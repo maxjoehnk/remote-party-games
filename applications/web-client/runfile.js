@@ -2,7 +2,7 @@ const glob = require('glob');
 const { exportTranslationKeys } = require('i18n-tag-schema');
 const { existsSync, readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
-const { run } = require('runjs')
+const { run } = require('runjs');
 
 const preprocessor = join(__dirname, 'preprocessors/i18n-typescript');
 
@@ -10,9 +10,7 @@ const preprocessor = join(__dirname, 'preprocessors/i18n-typescript');
  * Updates the translation.schema.json file with all available translation keys.
  */
 function updateSchema() {
-    run(
-        `i18n-tag-schema ./src -p ${preprocessor} -f .tsx --schema ./translation.schema.json`
-    );
+    run(`i18n-tag-schema ./src -p ${preprocessor} -f .tsx --schema ./translation.schema.json`);
     run('prettier --write translation.schema.json');
 }
 
@@ -33,9 +31,7 @@ async function updateTranslation(language) {
  * Validates all translation files against the given translation schema
  */
 function validate() {
-    run(
-        'i18n-tag-schema ./translations --validate --schema ./translation.schema.json'
-    );
+    run('i18n-tag-schema ./translations --validate --schema ./translation.schema.json');
 }
 
 function getTranslatableFiles() {
@@ -91,12 +87,9 @@ function applyExistingTranslations(exportName, keys, translationFile) {
         for (const key of keys) {
             if (isGroup(key)) {
                 const groupName = key.group;
-                for (const item of Object.getOwnPropertyNames(
-                    translationFile[groupName]
-                )) {
+                for (const item of Object.getOwnPropertyNames(translationFile[groupName])) {
                     if (item in existingKeys[groupName]) {
-                        translationFile[groupName][item] =
-                            existingKeys[groupName][item];
+                        translationFile[groupName][item] = existingKeys[groupName][item];
                     }
                 }
             } else if (key in existingKeys) {

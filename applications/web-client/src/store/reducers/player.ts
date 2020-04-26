@@ -6,11 +6,14 @@ export interface PlayerState {
     name: string;
 }
 
-export const playerReducer = createReducer<PlayerState>({ id: null, name: null }, {
-    [updatePlayerName]: (state, action) => {
-        state.name = action.payload;
-    },
-    [playerConfigurationChanged]: (state, action) => {
-        state.id = action.payload.id;
+export const playerReducer = createReducer<PlayerState>(
+    { id: null, name: null },
+    {
+        [updatePlayerName]: (state, action) => {
+            state.name = action.payload;
+        },
+        [playerConfigurationChanged]: (state, action) => {
+            state.id = action.payload.id;
+        }
     }
-});
+);

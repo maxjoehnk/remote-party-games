@@ -9,26 +9,35 @@ const Welcome = () => {
     const [code, setCode] = useState();
     const history = useHistory();
 
-    const createAndOpenLobby = async() => {
+    const createAndOpenLobby = async () => {
         try {
             const { code } = await matchmakingApi.createLobby();
             history.push(`/lobby/${code}`);
-        }catch (error) {
+        } catch (error) {
             console.error(error);
         }
     };
 
-    return (<div className="home">
-        <div className="home__card card">
-            <h2 className="subtitle">{i18n`Connect to Lobby`}</h2>
-            <Button onClick={() => createAndOpenLobby()} primary>{i18n`Create a Game`}</Button>
-            <span>{i18n`or`}</span>
-            <div className="home__join-game">
-                <input className="input home__game-code-input" placeholder={i18n`Enter Room Code`} onInput={e => setCode(e.target.value)}/>
-                <Link to={`/lobby/${(code || '').trim()}`} className={`button ${code == null ? 'button--disabled' : ''}`}>{i18n`Join a Game`}</Link>
+    return (
+        <div className="home">
+            <div className="home__card card">
+                <h2 className="subtitle">{i18n`Connect to Lobby`}</h2>
+                <Button onClick={() => createAndOpenLobby()} primary>{i18n`Create a Game`}</Button>
+                <span>{i18n`or`}</span>
+                <div className="home__join-game">
+                    <input
+                        className="input home__game-code-input"
+                        placeholder={i18n`Enter Room Code`}
+                        onInput={e => setCode(e.target.value)}
+                    />
+                    <Link
+                        to={`/lobby/${(code || '').trim()}`}
+                        className={`button ${code == null ? 'button--disabled' : ''}`}
+                    >{i18n`Join a Game`}</Link>
+                </div>
             </div>
         </div>
-    </div>);
+    );
 };
 
 export default Welcome;

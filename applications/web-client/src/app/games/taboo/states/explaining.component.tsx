@@ -5,14 +5,16 @@ import Button from '../../../ui-elements/button/button.component';
 import { rightGuess, skipCard } from '../taboo-api';
 
 const TabooExplaining = () => {
-    return <div className="game-taboo__explaining">
-        <span>{i18n('taboo')`You're explaining`}</span>
-        <TabooCard/>
-        <div className="game-taboo__actions">
-            <Button primary onClick={() => rightGuess()}>{i18n('taboo')`Guessed`}</Button>
-            <Button onClick={() => skipCard()}>{i18n('taboo')`Skip`}</Button>
+    return (
+        <div className="game-taboo__explaining">
+            <span>{i18n('taboo')`You're explaining`}</span>
+            <TabooCard />
+            <div className="game-taboo__actions">
+                <Button primary onClick={() => rightGuess()}>{i18n('taboo')`Guessed`}</Button>
+                <Button onClick={() => skipCard()}>{i18n('taboo')`Skip`}</Button>
+            </div>
         </div>
-    </div>;
+    );
 };
 
 export default TabooExplaining;

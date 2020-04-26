@@ -1,18 +1,13 @@
 {
-  "compilerOptions": {
-    "module": "es2016",
-    "moduleResolution": "node",
-    "target": "es6",
-    "sourceMap": true,
-    "jsx": "react",
-    "lib": [
-      "es2018",
-      "DOM"
-    ],
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "module": "es2016",
+        "moduleResolution": "node",
+        "target": "es6",
+        "sourceMap": true,
+        "jsx": "react",
+        "lib": ["es2018", "DOM"],
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules"]
 }

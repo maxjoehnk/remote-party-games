@@ -10,7 +10,7 @@ import Header from './header.component';
 import { subscribeGameStarted, subscribeLobbyClosed } from './matchmaking/matchmaking.api';
 import TabooGame from './games/taboo/taboo-game.component';
 
-const SocketListener = ({children}) => {
+const SocketListener = ({ children }) => {
     const history = useHistory();
 
     useEffect(() => {
@@ -32,20 +32,28 @@ const SocketListener = ({children}) => {
 };
 
 const ApplicationRoutes = () => {
-    return <SocketListener>
-        <Switch>
-            <Route path="/" exact><Welcome/></Route>
-            <Route path="/lobby/:code" exact><GameLobby/></Route>
-            <Route path="/play/taboo"><TabooGame/></Route>
-        </Switch>
-    </SocketListener>;
+    return (
+        <SocketListener>
+            <Switch>
+                <Route path="/" exact>
+                    <Welcome />
+                </Route>
+                <Route path="/lobby/:code" exact>
+                    <GameLobby />
+                </Route>
+                <Route path="/play/taboo">
+                    <TabooGame />
+                </Route>
+            </Switch>
+        </SocketListener>
+    );
 };
 
-const PlayerSetup = ({children}) => {
+const PlayerSetup = ({ children }) => {
     const player = useSelector(selectPlayer);
 
     if (player.name == null) {
-        return <PlayerEditor/>;
+        return <PlayerEditor />;
     }
     return children;
 };
@@ -54,8 +62,8 @@ const App = () => (
     <Provider store={store}>
         <Router>
             <PlayerSetup>
-                <Header/>
-                <ApplicationRoutes/>
+                <Header />
+                <ApplicationRoutes />
             </PlayerSetup>
         </Router>
     </Provider>

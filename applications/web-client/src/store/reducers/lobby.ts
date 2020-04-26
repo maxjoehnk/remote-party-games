@@ -9,19 +9,22 @@ export interface LobbyState {
     code: string;
 }
 
-export const lobbyReducer = createReducer<LobbyState>({
-    players: [],
-    teams: [],
-    code: null
-}, {
-    [joinLobby]: (state, action) => {
-        state.code = action.payload
+export const lobbyReducer = createReducer<LobbyState>(
+    {
+        players: [],
+        teams: [],
+        code: null
     },
-    [leaveLobby]: (state, action) => {
-        state = null;
-    },
-    [lobbyUpdated]: (state, action) => {
-        state.players = action.payload.players;
-        state.teams = action.payload.teams;
+    {
+        [joinLobby]: (state, action) => {
+            state.code = action.payload;
+        },
+        [leaveLobby]: (state, action) => {
+            state = null;
+        },
+        [lobbyUpdated]: (state, action) => {
+            state.players = action.payload.players;
+            state.teams = action.payload.teams;
+        }
     }
-});
+);

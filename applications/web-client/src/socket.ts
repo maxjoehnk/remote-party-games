@@ -21,7 +21,7 @@ export function emit(msg) {
     const serialized = JSON.stringify(msg);
     if (ws.readyState !== ws.OPEN) {
         queue.push(serialized);
-    }else {
+    } else {
         ws.send(serialized);
     }
 }

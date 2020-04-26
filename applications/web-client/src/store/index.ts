@@ -27,6 +27,6 @@ loadStoredState(store);
 store.subscribe(() => {
     const state = store.getState();
     updateStoredState(state);
-})
+});
 
 export default store;

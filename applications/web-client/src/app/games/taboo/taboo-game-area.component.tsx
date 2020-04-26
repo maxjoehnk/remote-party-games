@@ -10,12 +10,14 @@ import TabooContinue from './states/continue.component';
 const TabooGameArea = () => {
     const view = useSelector(selectTabooView);
 
-    return <div className="game-taboo__game-area">
-        {view === TabooView.Explaining && <TabooExplaining/>}
-        {view === TabooView.Guessing && <TabooGuessing/>}
-        {view === TabooView.Observing && <TabooObserving/>}
-        {view === TabooView.Continue && <TabooContinue/>}
-    </div>
+    return (
+        <div className="game-taboo__game-area">
+            {view === TabooView.Explaining && <TabooExplaining />}
+            {view === TabooView.Guessing && <TabooGuessing />}
+            {view === TabooView.Observing && <TabooObserving />}
+            {view === TabooView.Continue && <TabooContinue />}
+        </div>
+    );
 };
 
 export default TabooGameArea;

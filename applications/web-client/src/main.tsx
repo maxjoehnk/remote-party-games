@@ -5,8 +5,8 @@ import Modal from 'react-modal';
 import App from './app/app.component';
 import { setupInternationalization } from './i18n';
 
-setupInternationalization()
+setupInternationalization();
 
 Modal.setAppElement('#app');
 
-ReactDom.render(<App/>, document.getElementById('app'));
+ReactDom.render(<App />, document.getElementById('app'));
