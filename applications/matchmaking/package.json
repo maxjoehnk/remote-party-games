@@ -10,6 +10,7 @@
     "csv-parse": "^4.8.9",
     "express": "^4.17.1",
     "helmet": "^3.22.0",
+    "on-response": "^1.0.1",
     "prom-client": "^12.0.0",
     "uuid": "^7.0.3",
     "ws": "^7.2.3"

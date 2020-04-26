@@ -1,4 +1,10 @@
+import onResponse from 'on-response';
+
 export const loggingMiddleware = (req, res, next) => {
-    console.log(`[HTTP] ${req.method} ${req.url}`);
+    const start = Date.now();
+    onResponse(req, res, () => {
+        const duration = Date.now() - start;
+        console.log(`[HTTP] ${res.statusCode} ${req.method} ${req.url} - ${duration}ms`);
+    });
     next();
 };
