@@ -18,7 +18,7 @@ export function loadCards(callback) {
             }
             const cards = lines.map(line => ({
                 term: line[0],
-                taboo: line.slice(1)
+                taboo: line.slice(1).filter(r => r !== '' && r != null)
             }));
             callback(null, cards);
         })
