@@ -1,9 +1,7 @@
-import ReconnectingWebSocket from 'reconnecting-websocket';
-
 const isSecure = window.location.protocol === 'https:';
 const wsUrl = `${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`;
 
-const ws = new ReconnectingWebSocket(wsUrl);
+const ws = new WebSocket(wsUrl);
 
 const queue = [];
 

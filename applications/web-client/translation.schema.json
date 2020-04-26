@@ -9,6 +9,10 @@
             "minLength": 1,
             "pattern": "(?=.*?\\$\\{0\\})"
         },
+        "Back to Lobby": {
+            "type": "string",
+            "minLength": 1
+        },
         "Change name": {
             "type": "string",
             "minLength": 1
@@ -50,6 +54,10 @@
             "minLength": 1
         },
         "Lobby Settings": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Lobby was closed": {
             "type": "string",
             "minLength": 1
         },
@@ -141,6 +149,7 @@
     },
     "required": [
         "${0} (You)",
+        "Back to Lobby",
         "Change name",
         "Connect to Lobby",
         "Copied to Clipboard!",
@@ -152,6 +161,7 @@
         "Join a Lobby",
         "Link",
         "Lobby Settings",
+        "Lobby was closed",
         "Player setup",
         "Players",
         "Playing as ${0}",

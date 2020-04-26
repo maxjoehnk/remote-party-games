@@ -18,7 +18,10 @@ export function useNotification(timeout = 5000): NotificationCallback {
             setState(null);
         }, timeout);
 
-        return () => clearTimeout(timeoutId);
+        return () => {
+            clearTimeout(timeoutId);
+            context.removeNotification(state);
+        };
     }, [state]);
 
     return content => setState(content);

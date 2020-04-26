@@ -13,15 +13,17 @@ import {
     subscribeLobbyClosed
 } from './matchmaking/matchmaking.api';
 import TabooGame from './games/taboo/taboo-game.component';
-import { onSocketClose } from '../socket';
-import { NotificationContainer } from './ui-elements/notification';
+import { NotificationContainer, useNotification } from './ui-elements/notification';
+import i18n from 'es2015-i18n-tag';
 
 const SocketListener = ({ children }) => {
     const history = useHistory();
+    const notify = useNotification();
 
     useEffect(() => {
         const subscription = subscribeLobbyClosed(() => {
             history.push('/');
+            notify(i18n`Lobby was closed`);
         });
 
         return () => subscription.unsubscribe();
@@ -43,13 +45,6 @@ const SocketListener = ({ children }) => {
         return () => subscription.unsubscribe();
     });
 
-    useEffect(() => {
-        const subscription = onSocketClose(() => {
-            history.push('/');
-        });
-
-        return () => subscription.unsubscribe();
-    });
     return children;
 };
 

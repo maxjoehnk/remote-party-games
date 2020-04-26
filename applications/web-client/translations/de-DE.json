@@ -1,4 +1,5 @@
 {
+    "Lobby was closed": "Lobby wurde geschlossen",
     "taboo": {
         "Start": "Start",
         "You're next": "Du bist als nächstes dran",
@@ -9,6 +10,7 @@
         "You're observing": "Du beobachtest",
         "${0}s left": "${0}s verbleiben"
     },
+    "Back to Lobby": "Zurück zur Lobby",
     "Change name": "Namen ändern",
     "Playing as ${0}": "Benutzername: ${0}",
     "Copied to Clipboard!": "Kopiert!",
