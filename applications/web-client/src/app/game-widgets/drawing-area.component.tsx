@@ -1,5 +1,5 @@
 import React, { RefObject } from 'react';
-import { updateUserImage } from '../player/player.api';
+import './drawing-area.component.css';
 
 const DEFAULT_THICKNESS = 4;
 const DEFAULT_COLOR = 'black';
@@ -40,7 +40,7 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     }
 
     componentDidUpdate(): void {
-        const {tool, thickness, color} = this.props;
+        const { tool, thickness, color } = this.props;
         this.canvasContext.lineWidth = thickness;
         if (tool === DrawingTool.Pen) {
             this.canvasContext.strokeStyle = color || DEFAULT_COLOR;
@@ -66,10 +66,14 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     }
 
     render() {
-        return <canvas style={{position: 'relative'}}
-                       width={this.props.width}
-                       height={this.props.height}
-                       ref={this.canvas}/>;
+        return (
+            <canvas
+                className="drawing-area"
+                width={this.props.width}
+                height={this.props.height}
+                ref={this.canvas}
+            />
+        );
     }
 
     public clear() {
@@ -79,7 +83,7 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     public async save(): Promise<Blob> {
         return new Promise((resolve, reject) => {
             this.canvas.current.toBlob(resolve);
-        })
+        });
     }
 
     private onMouseDown = e => {
@@ -93,7 +97,7 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
         if (!this.state.isMouseDown) {
             return;
         }
-        this.setState({isMouseDown: false});
+        this.setState({ isMouseDown: false });
         this.stopLine(e.layerX, e.layerY);
     };
 
@@ -118,6 +122,10 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
         this.stopLine(x, y);
         this.startLine(x, y);
     };
+
+    load(img: Image) {
+        this.canvasContext.drawImage(img, 0, 0);
+    }
 }
 
 export default DrawingArea;

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { playerConfigurationChanged, updatePlayerName } from '../actions/player';
+import { loadPlayer, updatePlayerName } from '../actions/player';
 
 export interface PlayerState {
     id: string;
@@ -12,8 +12,6 @@ export const playerReducer = createReducer<PlayerState>(
         [updatePlayerName]: (state, action) => {
             state.name = action.payload;
         },
-        [playerConfigurationChanged]: (state, action) => {
-            state.id = action.payload.id;
-        }
+        [loadPlayer]: (state, action) => action.payload
     }
 );

@@ -1,7 +1,10 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import { getUserId } from './user-store';
 
 const isSecure = window.location.protocol === 'https:';
-const wsUrl = `${isSecure ? 'wss' : 'ws'}://${window.location.host}/api/matchmaking`;
+const wsUrl = `${isSecure ? 'wss' : 'ws'}://${
+    window.location.host
+}/api/matchmaking?userId=${getUserId()}`;
 
 const ws = new ReconnectingWebSocket(wsUrl);
 

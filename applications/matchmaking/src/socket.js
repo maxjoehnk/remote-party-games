@@ -10,6 +10,7 @@ import { stopGameHandler } from './socket-handlers/stop-game.js';
 import { switchTeamSocketHandler } from './socket-handlers/switch-team.js';
 import { updateUsernameHandler } from './socket-handlers/update-username.js';
 import { getSocketMetrics } from './metrics/socket.js';
+import { parse } from 'url';
 
 const metrics = getSocketMetrics();
 
@@ -26,17 +27,15 @@ handlers.set('game/action', gameActionHandler);
 export function setupSocketServer(httpServer) {
     wss = new WebSocket.Server({ server: httpServer });
 
-    wss.on('connection', ws => {
+    wss.on('connection', (ws, req) => {
+        const url = parse(req.url, true);
+        if (url.query.userId == null) {
+            console.warn(`[Socket] Connection opened without user id`);
+            return ws.close();
+        }
         metrics.openSocketGauge.inc();
-        ws.playerId = uuid.v4();
+        ws.playerId = url.query.userId;
         console.log(`[Socket] Player ${ws.playerId} joined`);
-
-        sendMessage(ws, {
-            type: 'user/initial-configuration',
-            configuration: {
-                id: ws.playerId
-            }
-        });
 
         ws.on('message', data => {
             metrics.socketRecvMessageCounter.inc();

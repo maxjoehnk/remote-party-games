@@ -9,15 +9,20 @@ export function updateUsername(username: string) {
 }
 
 export async function updateUserImage(userId: string, img) {
-    const req = await fetch("/api/image", {
+    await fetch('/api/image', {
         method: 'POST',
         headers: {
-            "X-UserId": userId
+            'X-UserId': userId
         },
         body: img
-    })
+    });
 }
 
-export function subscribeUserConfiguration(callback: (config: UserConfigurationModel) => void) {
-    return onMessage('user/initial-configuration', msg => callback(msg.configuration));
+export function fetchUserImage(userId: string): Promise<Image> {
+    return new Promise<Image>((resolve, reject) => {
+        const img = new Image();
+        img.src = `/api/image/${userId}`;
+        img.addEventListener('error', err => reject(err));
+        img.addEventListener('load', () => resolve(img));
+    });
 }

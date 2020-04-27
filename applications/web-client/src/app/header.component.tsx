@@ -16,7 +16,10 @@ const Header = () => {
                 <h1 className="header__title">Remote Party Games</h1>
                 <button className="header__player-settings" onClick={() => setState(true)}>
                     <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
-                    <img className="header__player-img" src={`${window.location.origin}/api/image/${player.id}`}/>
+                    <img
+                        className="header__player-img"
+                        src={`${window.location.origin}/api/image/${player.id}`}
+                    />
                 </button>
             </div>
             <Modal
