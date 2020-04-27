@@ -1,5 +1,4 @@
-import { emit, onMessage } from '../../socket';
-import { UserConfigurationModel } from '../../contracts/user-configuration.model';
+import { emit } from '../../socket';
 
 export function updateUsername(username: string) {
     emit({
