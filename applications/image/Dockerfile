@@ -8,7 +8,7 @@ RUN yarn
 
 COPY ./ ./
 
-EXPOSE 8090
+EXPOSE 8091
 
 ENV STORAGE_PATH=/etc/party-games/storage
 
