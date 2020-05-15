@@ -1,16 +1,20 @@
+def applications = ["web-client", "matchmaking", "proxy"]
+
 node {
     checkout scm
     docker.withRegistry('https://docker.pkg.github.com', 'github') {
-        stage('Build Web Client') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/web-client:latest", './applications/web-client').push()
-        }
+        stage('Build') {
+            def stages = [:]
 
-        stage('Build Matchmaking') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/matchmaking:latest", './applications/matchmaking').push()
-        }
+            for (application in applications) {
+                stages["${application}"] = {
+                    stage("${application}") {
+                        docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/${application}:latest", "./applications/${application}").push()
+                    }
+                }
+            }
 
-        stage('Build Proxy') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/proxy:latest", './applications/proxy').push()
+            parallel stages
         }
     }
 }
