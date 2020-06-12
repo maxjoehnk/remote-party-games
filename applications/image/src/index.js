@@ -9,9 +9,10 @@ import { prepareStorage, readImage, storeImage } from './storage.js';
 const port = 8091;
 
 async function init() {
-    await prepareStorage()
+    await prepareStorage();
 
     const app = express();
+    app.set('etag', 'strong');
     app.use(helmet());
     app.use(loggingMiddleware);
     app.use(metricMiddleware);

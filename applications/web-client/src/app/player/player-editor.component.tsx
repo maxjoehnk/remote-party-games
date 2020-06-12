@@ -10,7 +10,7 @@ import { mdiTrashCan } from '@mdi/js';
 import Icon from '@mdi/react';
 import { fetchUserImage, updateUserImage } from './player.api';
 
-const PlayerEditor = ({ dispatch, onSave }) => {
+const PlayerEditor = ({ dispatch, onSave, onClose }) => {
     const player = useSelector(selectPlayer);
     const [state, setState] = useState(player || { name: '' });
 
@@ -41,12 +41,15 @@ const PlayerEditor = ({ dispatch, onSave }) => {
                     autoFocus
                     className="input"
                     placeholder={i18n`Username`}
-                    value={state.name}
+                    value={state.name || ''}
                     onChange={e => setUsername(e.target.value)}
                 />
                 <h3>{i18n`Avatar`}</h3>
                 <PlayerAvatarEditor ref={ref} />
-                <Button type="submit" primary>{i18n`Save`}</Button>
+                <div className="player-editor__actions">
+                    {onClose && <Button className="player-editor__action-btn" type="button" onClick={() => onClose()}>{i18n`Cancel`}</Button>}
+                    <Button className="player-editor__action-btn" type="submit" primary>{i18n`Save`}</Button>
+                </div>
             </form>
         </div>
     );

@@ -27,7 +27,7 @@ const Header = () => {
                 className="dialog"
                 style={{ overlay: { background: 'rgba(0, 0, 0, 0.5)' } }}
             >
-                <PlayerEditor onSave={() => setState(false)} />
+                <PlayerEditor onSave={() => setState(false)} onClose={() => setState(false)}/>
             </Modal>
         </>
     );
