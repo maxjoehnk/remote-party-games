@@ -6,6 +6,15 @@
 
 .player-list__player-list-item {
     list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.player-list__player-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
 }
 
 .player-list__player-list-item--self {

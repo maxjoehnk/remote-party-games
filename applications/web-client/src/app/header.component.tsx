@@ -14,18 +14,20 @@ const Header = () => {
         <>
             <div className="header">
                 <h1 className="header__title">Remote Party Games</h1>
-                <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
-                <button
-                    className="header__change-name"
-                    onClick={() => setState(true)}
-                >{i18n`Change name`}</button>
+                <button className="header__player-settings" onClick={() => setState(true)}>
+                    <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
+                    <img
+                        className="header__player-img"
+                        src={`${window.location.origin}/api/image/${player.id}`}
+                    />
+                </button>
             </div>
             <Modal
                 isOpen={state}
                 className="dialog"
                 style={{ overlay: { background: 'rgba(0, 0, 0, 0.5)' } }}
             >
-                <PlayerEditor onSave={() => setState(false)} />
+                <PlayerEditor onSave={() => setState(false)} onClose={() => setState(false)}/>
             </Modal>
         </>
     );

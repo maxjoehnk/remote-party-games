@@ -8,6 +8,10 @@ services:
         restart: on-failure
         build: applications/matchmaking
         image: party-games/matchmaking:latest
+    image:
+        restart: on-failure
+        build: applications/image
+        image: party-games/image:latest
     proxy:
         restart: on-failure
         build: applications/proxy

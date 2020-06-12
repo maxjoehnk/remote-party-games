@@ -21,7 +21,7 @@ const TabooPlayerList = () => {
                 const className = getPlayerClassName(isExplainingPlayer, isPlayingTeam);
 
                 return (
-                    <span className={`game-taboo__player ${className}`}>
+                    <span className={`game-taboo__player ${className}`} key={player.id}>
                         <span className="game-taboo__player-name">{text}</span>
                         <Icon path={icon} size={1} className="game-taboo__player-icon" />
                     </span>

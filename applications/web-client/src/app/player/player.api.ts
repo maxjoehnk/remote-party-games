@@ -1,5 +1,4 @@
-import { emit, onMessage } from '../../socket';
-import { UserConfigurationModel } from '../../contracts/user-configuration.model';
+import { emit } from '../../socket';
 
 export function updateUsername(username: string) {
     emit({
@@ -8,6 +7,21 @@ export function updateUsername(username: string) {
     });
 }
 
-export function subscribeUserConfiguration(callback: (config: UserConfigurationModel) => void) {
-    return onMessage('user/initial-configuration', msg => callback(msg.configuration));
+export async function updateUserImage(userId: string, img) {
+    await fetch('/api/image', {
+        method: 'POST',
+        headers: {
+            'X-UserId': userId
+        },
+        body: img
+    });
+}
+
+export function fetchUserImage(userId: string): Promise<Image> {
+    return new Promise<Image>((resolve, reject) => {
+        const img = new Image();
+        img.src = `/api/image/${userId}`;
+        img.addEventListener('error', err => reject(err));
+        img.addEventListener('load', () => resolve(img));
+    });
 }

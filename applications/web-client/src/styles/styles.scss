@@ -33,6 +33,22 @@
     line-height: 1;
 }
 
+.icon-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: var(--default-transition);
+}
+
+.icon-button--active {
+    color: var(--color-primary);
+    opacity: 1;
+}
+
+.icon-button--inactive {
+    opacity: 0.54;
+}
+
 .button--primary {
     background-color: var(--color-primary);
     color: var(--text-color-primary);

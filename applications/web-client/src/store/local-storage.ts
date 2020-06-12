@@ -1,23 +1,14 @@
 import { ApplicationState } from './index';
-import { PlayerState } from './reducers/player';
-import { updatePlayerName } from './actions/player';
-
-function getStoredPlayer(): PlayerState | null {
-    const serializedPlayerState = localStorage.getItem('player');
-    const playerState: PlayerState = serializedPlayerState
-        ? JSON.parse(serializedPlayerState)
-        : null;
-
-    return playerState;
-}
+import { loadPlayer } from './actions/player';
+import { getUser, storeUser } from '../user-store';
 
 export const updateStoredState = (state: ApplicationState) => {
-    localStorage.setItem('player', JSON.stringify(state.player));
+    storeUser(state.player);
 };
 
 export const loadStoredState = store => {
-    const player = getStoredPlayer();
+    const player = getUser();
     if (player != null) {
-        store.dispatch(updatePlayerName(player.name));
+        store.dispatch(loadPlayer(player));
     }
 };
