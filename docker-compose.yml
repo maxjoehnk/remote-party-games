@@ -19,9 +19,12 @@ services:
           - web-client
           - matchmaking
         image: party-games/proxy:latest
-        ports:
-          - 8000:80
+        networks:
+          - web
+          - default
         labels:
           traefik.enable: "true"
-          traefik.frontend.rule: "Host:party.maxjoehnk.me"
-          traefik.port: "80"
+          traefik.http.routers.party-games-proxy.rule: "Host(`party.maxjoehnk.me`)"
+          traefik.http.services.party-games-proxy.loadbalancer.server.port: "80"
+          traefik.docker.network: "web"
+
