@@ -9,11 +9,20 @@
             "minLength": 1,
             "pattern": "(?=.*?\\$\\{0\\})"
         },
+        "${0} Point(s)": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "Avatar": {
+            "type": "string",
+            "minLength": 1
+        },
         "Back to Lobby": {
             "type": "string",
             "minLength": 1
         },
-        "Change name": {
+        "Cancel": {
             "type": "string",
             "minLength": 1
         },
@@ -37,11 +46,19 @@
             "type": "string",
             "minLength": 1
         },
+        "Draw": {
+            "type": "string",
+            "minLength": 1
+        },
         "Enter Room Code": {
             "type": "string",
             "minLength": 1
         },
         "Game": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Game History": {
             "type": "string",
             "minLength": 1
         },
@@ -102,6 +119,11 @@
             "type": "string",
             "minLength": 1
         },
+        "Winner: ${0}": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
         "or": {
             "type": "string",
             "minLength": 1
@@ -157,15 +179,19 @@
     },
     "required": [
         "${0} (You)",
+        "${0} Point(s)",
+        "Avatar",
         "Back to Lobby",
-        "Change name",
+        "Cancel",
         "Connect to Lobby",
         "Copied to Clipboard!",
         "Copy",
         "Create a Lobby",
         "Disconnected",
+        "Draw",
         "Enter Room Code",
         "Game",
+        "Game History",
         "Join Team",
         "Join a Lobby",
         "Link",
@@ -180,6 +206,7 @@
         "Start Game",
         "Taboo",
         "Username",
+        "Winner: ${0}",
         "or",
         "taboo"
     ],
