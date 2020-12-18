@@ -12,5 +12,9 @@ node {
         stage('Build Proxy') {
             docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/proxy:latest", './applications/proxy').push()
         }
+
+        stage('Build Image Service') {
+            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/image:latest", './applications/image').push()
+        }
     }
 }
