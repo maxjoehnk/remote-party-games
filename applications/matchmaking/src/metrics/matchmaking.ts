@@ -1,4 +1,4 @@
-import { Gauge, register } from 'prom-client';
+import { collectDefaultMetrics, Gauge, register } from 'prom-client';
 import { Injectable } from '@nestjs/common';
 import { LobbyStore } from '../lobby-store';
 
@@ -20,6 +20,7 @@ export class MatchmakingMetrics {
   });
 
   constructor(private lobbyStore: LobbyStore) {
+    collectDefaultMetrics();
   }
 
   getMetrics() {
