@@ -6,7 +6,9 @@ services:
     image: docker.pkg.github.com/maxjoehnk/remote-party-games/web-client:latest
   matchmaking:
     restart: on-failure
-    build: applications/matchmaking
+    build:
+      context: .
+      dockerfile: applications/matchmaking/Dockerfile
     image: docker.pkg.github.com/maxjoehnk/remote-party-games/matchmaking:latest
     volumes:
       - ./game_assets:/src/applications/matchmaking/assets
