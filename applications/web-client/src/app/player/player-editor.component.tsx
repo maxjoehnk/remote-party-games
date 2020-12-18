@@ -47,8 +47,18 @@ const PlayerEditor = ({ dispatch, onSave, onClose }) => {
                 <h3>{i18n`Avatar`}</h3>
                 <PlayerAvatarEditor ref={ref} />
                 <div className="player-editor__actions">
-                    {onClose && <Button className="player-editor__action-btn" type="button" onClick={() => onClose()}>{i18n`Cancel`}</Button>}
-                    <Button className="player-editor__action-btn" type="submit" primary>{i18n`Save`}</Button>
+                    {onClose && (
+                        <Button
+                            className="player-editor__action-btn"
+                            type="button"
+                            onClick={() => onClose()}
+                        >{i18n`Cancel`}</Button>
+                    )}
+                    <Button
+                        className="player-editor__action-btn"
+                        type="submit"
+                        primary
+                    >{i18n`Save`}</Button>
                 </div>
             </form>
         </div>

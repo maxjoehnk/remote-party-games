@@ -84,7 +84,12 @@ export class LobbyStore {
       throw new Error(`Unknown Lobby ${lobbyCode}`);
     }
     const game = await this.getGameForLobby(lobbyCode);
-    await game.stop();
+    const score = await game.stop();
+    lobby.history.push({
+      game: game.type,
+      players: lobby.players,
+      score
+    });
     this.games.delete(lobbyCode);
   }
 
@@ -147,6 +152,7 @@ export class LobbyStore {
         players: [],
       },
     ],
+    history: [],
   });
 
   private joinTeamWhenAvailable(lobby: Lobby, playerId: string) {

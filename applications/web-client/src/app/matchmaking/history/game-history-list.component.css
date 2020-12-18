@@ -1,0 +1,35 @@
+.game-history-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.game-history-entry {
+    display: grid;
+    grid-template-areas: 'game chevron' 'result chevron';
+    grid-template-columns: 1fr 16px;
+    grid-column-gap: 8px;
+    padding: 0 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-color-default);
+}
+
+.game-history-entry:hover {
+    background: var(--button-default);
+}
+
+.game-history-entry__game {
+    grid-area: game;
+}
+
+.game-history-entry__result {
+    grid-area: result;
+}
+
+.game-history-entry__chevron {
+    grid-area: chevron;
+    align-self: center;
+    color: var(--icon-default);
+}

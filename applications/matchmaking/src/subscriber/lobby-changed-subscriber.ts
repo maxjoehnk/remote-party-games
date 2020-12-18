@@ -21,6 +21,7 @@ export class LobbyChangedSubscriber
       type: lobbyChangedSocketMsg,
       players: lobby.players,
       teams: lobby.teams,
+      history: lobby.history,
     });
   }
 }

@@ -87,7 +87,7 @@ interface PlayersProps {
     children?: (text: string, player: PlayerModel) => any;
 }
 
-const Players = ({ players, children }: PlayersProps) => {
+export const Players = ({ players, children }: PlayersProps) => {
     const user = useSelector(selectPlayer);
 
     return (

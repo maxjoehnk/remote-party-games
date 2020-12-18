@@ -10,9 +10,14 @@ import Button from '../../ui-elements/button/button.component';
 import { startGame } from '../matchmaking.api';
 import { useNotification } from '../../ui-elements/notification';
 import { useClipboard } from '../../ui-elements/clipboard';
+import GameHistoryList from '../history/game-history-list.component';
+
+export interface GameLobbyRouteParams {
+    code: string;
+}
 
 const LobbyLoader = ({ dispatch }) => {
-    const { code } = useParams();
+    const { code } = useParams<GameLobbyRouteParams>();
     dispatch(joinLobby(code));
 
     return <GameLobby />;
@@ -41,6 +46,7 @@ const GameLobby = () => {
                 >{i18n`Start Game`}</Button>
             </div>
             <PlayerList className="lobby__card" canChangeTeam={true} />
+            <GameHistoryList className="lobby__card" />
         </div>
     );
 };

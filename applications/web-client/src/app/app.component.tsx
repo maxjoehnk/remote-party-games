@@ -16,6 +16,7 @@ import TabooGame from './games/taboo/taboo-game.component';
 import { NotificationContainer, useNotification } from './ui-elements/notification';
 import i18n from 'es2015-i18n-tag';
 import { onSocketClose, onSocketOpen } from '../socket';
+import GameHistory from './matchmaking/history/game-history.component';
 
 let clearNotification;
 
@@ -80,6 +81,9 @@ const ApplicationRoutes = () => {
                 </Route>
                 <Route path="/lobby/:code" exact>
                     <GameLobby />
+                </Route>
+                <Route path="/lobby/:code/history/:game" exact>
+                    <GameHistory />
                 </Route>
                 <Route path="/play/taboo">
                     <TabooGame />

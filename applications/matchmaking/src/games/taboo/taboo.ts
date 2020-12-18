@@ -2,8 +2,9 @@ import { Game } from '../../contracts/game';
 import { TabooCard } from './taboo-card';
 import { loadCards } from './card-loader';
 import { Team } from '../../contracts/team';
-import Timeout = NodeJS.Timeout;
 import { SocketBroadcaster } from '../../sockets/socket-broadcaster';
+import { TeamBasedScore } from '../../contracts/game-history';
+import Timeout = NodeJS.Timeout;
 
 enum TabooActionTypes {
   Timer = 'taboo/timer',
@@ -104,8 +105,27 @@ export class Taboo implements Game {
     };
   }
 
-  stop(): Promise<void> {
-    return Promise.resolve(undefined);
+  async stop(): Promise<TeamBasedScore> {
+    this.stopTimer();
+
+    return {
+      type: 'team-score',
+      scores: {
+        [this.config.teamOne.id]: this.teamOnePoints,
+        [this.config.teamTwo.id]: this.teamTwoPoints,
+      },
+      winner: this.getWinner(),
+      teams: [this.config.teamOne, this.config.teamTwo]
+    };
+  }
+
+  private getWinner() {
+    if (this.teamOnePoints > this.teamTwoPoints) {
+      return this.config.teamOne.id;
+    }else if (this.teamTwoPoints > this.teamOnePoints) {
+      return this.config.teamTwo.id;
+    }
+    return null; // Draw
   }
 
   start(): Promise<void> {
