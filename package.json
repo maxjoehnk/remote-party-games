@@ -1,0 +1,8 @@
+{
+  "name": "remote-party-games",
+  "version": "0.1.0",
+  "repository": "git@github.com:maxjoehnk/activity-web.git",
+  "author": "Max Jöhnk <maxjoehnk@gmail.com>",
+  "workspaces": ["applications/*"],
+  "private": true
+}

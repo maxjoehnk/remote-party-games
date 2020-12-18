@@ -6,7 +6,7 @@ node {
         }
 
         stage('Build Matchmaking') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/matchmaking:latest", './applications/matchmaking').push()
+            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/matchmaking:latest", '-f applications/matchmaking/Dockerfile .').push()
         }
 
         stage('Build Proxy') {
