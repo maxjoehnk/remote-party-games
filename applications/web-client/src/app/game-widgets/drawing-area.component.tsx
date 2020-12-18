@@ -52,8 +52,11 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     componentDidMount(): void {
         const canvas = this.canvas.current;
         canvas.addEventListener('mousedown', this.onMouseDown);
+        canvas.addEventListener('touchstart', this.onMouseDown);
         canvas.addEventListener('mousemove', this.onMouseMove);
+        canvas.addEventListener('touchmove', this.onMouseMove);
         window.addEventListener('mouseup', this.onMouseUp);
+        window.addEventListener('touchend', this.onMouseUp);
         const context = canvas.getContext('2d');
         context.strokeStyle = this.props.color || DEFAULT_COLOR;
         context.lineWidth = this.props.thickness || DEFAULT_THICKNESS;
@@ -87,6 +90,8 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     }
 
     private onMouseDown = e => {
+        e.preventDefault();
+        e.stopPropagation();
         this.setState({
             isMouseDown: true
         });
@@ -97,6 +102,8 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
         if (!this.state.isMouseDown) {
             return;
         }
+        e.preventDefault();
+        e.stopPropagation();
         this.setState({ isMouseDown: false });
         this.stopLine(e.layerX, e.layerY);
     };
@@ -105,6 +112,8 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
         if (!this.state.isMouseDown) {
             return;
         }
+        e.preventDefault();
+        e.stopPropagation();
         this.draw(e.layerX, e.layerY);
     };
 
