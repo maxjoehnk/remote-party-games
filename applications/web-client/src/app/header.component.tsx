@@ -5,6 +5,7 @@ import './header.component.css';
 import i18n from 'es2015-i18n-tag';
 import Modal from 'react-modal';
 import PlayerEditor from './player/player-editor.component';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const [state, setState] = useState(false);
@@ -13,7 +14,7 @@ const Header = () => {
     return (
         <>
             <div className="header">
-                <h1 className="header__title">Remote Party Games</h1>
+                <Link to="/" className="header__title-link"><h1 className="header__title">Remote Party Games</h1></Link>
                 <button className="header__player-settings" onClick={() => setState(true)}>
                     <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
                     <img
