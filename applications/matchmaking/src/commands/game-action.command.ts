@@ -1,4 +1,3 @@
 export class GameActionCommand {
-  constructor(public playerId: string, public action: any) {
-  }
+  constructor(public playerId: string, public action: any) {}
 }

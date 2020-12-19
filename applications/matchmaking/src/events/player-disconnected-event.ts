@@ -1,4 +1,3 @@
 export class PlayerDisconnectedEvent {
-  constructor(public playerId: string) {
-  }
+  constructor(public playerId: string) {}
 }

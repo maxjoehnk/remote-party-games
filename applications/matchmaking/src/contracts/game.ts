@@ -6,5 +6,5 @@ export interface Game {
 
   start(): Promise<void>;
   stop(): Promise<GameScore>;
-  execute(action: any): Promise<void>;
+  execute(action: any, playerId?: string): Promise<void>;
 }

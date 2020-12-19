@@ -4,7 +4,7 @@ export interface ButtonProps {
     children: any;
     className?: string;
     primary?: boolean;
-    onClick?: () => any;
+    onClick?: (event?: any) => any;
     type?: 'button' | 'submit';
 }
 

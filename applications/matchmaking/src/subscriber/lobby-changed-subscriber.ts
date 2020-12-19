@@ -22,6 +22,10 @@ export class LobbyChangedSubscriber
       players: lobby.players,
       teams: lobby.teams,
       history: lobby.history,
+      game: {
+        type: lobby.game,
+        config: lobby.gameConfiguration,
+      },
     });
   }
 }

@@ -17,6 +17,16 @@ export const selectLobbyCode = createSelector(
 );
 
 export const selectGameHistory = createSelector(
+  (state: ApplicationState) => state.lobby,
+  lobby => lobby.history
+);
+
+export const selectGameType = createSelector(
     (state: ApplicationState) => state.lobby,
-    lobby => lobby.history
+    lobby => lobby.game?.type
+);
+
+export const selectGameConfig = createSelector(
+  (state: ApplicationState) => state.lobby,
+  lobby => lobby.game?.config
 );

@@ -3,8 +3,7 @@ import { MatchmakingMetrics } from '../metrics/matchmaking';
 
 @Controller('/api/metrics')
 export class MetricsController {
-  constructor(private matchmakingMetrics: MatchmakingMetrics) {
-  }
+  constructor(private matchmakingMetrics: MatchmakingMetrics) {}
 
   @Get()
   @HttpCode(200)

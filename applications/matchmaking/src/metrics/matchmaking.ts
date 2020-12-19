@@ -6,17 +6,17 @@ import { LobbyStore } from '../lobby-store';
 export class MatchmakingMetrics {
   private lobbyGauge = new Gauge({
     name: 'matchmaking_lobbies',
-    help: 'Count of open lobbies'
+    help: 'Count of open lobbies',
   });
 
   private playerGauge = new Gauge({
     name: 'matchmaking_players',
-    help: 'Count of players connected to lobbies'
+    help: 'Count of players connected to lobbies',
   });
 
   private gameGauge = new Gauge({
     name: 'matchmaking_games',
-    help: 'Count of games currently running'
+    help: 'Count of games currently running',
   });
 
   constructor(private lobbyStore: LobbyStore) {
@@ -32,4 +32,3 @@ export class MatchmakingMetrics {
     return register.metrics();
   }
 }
-

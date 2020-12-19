@@ -1,16 +1,19 @@
 import React from 'react';
 import PlayerList from '../player-list/player-list.component';
-import { selectLobbyCode } from '../../../store/selectors/lobby';
+import { selectGameType, selectLobbyCode } from '../../../store/selectors/lobby';
 import { connect, useSelector } from 'react-redux';
 import './lobby.component.css';
 import i18n from 'es2015-i18n-tag';
 import { useParams } from 'react-router-dom';
 import { joinLobby } from '../../../store/actions/lobby';
 import Button from '../../ui-elements/button/button.component';
-import { startGame } from '../matchmaking.api';
+import { changeGame, startGame } from '../matchmaking.api';
 import { useNotification } from '../../ui-elements/notification';
 import { useClipboard } from '../../ui-elements/clipboard';
 import GameHistoryList from '../history/game-history-list.component';
+import StadtLandFlussSettings from './settings/stadt-land-fluss-settings';
+import TabooSettings from './settings/taboo-settings';
+import { getGameName } from '../history/game-names';
 
 export interface GameLobbyRouteParams {
     code: string;
@@ -23,8 +26,11 @@ const LobbyLoader = ({ dispatch }) => {
     return <GameLobby />;
 };
 
+const games = ['taboo', 'stadt-land-fluss'];
+
 const GameLobby = () => {
     const code = useSelector(selectLobbyCode);
+    const game = useSelector(selectGameType);
     return (
         <div className="lobby">
             <div className="lobby__card lobby__card--settings card">
@@ -34,10 +40,12 @@ const GameLobby = () => {
                     {`${window.location.origin}/lobby/${code}`}
                 </LobbySettingsGroup>
                 <LobbySettingsGroup label={i18n`Game`}>
-                    <select className="select lobby__game-selection">
-                        <option value="taboo">{i18n`Taboo`}</option>
+                    <select className="select lobby__game-selection" value={game} onChange={event => changeGame(event.target.value)}>
+                        {games.map(game => <option key={game} value={game}>{getGameName(game)}</option>)}
                     </select>
                 </LobbySettingsGroup>
+                {game === 'taboo' && <TabooSettings />}
+                {game === 'stadt-land-fluss' && <StadtLandFlussSettings />}
                 <div style={{ flex: 1 }} />
                 <Button
                     onClick={() => startGame()}
@@ -51,7 +59,7 @@ const GameLobby = () => {
     );
 };
 
-const LobbySettingsGroup = ({ label, children }) => {
+export const LobbySettingsGroup = ({ label, actions, children }: { label: string; actions?: any; children: any; }) => {
     const notify = useNotification();
     const clipboard = useClipboard();
     const canCopy = typeof children === 'string';
@@ -69,6 +77,7 @@ const LobbySettingsGroup = ({ label, children }) => {
                         }}
                     >{i18n`Copy`}</button>
                 )}
+                {actions}
             </h3>
             {children}
         </div>

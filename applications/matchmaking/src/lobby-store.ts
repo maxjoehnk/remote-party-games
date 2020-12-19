@@ -6,7 +6,11 @@ import { promisify } from 'util';
 import { Lobby } from './contracts/lobby';
 import { v4 as uuid } from 'uuid';
 import { Team } from './contracts/team';
-import { GameFactory } from './games/factory';
+import { CreateGameConfig, GameFactory } from './games/factory';
+import { GameTypes, STADT_LAND_FLUSS, TABOO } from './games/types';
+import { defaultTabooConfig } from './games/taboo/config';
+import { defaultStadtLandFlussConfig } from './games/stadt-land-fluss/config';
+import { GameConfiguration } from './games/config';
 
 const randomBytes = promisify(crypto.randomBytes);
 
@@ -70,11 +74,22 @@ export class LobbyStore {
     if (lobby == null) {
       throw new Error(`Unknown Lobby ${lobbyCode}`);
     }
-    const game = this.gameFactory.createGame(lobby.game, lobby.teams);
+    const config = this.getGameConfig(lobby);
+    const game = this.gameFactory.createGame(lobby.game, config, {
+      getPlayers: () => this.getLobby(lobbyCode).then((lobby) => lobby.players),
+    });
     this.games.set(lobbyCode, game);
     await game.start();
 
     return game;
+  }
+
+  private getGameConfig(lobby: Lobby): CreateGameConfig {
+    return {
+      teams: lobby.teams,
+      players: lobby.players,
+      gameConfiguration: lobby.gameConfiguration,
+    };
   }
 
   async stopGameInLobby(lobbyCode: string) {
@@ -88,7 +103,7 @@ export class LobbyStore {
     lobby.history.push({
       game: game.type,
       players: lobby.players,
-      score
+      score,
     });
     this.games.delete(lobbyCode);
   }
@@ -115,6 +130,29 @@ export class LobbyStore {
     return this.games.get(lobbyCode);
   }
 
+  async changeLobbyGameType(lobbyCode: string, gameType: GameTypes) {
+    console.log(`[Lobby] Changing game in lobby ${lobbyCode} to ${gameType}`);
+    const lobby = await this.getLobby(lobbyCode);
+    if (lobby == null) {
+      throw new Error(`Unknown Lobby ${lobbyCode}`);
+    }
+    lobby.game = gameType;
+    LobbyStore.resetLobbyToGameSpecificSettings(lobby);
+
+    return lobby;
+  }
+
+  async updateGameConfiguration(lobbyCode: string, config: GameConfiguration) {
+    console.log(`[Lobby] Changing game configuration in lobby ${lobbyCode}`);
+    const lobby = await this.getLobby(lobbyCode);
+    if (lobby == null) {
+      throw new Error(`Unknown Lobby ${lobbyCode}`);
+    }
+    lobby.gameConfiguration = config;
+
+    return lobby;
+  }
+
   getLobbyMetrics() {
     const lobbyCount = this.lobbies.size;
     const playerCount = this.players.size;
@@ -127,6 +165,42 @@ export class LobbyStore {
     };
   }
 
+  private static resetLobbyToGameSpecificSettings(lobby: Lobby) {
+    switch (lobby.game) {
+      case TABOO:
+        return LobbyStore.updateTabooLobby(lobby);
+      case STADT_LAND_FLUSS:
+        return LobbyStore.updateStadtLandFlussLobby(lobby);
+    }
+  }
+
+  private static updateTabooLobby(lobby: Lobby) {
+    const firstTeam = lobby.players
+      .slice(0, Math.ceil(lobby.players.length / 2))
+      .map((p) => p.id);
+    const secondTeam = lobby.players
+      .slice(Math.ceil(lobby.players.length / 2))
+      .map((p) => p.id);
+    lobby.teams = [
+      {
+        id: uuid(),
+        name: 'Team 1',
+        players: firstTeam,
+      },
+      {
+        id: uuid(),
+        name: 'Team 2',
+        players: secondTeam,
+      },
+    ];
+    lobby.gameConfiguration = defaultTabooConfig;
+  }
+
+  private static updateStadtLandFlussLobby(lobby: Lobby) {
+    lobby.teams = [];
+    lobby.gameConfiguration = defaultStadtLandFlussConfig;
+  }
+
   private static async createLobbyId(): Promise<string> {
     let code = null;
     do {
@@ -136,24 +210,18 @@ export class LobbyStore {
     return code;
   }
 
-  private static createEmptyLobby = (code: string): Lobby => ({
-    code,
-    players: [],
-    game: 'taboo',
-    teams: [
-      {
-        id: uuid(),
-        name: 'Team 1',
-        players: [],
-      },
-      {
-        id: uuid(),
-        name: 'Team 2',
-        players: [],
-      },
-    ],
-    history: [],
-  });
+  private static createEmptyLobby = (code: string): Lobby => {
+    const lobby: Lobby = {
+      code,
+      players: [],
+      game: TABOO,
+      teams: [],
+      history: [],
+      gameConfiguration: null,
+    };
+    LobbyStore.resetLobbyToGameSpecificSettings(lobby);
+    return lobby;
+  };
 
   private joinTeamWhenAvailable(lobby: Lobby, playerId: string) {
     let lowestMembers = Number.MAX_VALUE;

@@ -7,10 +7,21 @@
     flex-direction: row;
 }
 
+.game-history__player-list {
+    display: flex;
+    flex-direction: column;
+}
+
 .game-history__team-score {
     flex: 1;
 }
 
 .game-history__score {
     font-weight: normal;
+}
+
+.game-history__player-score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

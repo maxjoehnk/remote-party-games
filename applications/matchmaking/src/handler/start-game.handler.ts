@@ -9,8 +9,7 @@ export class StartGameHandler implements ICommandHandler<StartGameCommand> {
   constructor(
     private lobbyStore: LobbyStore,
     private broadcaster: LobbyBroadcaster
-  ) {
-  }
+  ) {}
 
   async execute(command: StartGameCommand): Promise<any> {
     const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
@@ -23,7 +22,7 @@ export class StartGameHandler implements ICommandHandler<StartGameCommand> {
     await this.broadcaster.broadcastToLobby(lobbyCode, {
       type: gameStartedSocketMsg,
       game: game.type,
-      gameState: game.state
+      gameState: game.state,
     });
   }
 }

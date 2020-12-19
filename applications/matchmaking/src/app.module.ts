@@ -19,6 +19,8 @@ import { MetricsController } from './controllers/metrics-controller';
 import { SocketMetrics } from './metrics/socket';
 import { MatchmakingMetrics } from './metrics/matchmaking';
 import { EventBusMetrics } from './metrics/event-bus';
+import { ChangeGameHandler } from './handler/change-game.handler';
+import { ChangeGameConfigurationHandler } from './handler/change-game-configuration.handler';
 
 @Module({
   imports: [CqrsModule],
@@ -38,10 +40,11 @@ import { EventBusMetrics } from './metrics/event-bus';
     StopGameHandler,
     SwitchTeamHandler,
     UpdateUsernameHandler,
+    ChangeGameHandler,
+    ChangeGameConfigurationHandler,
     LobbyPlayerChangedSubscriber,
     LobbyChangedSubscriber,
     PlayerDisconnectedSubscriber,
-  ]
+  ],
 })
-export class AppModule {
-}
+export class AppModule {}

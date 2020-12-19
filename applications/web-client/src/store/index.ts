@@ -6,18 +6,22 @@ import { listenerMiddleware } from './listener';
 import { socketSubscriberMiddleware } from './socket-subscribers';
 import { tabooReducer } from './reducers/taboo';
 import { TabooGameState } from '../contracts/taboo-game-configuration';
+import { StadtLandFlussGameState } from '../contracts/stadt-land-fluss-configuration';
+import { stadtLandFlussReducer } from './reducers/stadt-land-fluss';
 
 export interface ApplicationState {
     lobby: LobbyState;
     player: PlayerState;
     taboo: TabooGameState;
+    stadtLandFluss: StadtLandFlussGameState;
 }
 
 const store = configureStore<ApplicationState>({
     reducer: combineReducers({
         lobby: lobbyReducer,
         player: playerReducer,
-        taboo: tabooReducer
+        taboo: tabooReducer,
+        stadtLandFluss: stadtLandFlussReducer,
     }),
     middleware: [listenerMiddleware, socketSubscriberMiddleware] as any
 });

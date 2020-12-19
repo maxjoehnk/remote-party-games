@@ -14,6 +14,29 @@
             "minLength": 1,
             "pattern": "(?=.*?\\$\\{0\\})"
         },
+        "${0} Points": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "${0} left": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "${0}s": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "Add": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Add Column": {
+            "type": "string",
+            "minLength": 1
+        },
         "Avatar": {
             "type": "string",
             "minLength": 1
@@ -23,6 +46,14 @@
             "minLength": 1
         },
         "Cancel": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Column": {
+            "type": "string",
+            "minLength": 1
+        },
+        "Columns": {
             "type": "string",
             "minLength": 1
         },
@@ -43,10 +74,6 @@
             "minLength": 1
         },
         "Disconnected": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Draw": {
             "type": "string",
             "minLength": 1
         },
@@ -107,11 +134,15 @@
             "type": "string",
             "minLength": 1
         },
+        "Seconds": {
+            "type": "string",
+            "minLength": 1
+        },
         "Start Game": {
             "type": "string",
             "minLength": 1
         },
-        "Taboo": {
+        "Timer": {
             "type": "string",
             "minLength": 1
         },
@@ -119,23 +150,63 @@
             "type": "string",
             "minLength": 1
         },
-        "Winner: ${0}": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
         "or": {
             "type": "string",
             "minLength": 1
         },
-        "taboo": {
+        "stadt-land-fluss": {
             "type": "object",
             "properties": {
-                "${0}s left": {
+                "${0} (+${1}) Points": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
+                },
+                "${0} starting with ${1}": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
+                },
+                "<empty>": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Deny": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Next round": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Stop": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Upvote": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "Words starting with ${0}": {
                     "type": "string",
                     "minLength": 1,
                     "pattern": "(?=.*?\\$\\{0\\})"
-                },
+                }
+            },
+            "required": [
+                "${0} (+${1}) Points",
+                "${0} starting with ${1}",
+                "<empty>",
+                "Deny",
+                "Next round",
+                "Stop",
+                "Upvote",
+                "Words starting with ${0}"
+            ]
+        },
+        "taboo": {
+            "type": "object",
+            "properties": {
                 "Guessed": {
                     "type": "string",
                     "minLength": 1
@@ -166,7 +237,6 @@
                 }
             },
             "required": [
-                "${0}s left",
                 "Guessed",
                 "Skip",
                 "Start",
@@ -180,15 +250,21 @@
     "required": [
         "${0} (You)",
         "${0} Point(s)",
+        "${0} Points",
+        "${0} left",
+        "${0}s",
+        "Add",
+        "Add Column",
         "Avatar",
         "Back to Lobby",
         "Cancel",
+        "Column",
+        "Columns",
         "Connect to Lobby",
         "Copied to Clipboard!",
         "Copy",
         "Create a Lobby",
         "Disconnected",
-        "Draw",
         "Enter Room Code",
         "Game",
         "Game History",
@@ -203,11 +279,12 @@
         "Reconnected",
         "Room Code",
         "Save",
+        "Seconds",
         "Start Game",
-        "Taboo",
+        "Timer",
         "Username",
-        "Winner: ${0}",
         "or",
+        "stadt-land-fluss",
         "taboo"
     ],
     "additionalProperties": false

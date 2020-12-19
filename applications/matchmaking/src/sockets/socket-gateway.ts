@@ -22,6 +22,10 @@ import { PlayerDisconnectedEvent } from '../events/player-disconnected-event';
 import { GameActionCommand } from '../commands/game-action.command';
 import { SocketBroadcaster } from './socket-broadcaster';
 import { SocketMetrics } from '../metrics/socket';
+import { GameTypes } from '../games/types';
+import { ChangeGameCommand } from '../commands/change-game.command';
+import { GameConfiguration } from '../games/config';
+import { ChangeGameConfigurationCommand } from '../commands/change-game-configuration.command';
 
 interface JoinLobbyMessage {
   code: string;
@@ -35,15 +39,30 @@ interface SwitchTeamMessage {
   teamId: string;
 }
 
+interface ChangeGameMessage {
+  game: GameTypes;
+}
+
+interface ChangeGameConfigurationMessage {
+  configuration: GameConfiguration;
+}
+
 @WebSocketGateway()
 export class SocketGateway
-  implements OnGatewayConnection<WebSocket>, OnGatewayDisconnect<WebSocket>, SocketBroadcaster {
+  implements
+    OnGatewayConnection<WebSocket>,
+    OnGatewayDisconnect<WebSocket>,
+    SocketBroadcaster {
   private sockets = new WeakMap<WebSocket, string>();
 
   @WebSocketServer()
   server: WebSocket.Server;
 
-  constructor(private commandBus: CommandBus, private eventBus: EventBus, private socketMetrics: SocketMetrics) {}
+  constructor(
+    private commandBus: CommandBus,
+    private eventBus: EventBus,
+    private socketMetrics: SocketMetrics
+  ) {}
 
   @SubscribeMessage('lobby/join')
   async onJoinLobby(
@@ -106,9 +125,32 @@ export class SocketGateway
   }
 
   @SubscribeMessage('game/action')
-  async onGameAction(@ConnectedSocket() client: WebSocket, @MessageBody() msg: any) {
+  async onGameAction(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody() msg: any
+  ) {
     const playerId = this.getPlayerId(client);
     await this.commandBus.execute(new GameActionCommand(playerId, msg));
+  }
+
+  @SubscribeMessage('lobby/change-game')
+  async onChangeGame(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody() msg: ChangeGameMessage
+  ) {
+    const playerId = this.getPlayerId(client);
+    await this.commandBus.execute(new ChangeGameCommand(playerId, msg.game));
+  }
+
+  @SubscribeMessage('lobby/update-game-config')
+  async onChangeGameConfiguration(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody() msg: ChangeGameConfigurationMessage
+  ) {
+    const playerId = this.getPlayerId(client);
+    await this.commandBus.execute(
+      new ChangeGameConfigurationCommand(playerId, msg.configuration)
+    );
   }
 
   handleConnection(client: WebSocket, msg: any) {
@@ -123,7 +165,9 @@ export class SocketGateway
 
     this.sockets.set(client, playerId);
     this.socketMetrics.openSocketGauge.inc();
-    client.addEventListener('message', () => this.socketMetrics.socketRecvMessageCounter.inc());
+    client.addEventListener('message', () =>
+      this.socketMetrics.socketRecvMessageCounter.inc()
+    );
   }
 
   handleDisconnect(client: WebSocket) {

@@ -9,49 +9,7 @@
 }
 
 .game-taboo__header {
-    padding-top: 8px;
-    background: var(--card-background);
-    border-radius: var(--border-radius);
     grid-area: header;
-    display: grid;
-    align-items: center;
-    grid-template-areas: 'lobby score timer' 'progress progress progress';
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 8px;
-}
-
-.game-taboo__lobby {
-    grid-area: lobby;
-    padding: 0 16px;
-}
-
-.game-taboo__back-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.game-taboo__progress-bar-container {
-    grid-area: progress;
-}
-
-.game-taboo__progress-bar {
-    background: var(--color-primary);
-    height: 4px;
-    transition: 1s linear all;
-    border-bottom-left-radius: var(--border-radius);
-}
-
-/** TIMER */
-
-.game-taboo__time-left {
-    grid-area: timer;
-    padding: 0 16px;
-    text-align: end;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
 }
 
 /** PLAYER LIST */

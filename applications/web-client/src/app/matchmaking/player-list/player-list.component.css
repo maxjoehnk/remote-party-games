@@ -36,7 +36,7 @@
     background: none;
     cursor: pointer;
     transition: var(--default-transition);
-    color: rgba(0, 0, 0, 0.54);
+    color: var(--text-color-hint);
 }
 
 .player-list__join-team-btn:hover {

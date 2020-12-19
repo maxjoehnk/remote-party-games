@@ -17,6 +17,7 @@ import { NotificationContainer, useNotification } from './ui-elements/notificati
 import i18n from 'es2015-i18n-tag';
 import { onSocketClose, onSocketOpen } from '../socket';
 import GameHistory from './matchmaking/history/game-history.component';
+import StadtLandFlussGame from './games/stadt-land-fluss/stadt-land-fluss-game.component';
 
 let clearNotification;
 
@@ -36,7 +37,7 @@ const SocketListener = ({ children }) => {
 
     useEffect(() => {
         const subscription = subscribeGameStarted(msg => {
-            history.push('/play/taboo');
+            history.push(`/play/${msg.game}`);
         });
 
         return () => subscription.unsubscribe();
@@ -87,6 +88,9 @@ const ApplicationRoutes = () => {
                 </Route>
                 <Route path="/play/taboo">
                     <TabooGame />
+                </Route>
+                <Route path="/play/stadt-land-fluss">
+                    <StadtLandFlussGame/>
                 </Route>
             </Switch>
         </SocketListener>

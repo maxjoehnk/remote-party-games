@@ -100,7 +100,7 @@ export const Players = ({ players, children }: PlayersProps) => {
                 }
 
                 return (
-                    <li key={p.id} className={`player-list__player-list-item`}>
+                    <li key={p.id} className="player-list__player-list-item">
                         <img
                             className="player-list__player-avatar"
                             src={`${window.location.origin}/api/image/${p.id}`}

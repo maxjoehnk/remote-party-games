@@ -1,0 +1,126 @@
+.game-stadt-land-fluss {
+    display: grid;
+    grid-template-areas: 'header' 'game-area';
+    grid-template-rows: 76px 1fr;
+    grid-gap: 16px;
+    padding: 16px;
+    height: 100%;
+}
+
+.game-stadt-land-fluss__header {
+    grid-area: header;
+}
+
+.game-stadt-land-fluss__header-content {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-stadt-land-fluss__stop-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.game-stadt-land-fluss__stop-btn-icon {
+    margin-right: 4px;
+}
+
+.game-stadt-land-fluss__columns,
+.game-stadt-land-fluss__results {
+    grid-area: game-area;
+    display: grid;
+    grid-gap: 16px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.game-stadt-land-fluss-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.game-stadt-land-fluss-column--valid {
+    color: var(--text-color-hint);
+}
+
+.game-stadt-land-fluss-column input {
+    width: 100%;
+}
+
+.game-stadt-land-fluss-column__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 8px;
+}
+
+.game-stadt-land-fluss-column__icon--valid {
+    color: var(--color-primary);
+}
+
+.game-stadt-land-fluss-column__icon--empty {
+    color: var(--text-color-hint);
+}
+
+.game-stadt-land-fluss-column__icon--invalid {
+    color: var(--color-error);
+}
+
+.game-stadt-land-fluss-result-answer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+    border-radius: var(--border-radius);
+}
+
+.game-stadt-land-fluss-result-answer:hover {
+    background: var(--button-default);
+}
+
+.game-stadt-land-fluss-result-answer__answer {
+    flex: 1;
+    padding: 0 4px;
+}
+
+.game-stadt-land-fluss-result-answer__answer-empty {
+    color: var(--text-color-hint);
+}
+
+.game-stadt-land-fluss-result-answer__actions {
+    opacity: 0;
+    transition: var(--default-transition);
+}
+
+.game-stadt-land-fluss-result-answer:hover .game-stadt-land-fluss-result-answer__actions {
+    opacity: 1;
+}
+
+.game-stadt-land-fluss-result-answer__actions .button {
+    margin-right: 8px;
+}
+
+.game-stadt-land-fluss-result-answer__score {
+    color: var(--text-color-hint);
+    border-radius: 16px;
+    padding: 0 8px;
+}
+
+.game-stadt-land-fluss-result-answer__score--single {
+    background: var(--color-primary);
+    color: var(--text-color-primary);
+}
+
+.game-stadt-land-fluss-result-answer__score--unique {
+    color: var(--text-color-default);
+    background: var(--color-default);
+}
+
+.game-stadt-land-fluss-result-answer__score--common {
+    color: var(--text-color-default);
+}

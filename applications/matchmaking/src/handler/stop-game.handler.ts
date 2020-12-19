@@ -10,7 +10,7 @@ export class StopGameHandler implements ICommandHandler<StopGameCommand> {
   constructor(
     private lobbyStore: LobbyStore,
     private broadcaster: LobbyBroadcaster,
-    private eventBus: EventBus,
+    private eventBus: EventBus
   ) {}
 
   async execute(command: StopGameCommand): Promise<any> {

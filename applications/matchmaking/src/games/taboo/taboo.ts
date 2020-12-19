@@ -2,35 +2,36 @@ import { Game } from '../../contracts/game';
 import { TabooCard } from './taboo-card';
 import { loadCards } from './card-loader';
 import { Team } from '../../contracts/team';
-import { SocketBroadcaster } from '../../sockets/socket-broadcaster';
+import {
+  SocketBroadcaster,
+  SocketMessage,
+} from '../../sockets/socket-broadcaster';
 import { TeamBasedScore } from '../../contracts/game-history';
 import Timeout = NodeJS.Timeout;
+import { Action, GameHandler } from '../game-handler';
+import { TABOO } from '../types';
+import { CreateGameConfig } from '../factory';
+import { TabooGameConfiguration } from './config';
 
 enum TabooActionTypes {
   Timer = 'taboo/timer',
   Guess = 'taboo/guess',
   SkipCard = 'taboo/skip',
-  Continue = 'taboo/continue'
+  Continue = 'taboo/continue',
 }
 
 enum TabooView {
   Explaining = 0,
   Guessing = 1,
   Observing = 2,
-  Continue = 3
+  Continue = 3,
 }
 
 let cards: TabooCard[] = [
   {
     term: 'Valentines Day',
-    taboo: [
-      'February',
-      'Heart',
-      'Hallmark',
-      'Cards',
-      'Flowers'
-    ]
-  }
+    taboo: ['February', 'Heart', 'Hallmark', 'Cards', 'Flowers'],
+  },
 ];
 
 loadCards((err, c) => {
@@ -47,14 +48,10 @@ interface GameConfig {
   teamTwo: Team;
 }
 
-interface Action {
-  actionType: TabooActionTypes;
-}
-
 export class Taboo implements Game {
   private config: GameConfig;
   private pastWords: string[] = [];
-  private handlers = new Map<TabooActionTypes, (action: Action) => void>()
+  private handler = new GameHandler<TabooActionTypes>();
   private teamOnePoints = 0;
   private teamTwoPoints = 0;
   private currentTeam = 1;
@@ -66,42 +63,47 @@ export class Taboo implements Game {
 
   private currentCard: TabooCard;
 
-  constructor([teamOne, teamTwo]: Team[], private broadcaster: SocketBroadcaster) {
+  constructor(
+    config: CreateGameConfig<TabooGameConfiguration>,
+    private broadcaster: SocketBroadcaster
+  ) {
+    const [teamOne, teamTwo] = config.teams;
     this.config = {
-      timer: 60,
+      timer: config.gameConfiguration.timer,
       teamOne,
-      teamTwo
+      teamTwo,
     };
-    this.handlers.set(TabooActionTypes.Timer, this.handleTimer);
-    this.handlers.set(TabooActionTypes.SkipCard, this.nextCard);
-    this.handlers.set(TabooActionTypes.Guess, this.guess);
-    this.handlers.set(TabooActionTypes.Continue, this.continueGame);
+    this.handler.add(TabooActionTypes.Timer, this.handleTimer);
+    this.handler.add(TabooActionTypes.SkipCard, this.nextCard);
+    this.handler.add(TabooActionTypes.Guess, this.guess);
+    this.handler.add(TabooActionTypes.Continue, this.continueGame);
     this.timeLeft = this.config.timer;
     this.nextCard();
   }
 
   get type(): string {
-    return 'taboo';
+    return TABOO;
   }
 
   get state() {
     return {
       teamOne: {
         players: this.config.teamOne.players,
-        points: this.teamOnePoints
+        points: this.teamOnePoints,
       },
       teamTwo: {
         players: this.config.teamTwo.players,
-        points: this.teamTwoPoints
+        points: this.teamTwoPoints,
       },
       currentRound: {
         team: this.currentTeam,
-        activePlayer: this.currentTeam === 1 ?
-          this.config.teamOne.players[this.teamOnePlayer] :
-          this.config.teamTwo.players[this.teamTwoPlayer],
-        timeLeft: this.timeLeft
+        activePlayer:
+          this.currentTeam === 1
+            ? this.config.teamOne.players[this.teamOnePlayer]
+            : this.config.teamTwo.players[this.teamTwoPlayer],
+        timeLeft: this.timeLeft,
       },
-      currentCard: this.currentCard
+      currentCard: this.currentCard,
     };
   }
 
@@ -115,14 +117,14 @@ export class Taboo implements Game {
         [this.config.teamTwo.id]: this.teamTwoPoints,
       },
       winner: this.getWinner(),
-      teams: [this.config.teamOne, this.config.teamTwo]
+      teams: [this.config.teamOne, this.config.teamTwo],
     };
   }
 
   private getWinner() {
     if (this.teamOnePoints > this.teamTwoPoints) {
       return this.config.teamOne.id;
-    }else if (this.teamTwoPoints > this.teamOnePoints) {
+    } else if (this.teamTwoPoints > this.teamOnePoints) {
       return this.config.teamTwo.id;
     }
     return null; // Draw
@@ -133,13 +135,11 @@ export class Taboo implements Game {
     this.broadcast();
   }
 
-  execute(action: any): Promise<void> {
-    const handler = this.handlers.get(action.actionType);
-    if (handler == null) {
-      console.warn(`[Taboo] No action handler for ${action.actionType}`);
-      return;
-    }
-    handler(action);
+  async execute(
+    action: Action<TabooActionTypes>,
+    playerId?: string
+  ): Promise<void> {
+    await this.handler.execute(action, playerId);
     this.broadcast();
   }
 
@@ -149,7 +149,7 @@ export class Taboo implements Game {
     }
     this.timer = setInterval(() => {
       this.execute({
-        actionType: TabooActionTypes.Timer
+        actionType: TabooActionTypes.Timer,
       });
     }, 1000);
   }
@@ -185,32 +185,36 @@ export class Taboo implements Game {
     }
     this.currentTeam = this.currentTeam === 1 ? 2 : 1;
     this.nextCard();
-  }
+  };
 
   private continueGame = () => {
     return this.startTimer();
-  }
+  };
 
   private guess = () => {
     if (this.currentTeam === 1) {
       this.teamOnePoints++;
-    }else {
+    } else {
       this.teamTwoPoints++;
     }
     this.nextCard();
-  }
+  };
 
   private nextCard = () => {
     if (this.currentCard != null) {
       this.pastWords.push(this.currentCard.term);
     }
     const availableCards = this.getAvailableCards();
-    const nextCardIndex = Math.floor(Math.random() * Math.floor(availableCards.length - 1));
+    const nextCardIndex = Math.floor(
+      Math.random() * Math.floor(availableCards.length - 1)
+    );
     this.currentCard = availableCards[nextCardIndex];
-  }
+  };
 
   private getAvailableCards() {
-    const availableCards = cards.filter(c => !this.pastWords.includes(c.term));
+    const availableCards = cards.filter(
+      (c) => !this.pastWords.includes(c.term)
+    );
     if (availableCards.length === 0) {
       this.pastWords = [];
       return cards;
@@ -226,7 +230,7 @@ export class Taboo implements Game {
     this.broadcastToExplaining(this.state);
     this.broadcastToGuessing(this.state);
     this.broadcastToObserving(this.state);
-  }
+  };
 
   private broadcastToNextPlayer = (state) => {
     const msg = {
@@ -236,11 +240,14 @@ export class Taboo implements Game {
         teamTwo: state.teamTwo,
         currentRound: state.currentRound,
         view: TabooView.Continue,
-        currentCard: state.currentCard
-      }
+        currentCard: state.currentCard,
+      },
     };
-    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
-  }
+    this.broadcaster.broadcast(
+      msg,
+      (c, playerId) => playerId === state.currentRound.activePlayer
+    );
+  };
 
   private broadcastToExplaining = (state) => {
     const msg = {
@@ -250,11 +257,14 @@ export class Taboo implements Game {
         teamTwo: state.teamTwo,
         currentRound: state.currentRound,
         view: TabooView.Explaining,
-        currentCard: state.currentCard
-      }
+        currentCard: state.currentCard,
+      },
     };
-    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
-  }
+    this.broadcaster.broadcast(
+      msg,
+      (c, playerId) => playerId === state.currentRound.activePlayer
+    );
+  };
 
   private broadcastToGuessing = (state) => {
     const msg = {
@@ -264,26 +274,38 @@ export class Taboo implements Game {
         teamTwo: state.teamTwo,
         currentRound: state.currentRound,
         view: TabooView.Guessing,
-        currentCard: null
-      }
+        currentCard: null,
+      },
     };
-    const currentTeam = state.currentRound.team === 1 ? state.teamOne.players : state.teamTwo.players;
-    const allGuessingPlayers = currentTeam.filter(playerId => playerId !== state.currentRound.activePlayer);
-    this.broadcaster.broadcast(msg, (c, playerId) => allGuessingPlayers.includes(playerId));
-  }
+    const currentTeam =
+      state.currentRound.team === 1
+        ? state.teamOne.players
+        : state.teamTwo.players;
+    const allGuessingPlayers = currentTeam.filter(
+      (playerId) => playerId !== state.currentRound.activePlayer
+    );
+    this.broadcaster.broadcast(msg, (c, playerId) =>
+      allGuessingPlayers.includes(playerId)
+    );
+  };
 
   private broadcastToObserving = (state) => {
-    const msg = {
+    const msg: SocketMessage = {
       type: 'taboo/update',
       gameState: {
         teamOne: state.teamOne,
         teamTwo: state.teamTwo,
         currentRound: state.currentRound,
         view: TabooView.Observing,
-        currentCard: state.currentCard
-      }
+        currentCard: state.currentCard,
+      },
     };
-    const otherTeam = state.currentRound.team !== 1 ? state.teamOne.players : state.teamTwo.players;
-    this.broadcaster.broadcast(msg, (c, playerId) => otherTeam.includes(playerId));
-  }
+    const otherTeam =
+      state.currentRound.team !== 1
+        ? state.teamOne.players
+        : state.teamTwo.players;
+    this.broadcaster.broadcast(msg, (c, playerId) =>
+      otherTeam.includes(playerId)
+    );
+  };
 }

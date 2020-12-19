@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 export class EventBusMetrics {
   private busMessageCounter = new Counter({
     name: 'bus_sent_messages',
-    help: 'Count of sent event bus messages'
+    help: 'Count of sent event bus messages',
   });
 
   constructor(private eventBus: EventBus) {

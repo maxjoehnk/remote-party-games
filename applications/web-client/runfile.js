@@ -87,6 +87,9 @@ function applyExistingTranslations(exportName, keys, translationFile) {
         for (const key of keys) {
             if (isGroup(key)) {
                 const groupName = key.group;
+                if (existingKeys[groupName] == null) {
+                    existingKeys[groupName] = {};
+                }
                 for (const item of Object.getOwnPropertyNames(translationFile[groupName])) {
                     if (item in existingKeys[groupName]) {
                         translationFile[groupName][item] = existingKeys[groupName][item];

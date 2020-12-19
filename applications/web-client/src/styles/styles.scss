@@ -31,12 +31,18 @@
     opacity: 1;
 }
 
+.icon-button--hint,
 .icon-button--inactive {
     opacity: 0.54;
 }
 
 .button--primary {
     background-color: var(--color-primary);
+    color: var(--text-color-primary);
+}
+
+.button--error {
+    background-color: var(--color-error);
     color: var(--text-color-primary);
 }
 

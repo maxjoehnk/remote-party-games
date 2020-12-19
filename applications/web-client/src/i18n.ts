@@ -1,7 +1,10 @@
 import { i18nConfig } from 'es2015-i18n-tag';
 
+const query = new URLSearchParams(window.location.search);
+const languageOverride = query.get('lang');
+
 // @ts-ignore
-let currentLanguage = navigator.language || navigator.userLanguage || 'en-US';
+let currentLanguage = languageOverride || navigator.language || navigator.userLanguage || 'en-US';
 
 export const locales = {
     'de-DE': require('../translations/de-DE.json'),

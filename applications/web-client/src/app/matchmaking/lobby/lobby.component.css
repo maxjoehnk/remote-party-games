@@ -1,7 +1,7 @@
 .lobby {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
@@ -10,12 +10,13 @@
     flex-direction: column;
     align-items: flex-start;
     width: 300px;
-    height: 500px;
+    min-height: 500px;
     margin: 16px;
 }
 
 .lobby__settings-group {
     width: 100%;
+    margin-bottom: 4px;
 }
 
 .lobby__settings-group-header {
@@ -33,7 +34,7 @@
     background: none;
     cursor: pointer;
     transition: var(--default-transition);
-    color: rgba(0, 0, 0, 0.54);
+    color: var(--text-color-hint);
 }
 
 .lobby__copy-btn:hover {

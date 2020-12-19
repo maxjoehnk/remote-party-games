@@ -2,8 +2,6 @@ import { TabooCardModel } from './taboo-card';
 
 export interface TabooGameConfiguration {
     timer: number;
-    teamOne: string[];
-    teamTwo: string[];
 }
 
 export interface TabooGameState {
