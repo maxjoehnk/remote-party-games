@@ -4,7 +4,7 @@ import { ApplicationState } from '../index';
 import { Store } from 'redux';
 
 export function tabooGameUpdateSubscriber(store: Store<ApplicationState>) {
-    subscribeTabooGameUpdates(state => {
-        store.dispatch(tabooGameUpdate(state));
-    });
+  subscribeTabooGameUpdates(state => {
+    store.dispatch(tabooGameUpdate(state));
+  });
 }

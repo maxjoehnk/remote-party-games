@@ -1,61 +1,61 @@
 .game-header {
-    padding-top: 8px;
-    background: var(--card-background);
-    border-radius: var(--border-radius);
-    grid-area: header;
-    display: grid;
-    align-items: center;
-    grid-template-areas: 'lobby content .';
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 8px;
+  padding-top: 8px;
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  grid-area: header;
+  display: grid;
+  align-items: center;
+  grid-template-areas: 'lobby content .';
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
 }
 
 .game-header--timer {
-    grid-template-areas: 'lobby content timer' 'progress progress progress';
-    grid-template-rows: auto 4px;
+  grid-template-areas: 'lobby content timer' 'progress progress progress';
+  grid-template-rows: auto 4px;
 }
 
 .game-header__lobby {
-    grid-area: lobby;
-    padding: 0 16px;
+  grid-area: lobby;
+  padding: 0 16px;
 }
 
 .game-header__content {
-    grid-area: content;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  grid-area: content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .game-header__back-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .game-header__progress-bar-container {
-    grid-area: progress;
+  grid-area: progress;
 }
 
 .game-header__progress-bar {
-    background: var(--color-primary);
-    height: 4px;
-    transition: 1s linear all;
-    border-bottom-left-radius: var(--border-radius);
+  background: var(--color-primary);
+  height: 4px;
+  transition: 1s linear all;
+  border-bottom-left-radius: var(--border-radius);
 }
 
 /** TIMER */
 
 .game-header__time-left {
-    grid-area: timer;
-    padding: 0 16px;
-    text-align: end;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
+  grid-area: timer;
+  padding: 0 16px;
+  text-align: end;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .game-header__time-left-text {
-    padding-left: 4px;
+  padding-left: 4px;
 }

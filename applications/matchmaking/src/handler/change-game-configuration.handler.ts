@@ -9,9 +9,7 @@ export class ChangeGameConfigurationHandler
   constructor(private lobbyStore: LobbyStore, private eventBus: EventBus) {}
 
   async execute(command: ChangeGameConfigurationCommand): Promise<any> {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (lobbyCode == null) {
       return;
     }

@@ -1,26 +1,26 @@
 .stadt-land-fluss-settings__column {
-    background: var(--button-default);
-    border-radius: var(--border-radius);
-    padding: 0 4px;
-    margin-right: 4px;
-    margin-bottom: 4px;
-    font-size: 0.9rem;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
+  background: var(--button-default);
+  border-radius: var(--border-radius);
+  padding: 0 4px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .stadt-land-fluss-settings__column button {
-    display: inline-flex;
-    margin-left: 4px;
+  display: inline-flex;
+  margin-left: 4px;
 }
 
 .stadt-land-fluss-settings__add-column {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .stadt-land-fluss-settings__add-column input {
-    flex: 1;
-    margin-right: 8px;
+  flex: 1;
+  margin-right: 8px;
 }

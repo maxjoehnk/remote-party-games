@@ -1,0 +1,14 @@
+{
+  "singleQuote": true,
+  "proseWrap": "always",
+  "arrowParens": "avoid",
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ".stylelintrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}

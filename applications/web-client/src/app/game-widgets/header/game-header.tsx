@@ -29,13 +29,11 @@ const GameHeader = ({ timer, children, className, contentClass }: GameHeaderProp
           {i18n`Back to Lobby`}
         </Button>
       </div>
-      <div className={`game-header__content ${contentClass}`}>
-        {children}
-      </div>
+      <div className={`game-header__content ${contentClass}`}>{children}</div>
       {hasTimer && <Countdown timeLeft={timer.timeLeft} />}
       {hasTimer && <ProgressBar timer={timer} />}
     </div>
-  )
+  );
 };
 
 const Countdown = ({ timeLeft }) => {
@@ -57,9 +55,9 @@ const formatTime = (time: number): string => {
   const seconds = time - minutes * 60;
 
   return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-}
+};
 
-const ProgressBar = ({ timer }: { timer: Timer; }) => {
+const ProgressBar = ({ timer }: { timer: Timer }) => {
   const progress = timer.timeLeft / timer.maxTime;
 
   return (

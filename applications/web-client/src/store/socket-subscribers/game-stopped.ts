@@ -4,7 +4,7 @@ import { subscribeGameStopped } from '../../app/matchmaking/matchmaking.api';
 import { gameStopped } from '../actions/game';
 
 export function gameStoppedSubscriber(store: Store<ApplicationState>) {
-    subscribeGameStopped(msg => {
-        store.dispatch(gameStopped(msg));
-    });
+  subscribeGameStopped(msg => {
+    store.dispatch(gameStopped(msg));
+  });
 }

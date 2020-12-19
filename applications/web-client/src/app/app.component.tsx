@@ -8,9 +8,9 @@ import { selectPlayer } from '../store/selectors/player';
 import PlayerEditor from './player/player-editor.component';
 import Header from './header.component';
 import {
-    subscribeGameStarted,
-    subscribeGameStopped,
-    subscribeLobbyClosed
+  subscribeGameStarted,
+  subscribeGameStopped,
+  subscribeLobbyClosed,
 } from './matchmaking/matchmaking.api';
 import TabooGame from './games/taboo/taboo-game.component';
 import { NotificationContainer, useNotification } from './ui-elements/notification';
@@ -22,101 +22,101 @@ import StadtLandFlussGame from './games/stadt-land-fluss/stadt-land-fluss-game.c
 let clearNotification;
 
 const SocketListener = ({ children }) => {
-    const history = useHistory();
-    const showPermanentNotification = useNotification(0);
-    const showNotification = useNotification(3000);
+  const history = useHistory();
+  const showPermanentNotification = useNotification(0);
+  const showNotification = useNotification(3000);
 
-    useEffect(() => {
-        const subscription = subscribeLobbyClosed(() => {
-            history.push('/');
-            showNotification(i18n`Lobby was closed`);
-        });
-
-        return () => subscription.unsubscribe();
+  useEffect(() => {
+    const subscription = subscribeLobbyClosed(() => {
+      history.push('/');
+      showNotification(i18n`Lobby was closed`);
     });
 
-    useEffect(() => {
-        const subscription = subscribeGameStarted(msg => {
-            history.push(`/play/${msg.game}`);
-        });
+    return () => subscription.unsubscribe();
+  });
 
-        return () => subscription.unsubscribe();
+  useEffect(() => {
+    const subscription = subscribeGameStarted(msg => {
+      history.push(`/play/${msg.game}`);
     });
 
-    useEffect(() => {
-        const subscription = subscribeGameStopped(msg => {
-            history.push(`/lobby/${msg.code}`);
-        });
+    return () => subscription.unsubscribe();
+  });
 
-        return () => subscription.unsubscribe();
+  useEffect(() => {
+    const subscription = subscribeGameStopped(msg => {
+      history.push(`/lobby/${msg.code}`);
     });
 
-    useEffect(() => {
-        const subscription = onSocketClose(() => {
-            history.push('/');
-            clearNotification = showPermanentNotification(i18n`Disconnected`);
-        });
+    return () => subscription.unsubscribe();
+  });
 
-        return () => subscription.unsubscribe();
+  useEffect(() => {
+    const subscription = onSocketClose(() => {
+      history.push('/');
+      clearNotification = showPermanentNotification(i18n`Disconnected`);
     });
 
-    useEffect(() => {
-        const subscription = onSocketOpen(() => {
-            if (clearNotification != null) {
-                clearNotification();
-                showNotification(i18n`Reconnected`);
-            }
-        });
+    return () => subscription.unsubscribe();
+  });
 
-        return () => subscription.unsubscribe();
+  useEffect(() => {
+    const subscription = onSocketOpen(() => {
+      if (clearNotification != null) {
+        clearNotification();
+        showNotification(i18n`Reconnected`);
+      }
     });
-    return children;
+
+    return () => subscription.unsubscribe();
+  });
+  return children;
 };
 
 const ApplicationRoutes = () => {
-    return (
-        <SocketListener>
-            <Switch>
-                <Route path="/" exact>
-                    <Welcome />
-                </Route>
-                <Route path="/lobby/:code" exact>
-                    <GameLobby />
-                </Route>
-                <Route path="/lobby/:code/history/:game" exact>
-                    <GameHistory />
-                </Route>
-                <Route path="/play/taboo">
-                    <TabooGame />
-                </Route>
-                <Route path="/play/stadt-land-fluss">
-                    <StadtLandFlussGame/>
-                </Route>
-            </Switch>
-        </SocketListener>
-    );
+  return (
+    <SocketListener>
+      <Switch>
+        <Route path="/" exact>
+          <Welcome />
+        </Route>
+        <Route path="/lobby/:code" exact>
+          <GameLobby />
+        </Route>
+        <Route path="/lobby/:code/history/:game" exact>
+          <GameHistory />
+        </Route>
+        <Route path="/play/taboo">
+          <TabooGame />
+        </Route>
+        <Route path="/play/stadt-land-fluss">
+          <StadtLandFlussGame />
+        </Route>
+      </Switch>
+    </SocketListener>
+  );
 };
 
 const PlayerSetup = ({ children }) => {
-    const player = useSelector(selectPlayer);
+  const player = useSelector(selectPlayer);
 
-    if (player.name == null) {
-        return <PlayerEditor />;
-    }
-    return children;
+  if (player.name == null) {
+    return <PlayerEditor />;
+  }
+  return children;
 };
 
 const App = () => (
-    <Provider store={store}>
-        <NotificationContainer>
-            <Router>
-                <PlayerSetup>
-                    <Header />
-                    <ApplicationRoutes />
-                </PlayerSetup>
-            </Router>
-        </NotificationContainer>
-    </Provider>
+  <Provider store={store}>
+    <NotificationContainer>
+      <Router>
+        <PlayerSetup>
+          <Header />
+          <ApplicationRoutes />
+        </PlayerSetup>
+      </Router>
+    </NotificationContainer>
+  </Provider>
 );
 
 export default App;

@@ -1,5 +1,5 @@
 export interface TeamModel {
-    id: string;
-    name: string;
-    players: string[];
+  id: string;
+  name: string;
+  players: string[];
 }

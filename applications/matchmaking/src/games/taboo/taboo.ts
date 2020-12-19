@@ -2,10 +2,7 @@ import { Game } from '../../contracts/game';
 import { TabooCard } from './taboo-card';
 import { loadCards } from './card-loader';
 import { Team } from '../../contracts/team';
-import {
-  SocketBroadcaster,
-  SocketMessage,
-} from '../../sockets/socket-broadcaster';
+import { SocketBroadcaster, SocketMessage } from '../../sockets/socket-broadcaster';
 import { TeamBasedScore } from '../../contracts/game-history';
 import Timeout = NodeJS.Timeout;
 import { Action, GameHandler } from '../game-handler';
@@ -135,10 +132,7 @@ export class Taboo implements Game {
     this.broadcast();
   }
 
-  async execute(
-    action: Action<TabooActionTypes>,
-    playerId?: string
-  ): Promise<void> {
+  async execute(action: Action<TabooActionTypes>, playerId?: string): Promise<void> {
     await this.handler.execute(action, playerId);
     this.broadcast();
   }
@@ -205,16 +199,12 @@ export class Taboo implements Game {
       this.pastWords.push(this.currentCard.term);
     }
     const availableCards = this.getAvailableCards();
-    const nextCardIndex = Math.floor(
-      Math.random() * Math.floor(availableCards.length - 1)
-    );
+    const nextCardIndex = Math.floor(Math.random() * Math.floor(availableCards.length - 1));
     this.currentCard = availableCards[nextCardIndex];
   };
 
   private getAvailableCards() {
-    const availableCards = cards.filter(
-      (c) => !this.pastWords.includes(c.term)
-    );
+    const availableCards = cards.filter(c => !this.pastWords.includes(c.term));
     if (availableCards.length === 0) {
       this.pastWords = [];
       return cards;
@@ -232,7 +222,7 @@ export class Taboo implements Game {
     this.broadcastToObserving(this.state);
   };
 
-  private broadcastToNextPlayer = (state) => {
+  private broadcastToNextPlayer = state => {
     const msg = {
       type: 'taboo/update',
       gameState: {
@@ -243,13 +233,10 @@ export class Taboo implements Game {
         currentCard: state.currentCard,
       },
     };
-    this.broadcaster.broadcast(
-      msg,
-      (c, playerId) => playerId === state.currentRound.activePlayer
-    );
+    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
   };
 
-  private broadcastToExplaining = (state) => {
+  private broadcastToExplaining = state => {
     const msg = {
       type: 'taboo/update',
       gameState: {
@@ -260,13 +247,10 @@ export class Taboo implements Game {
         currentCard: state.currentCard,
       },
     };
-    this.broadcaster.broadcast(
-      msg,
-      (c, playerId) => playerId === state.currentRound.activePlayer
-    );
+    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
   };
 
-  private broadcastToGuessing = (state) => {
+  private broadcastToGuessing = state => {
     const msg = {
       type: 'taboo/update',
       gameState: {
@@ -278,18 +262,14 @@ export class Taboo implements Game {
       },
     };
     const currentTeam =
-      state.currentRound.team === 1
-        ? state.teamOne.players
-        : state.teamTwo.players;
+      state.currentRound.team === 1 ? state.teamOne.players : state.teamTwo.players;
     const allGuessingPlayers = currentTeam.filter(
-      (playerId) => playerId !== state.currentRound.activePlayer
+      playerId => playerId !== state.currentRound.activePlayer
     );
-    this.broadcaster.broadcast(msg, (c, playerId) =>
-      allGuessingPlayers.includes(playerId)
-    );
+    this.broadcaster.broadcast(msg, (c, playerId) => allGuessingPlayers.includes(playerId));
   };
 
-  private broadcastToObserving = (state) => {
+  private broadcastToObserving = state => {
     const msg: SocketMessage = {
       type: 'taboo/update',
       gameState: {
@@ -300,12 +280,7 @@ export class Taboo implements Game {
         currentCard: state.currentCard,
       },
     };
-    const otherTeam =
-      state.currentRound.team !== 1
-        ? state.teamOne.players
-        : state.teamTwo.players;
-    this.broadcaster.broadcast(msg, (c, playerId) =>
-      otherTeam.includes(playerId)
-    );
+    const otherTeam = state.currentRound.team !== 1 ? state.teamOne.players : state.teamTwo.players;
+    this.broadcaster.broadcast(msg, (c, playerId) => otherTeam.includes(playerId));
   };
 }

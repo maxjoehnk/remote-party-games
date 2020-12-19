@@ -7,9 +7,7 @@ export class GameActionHandler implements ICommandHandler<GameActionCommand> {
   constructor(private lobbyStore: LobbyStore) {}
 
   async execute(command: GameActionCommand) {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (!lobbyCode) {
       return;
     }

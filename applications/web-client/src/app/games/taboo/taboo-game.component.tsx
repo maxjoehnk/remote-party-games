@@ -7,27 +7,27 @@ import TabooPlayerList from './taboo-player-list.component';
 import GameHeader from '../../game-widgets/header/game-header';
 
 const TabooGame = () => {
-    const timeLeft = useSelector(selectTabooTimeLeft);
+  const timeLeft = useSelector(selectTabooTimeLeft);
 
-    return (
-        <div className="game-taboo">
-            <GameHeader className="game-taboo__header" timer={{ maxTime: 60, timeLeft }}>
-                <TabooGameScore />
-            </GameHeader>
-            <TabooPlayerList />
-            <TabooGameArea />
-        </div>
-    );
+  return (
+    <div className="game-taboo">
+      <GameHeader className="game-taboo__header" timer={{ maxTime: 60, timeLeft }}>
+        <TabooGameScore />
+      </GameHeader>
+      <TabooPlayerList />
+      <TabooGameArea />
+    </div>
+  );
 };
 
 const TabooGameScore = () => {
-    const [teamOne, teamTwo] = useSelector(selectTabooScore);
+  const [teamOne, teamTwo] = useSelector(selectTabooScore);
 
-    return (
-        <div className="game-taboo__score">
-            {teamOne}:{teamTwo}
-        </div>
-    );
+  return (
+    <div className="game-taboo__score">
+      {teamOne}:{teamTwo}
+    </div>
+  );
 };
 
 export default TabooGame;

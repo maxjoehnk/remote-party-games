@@ -46,9 +46,7 @@ export class LobbyStore {
   }
 
   async joinLobby(player: Player, lobbyCode: string): Promise<Game | null> {
-    console.log(
-      `[Lobby] ${player.name} (${player.id}) is joining ${lobbyCode}`
-    );
+    console.log(`[Lobby] ${player.name} (${player.id}) is joining ${lobbyCode}`);
     const lobby = await this.getLobby(lobbyCode);
     if (lobby == null) {
       throw new Error(`Unknown Lobby ${lobbyCode}`);
@@ -63,7 +61,7 @@ export class LobbyStore {
     console.log(`[Lobby] ${player.name} (${player.id}) is disconnected`);
     this.players.delete(player.id);
     const lobby = await this.getLobby(lobbyCode);
-    lobby.players = lobby.players.filter((p) => p.id !== player.id);
+    lobby.players = lobby.players.filter(p => p.id !== player.id);
     this.removePlayerFromTeam(lobby.teams, player.id);
     await this.removeEmptyLobby(lobby);
   }
@@ -76,7 +74,7 @@ export class LobbyStore {
     }
     const config = this.getGameConfig(lobby);
     const game = this.gameFactory.createGame(lobby.game, config, {
-      getPlayers: () => this.getLobby(lobbyCode).then((lobby) => lobby.players),
+      getPlayers: () => this.getLobby(lobbyCode).then(lobby => lobby.players),
     });
     this.games.set(lobbyCode, game);
     await game.start();
@@ -116,12 +114,12 @@ export class LobbyStore {
     if (lobby == null) {
       throw new Error(`Unknown Lobby ${lobbyCode}`);
     }
-    const team = lobby.teams.find((t) => t.id === teamId);
+    const team = lobby.teams.find(t => t.id === teamId);
     if (team == null) {
       throw new Error(`Unknown Team ${teamId}`);
     }
     for (const t of lobby.teams) {
-      t.players = t.players.filter((playerId) => playerId !== player.id);
+      t.players = t.players.filter(playerId => playerId !== player.id);
     }
     team.players.push(player.id);
   }
@@ -175,12 +173,8 @@ export class LobbyStore {
   }
 
   private static updateTabooLobby(lobby: Lobby) {
-    const firstTeam = lobby.players
-      .slice(0, Math.ceil(lobby.players.length / 2))
-      .map((p) => p.id);
-    const secondTeam = lobby.players
-      .slice(Math.ceil(lobby.players.length / 2))
-      .map((p) => p.id);
+    const firstTeam = lobby.players.slice(0, Math.ceil(lobby.players.length / 2)).map(p => p.id);
+    const secondTeam = lobby.players.slice(Math.ceil(lobby.players.length / 2)).map(p => p.id);
     lobby.teams = [
       {
         id: uuid(),
@@ -235,13 +229,13 @@ export class LobbyStore {
     if (teamId == null) {
       return;
     }
-    const team = lobby.teams.find((t) => t.id === teamId);
+    const team = lobby.teams.find(t => t.id === teamId);
     team.players.push(playerId);
   }
 
   private removePlayerFromTeam(teams: Team[], playerId: string) {
     for (const team of teams) {
-      team.players = team.players.filter((id) => id !== playerId);
+      team.players = team.players.filter(id => id !== playerId);
     }
   }
 

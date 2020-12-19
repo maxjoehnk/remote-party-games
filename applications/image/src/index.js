@@ -9,36 +9,35 @@ import { prepareStorage, readImage, storeImage } from './storage.js';
 const port = 8091;
 
 async function init() {
-    await prepareStorage();
+  await prepareStorage();
 
-    const app = express();
-    app.set('etag', 'strong');
-    app.use(helmet());
-    app.use(loggingMiddleware);
-    app.use(metricMiddleware);
-    app.get('/api/image/:userId', (req, res) => {
-        const userId = req.params.userId;
-        console.log(`[Image] Fetching User Image for user ${userId}`);
+  const app = express();
+  app.set('etag', 'strong');
+  app.use(helmet());
+  app.use(loggingMiddleware);
+  app.use(metricMiddleware);
+  app.get('/api/image/:userId', (req, res) => {
+    const userId = req.params.userId;
+    console.log(`[Image] Fetching User Image for user ${userId}`);
 
-        readImage(userId, res)
-    });
-    app.post('/api/image', (req, res, next) => {
-        const userId = req.get("X-UserId")
-        storeImage(userId, req)
-            .then(() => res.status(204).end())
-            .catch(err => next(err))
-    });
+    readImage(userId, res);
+  });
+  app.post('/api/image', (req, res, next) => {
+    const userId = req.get('X-UserId');
+    storeImage(userId, req)
+      .then(() => res.status(204).end())
+      .catch(err => next(err));
+  });
 
-    app.get('/api/metrics', (req, res) => {
-        const metrics = getMetrics();
-        res.status(200);
-        res.contentType('text/plain');
-        res.send(metrics);
-    })
+  app.get('/api/metrics', (req, res) => {
+    const metrics = getMetrics();
+    res.status(200);
+    res.contentType('text/plain');
+    res.send(metrics);
+  });
 
-    const server = createServer(app);
-    server.listen(port, () => console.log(`[HTTP] Listening on ${port}...`));
+  const server = createServer(app);
+  server.listen(port, () => console.log(`[HTTP] Listening on ${port}...`));
 }
 
-init()
-    .catch(err => console.error(err))
+init().catch(err => console.error(err));

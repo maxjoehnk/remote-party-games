@@ -13,9 +13,7 @@ export class SwitchTeamHandler implements ICommandHandler<SwitchTeamCommand> {
   ) {}
 
   async execute(command: SwitchTeamCommand): Promise<any> {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (lobbyCode == null) {
       return;
     }

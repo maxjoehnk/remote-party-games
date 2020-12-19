@@ -10,27 +10,27 @@ import { StadtLandFlussGameState } from '../contracts/stadt-land-fluss-configura
 import { stadtLandFlussReducer } from './reducers/stadt-land-fluss';
 
 export interface ApplicationState {
-    lobby: LobbyState;
-    player: PlayerState;
-    taboo: TabooGameState;
-    stadtLandFluss: StadtLandFlussGameState;
+  lobby: LobbyState;
+  player: PlayerState;
+  taboo: TabooGameState;
+  stadtLandFluss: StadtLandFlussGameState;
 }
 
 const store = configureStore<ApplicationState>({
-    reducer: combineReducers({
-        lobby: lobbyReducer,
-        player: playerReducer,
-        taboo: tabooReducer,
-        stadtLandFluss: stadtLandFlussReducer,
-    }),
-    middleware: [listenerMiddleware, socketSubscriberMiddleware] as any
+  reducer: combineReducers({
+    lobby: lobbyReducer,
+    player: playerReducer,
+    taboo: tabooReducer,
+    stadtLandFluss: stadtLandFlussReducer,
+  }),
+  middleware: [listenerMiddleware, socketSubscriberMiddleware] as any,
 });
 
 loadStoredState(store);
 
 store.subscribe(() => {
-    const state = store.getState();
-    updateStoredState(state);
+  const state = store.getState();
+  updateStoredState(state);
 });
 
 export default store;

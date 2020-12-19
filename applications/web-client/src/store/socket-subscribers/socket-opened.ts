@@ -4,10 +4,10 @@ import { Store } from 'redux';
 import { updateUsername } from '../../app/player/player.api';
 
 export function socketOpenedSubscriber(store: Store<ApplicationState>) {
-    onSocketOpen(() => {
-        const state = store.getState();
-        if (state.player.name != null) {
-            updateUsername(state.player.name);
-        }
-    });
+  onSocketOpen(() => {
+    const state = store.getState();
+    if (state.player.name != null) {
+      updateUsername(state.player.name);
+    }
+  });
 }

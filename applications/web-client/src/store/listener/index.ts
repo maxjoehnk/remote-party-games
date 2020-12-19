@@ -7,10 +7,10 @@ type ActionListener = (state: ApplicationState, action, previousState?: Applicat
 const listeners: ActionListener[] = [joinLobbyListener, updateUsernameListener];
 
 export const listenerMiddleware = store => next => action => {
-    const previous = store.getState();
-    const state = next(action);
-    for (const listener of listeners) {
-        listener(state, action, previous);
-    }
-    return state;
+  const previous = store.getState();
+  const state = next(action);
+  for (const listener of listeners) {
+    listener(state, action, previous);
+  }
+  return state;
 };

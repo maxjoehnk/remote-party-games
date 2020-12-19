@@ -11,18 +11,18 @@ import { getResult } from './result-helpers';
 import { getGameName } from './game-names';
 
 const GameHistoryList = ({ className }) => {
-    const history = useSelector(selectGameHistory);
+  const history = useSelector(selectGameHistory);
 
-    return (
-        <div className={`card ${className}`}>
-            <h2 className="subtitle">{i18n`Game History`}</h2>
-            <div className="game-history-list">
-                {history.map((entry, i) => (
-                    <HistoryEntry key={i} entry={entry} index={i} />
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className={`card ${className}`}>
+      <h2 className="subtitle">{i18n`Game History`}</h2>
+      <div className="game-history-list">
+        {history.map((entry, i) => (
+          <HistoryEntry key={i} entry={entry} index={i} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const HistoryEntry = ({ entry, index }: { entry: GameHistoryModel; index: number }) => {

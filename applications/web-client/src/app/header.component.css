@@ -1,51 +1,51 @@
 .header {
-    display: flex;
-    flex-direction: row;
-    padding: 4px;
+  display: flex;
+  flex-direction: row;
+  padding: 4px;
 }
 
 .header__title {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .header__title-link {
-    text-decoration: none;
-    color: black;
-    flex: 1;
-    padding: 4px;
+  text-decoration: none;
+  color: black;
+  flex: 1;
+  padding: 4px;
 }
 .header__title-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .header__change-name,
 .header__player-name {
-    padding: 4px;
-    font-size: 14px;
+  padding: 4px;
+  font-size: 14px;
 }
 
 .header__player-name {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .header__player-settings {
-    display: flex;
-    flex-direction: row;
-    opacity: 0.54;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: var(--default-transition);
+  display: flex;
+  flex-direction: row;
+  opacity: 0.54;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: var(--default-transition);
 }
 
 .header__player-settings:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .header__player-img {
-    width: 48px;
-    height: 48px;
-    border-radius: 100%;
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
 }

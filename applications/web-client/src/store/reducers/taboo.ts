@@ -7,23 +7,22 @@ const initialState: TabooGameState = {
   currentCard: null,
   teamOne: {
     players: [],
-    points: 0
+    points: 0,
   },
   teamTwo: {
     players: [],
-    points: 0
+    points: 0,
   },
   currentRound: {
     timeLeft: 60,
     activePlayer: null,
-    team: 1
+    team: 1,
   },
-  view: null
+  view: null,
 };
 
-export const tabooReducer = createReducer<TabooGameState>(
-    initialState,
-    builder => builder
-      .addCase(tabooGameUpdate, (state, action) => action.payload)
-      .addCase(gameStopped, () => initialState)
+export const tabooReducer = createReducer<TabooGameState>(initialState, builder =>
+  builder
+    .addCase(tabooGameUpdate, (state, action) => action.payload)
+    .addCase(gameStopped, () => initialState)
 );

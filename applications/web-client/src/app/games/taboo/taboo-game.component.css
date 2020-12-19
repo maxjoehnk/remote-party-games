@@ -1,82 +1,82 @@
 .game-taboo {
-    display: grid;
-    grid-template-areas: 'header header' 'player-list game-area';
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: 76px 1fr;
-    grid-gap: 16px;
-    padding: 16px;
-    height: 100%;
+  display: grid;
+  grid-template-areas: 'header header' 'player-list game-area';
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 76px 1fr;
+  grid-gap: 16px;
+  padding: 16px;
+  height: 100%;
 }
 
 .game-taboo__header {
-    grid-area: header;
+  grid-area: header;
 }
 
 /** PLAYER LIST */
 
 .game-taboo__player-list {
-    grid-area: player-list;
+  grid-area: player-list;
 }
 
 .game-taboo__player {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-radius: var(--border-radius);
-    padding: 4px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: var(--border-radius);
+  padding: 4px 8px;
 }
 
 .game-taboo__player-icon {
-    opacity: 0.54;
-    margin: 0 8px 0 0;
+  opacity: 0.54;
+  margin: 0 8px 0 0;
 }
 
 .game-taboo__player-name {
-    flex: 1;
+  flex: 1;
 }
 
 .game-taboo__player--explaining {
-    background: var(--color-primary);
-    color: var(--text-color-primary);
+  background: var(--color-primary);
+  color: var(--text-color-primary);
 }
 
 .game-taboo__player--observing {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .game-taboo__player--explaining .game-taboo__player-icon {
-    opacity: 1;
+  opacity: 1;
 }
 
 /** SCORE */
 
 .game-taboo__score {
-    grid-area: score;
-    font-size: 2rem;
-    letter-spacing: 1rem;
-    text-align: center;
+  grid-area: score;
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  text-align: center;
 }
 
 /** GAME AREA */
 
 .game-taboo__game-area {
-    grid-area: game-area;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  grid-area: game-area;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-taboo__actions {
-    display: flex;
-    flex-direction: row;
-    padding: 8px 0;
+  display: flex;
+  flex-direction: row;
+  padding: 8px 0;
 }
 
 .game-taboo__actions :first-child {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
 .game-taboo__actions * {
-    flex: 1;
+  flex: 1;
 }

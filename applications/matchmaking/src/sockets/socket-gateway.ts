@@ -49,10 +49,7 @@ interface ChangeGameConfigurationMessage {
 
 @WebSocketGateway()
 export class SocketGateway
-  implements
-    OnGatewayConnection<WebSocket>,
-    OnGatewayDisconnect<WebSocket>,
-    SocketBroadcaster {
+  implements OnGatewayConnection<WebSocket>, OnGatewayDisconnect<WebSocket>, SocketBroadcaster {
   private sockets = new WeakMap<WebSocket, string>();
 
   @WebSocketServer()
@@ -65,10 +62,7 @@ export class SocketGateway
   ) {}
 
   @SubscribeMessage('lobby/join')
-  async onJoinLobby(
-    @ConnectedSocket() client: WebSocket,
-    @MessageBody() msg: JoinLobbyMessage
-  ) {
+  async onJoinLobby(@ConnectedSocket() client: WebSocket, @MessageBody() msg: JoinLobbyMessage) {
     const playerId = this.getPlayerId(client);
     try {
       const game: Game | null = await this.commandBus.execute(
@@ -97,9 +91,7 @@ export class SocketGateway
     @MessageBody() msg: UpdateUsernameMessage
   ) {
     const playerId = this.getPlayerId(client);
-    await this.commandBus.execute(
-      new UpdateUsernameCommand(playerId, msg.username)
-    );
+    await this.commandBus.execute(new UpdateUsernameCommand(playerId, msg.username));
   }
 
   @SubscribeMessage('lobby/start-game')
@@ -125,19 +117,13 @@ export class SocketGateway
   }
 
   @SubscribeMessage('game/action')
-  async onGameAction(
-    @ConnectedSocket() client: WebSocket,
-    @MessageBody() msg: any
-  ) {
+  async onGameAction(@ConnectedSocket() client: WebSocket, @MessageBody() msg: any) {
     const playerId = this.getPlayerId(client);
     await this.commandBus.execute(new GameActionCommand(playerId, msg));
   }
 
   @SubscribeMessage('lobby/change-game')
-  async onChangeGame(
-    @ConnectedSocket() client: WebSocket,
-    @MessageBody() msg: ChangeGameMessage
-  ) {
+  async onChangeGame(@ConnectedSocket() client: WebSocket, @MessageBody() msg: ChangeGameMessage) {
     const playerId = this.getPlayerId(client);
     await this.commandBus.execute(new ChangeGameCommand(playerId, msg.game));
   }
@@ -148,9 +134,7 @@ export class SocketGateway
     @MessageBody() msg: ChangeGameConfigurationMessage
   ) {
     const playerId = this.getPlayerId(client);
-    await this.commandBus.execute(
-      new ChangeGameConfigurationCommand(playerId, msg.configuration)
-    );
+    await this.commandBus.execute(new ChangeGameConfigurationCommand(playerId, msg.configuration));
   }
 
   handleConnection(client: WebSocket, msg: any) {
@@ -165,9 +149,7 @@ export class SocketGateway
 
     this.sockets.set(client, playerId);
     this.socketMetrics.openSocketGauge.inc();
-    client.addEventListener('message', () =>
-      this.socketMetrics.socketRecvMessageCounter.inc()
-    );
+    client.addEventListener('message', () => this.socketMetrics.socketRecvMessageCounter.inc());
   }
 
   handleDisconnect(client: WebSocket) {
@@ -177,11 +159,8 @@ export class SocketGateway
     this.eventBus.publish(new PlayerDisconnectedEvent(playerId));
   }
 
-  broadcast(
-    msg: any,
-    clientFilter: (ws: WebSocket, playerId: string) => boolean = () => true
-  ) {
-    this.server.clients.forEach((ws) => {
+  broadcast(msg: any, clientFilter: (ws: WebSocket, playerId: string) => boolean = () => true) {
+    this.server.clients.forEach(ws => {
       const playerId = this.sockets.get(ws);
       if (!clientFilter(ws, playerId)) {
         return;

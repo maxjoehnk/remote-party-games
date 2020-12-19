@@ -14,9 +14,7 @@ export class JoinLobbyHandler implements ICommandHandler<JoinLobbyCommand> {
   ) {}
 
   async execute(command: JoinLobbyCommand): Promise<Game | null> {
-    const current = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const current = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (current === command.lobbyCode) {
       return;
     }

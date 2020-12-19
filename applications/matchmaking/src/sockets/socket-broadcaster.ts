@@ -5,8 +5,5 @@ export type SocketMessage = {
 } & any;
 
 export interface SocketBroadcaster {
-  broadcast(
-    msg: SocketMessage,
-    clientFilter?: (ws: WebSocket, playerId: string) => boolean
-  );
+  broadcast(msg: SocketMessage, clientFilter?: (ws: WebSocket, playerId: string) => boolean);
 }

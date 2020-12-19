@@ -21,11 +21,7 @@ export interface CreateGameConfig<TConfig = GameConfiguration> {
 export class GameFactory {
   constructor(private socketGateway: SocketGateway) {}
 
-  createGame(
-    gameType: GameTypes,
-    config: CreateGameConfig,
-    playerAccessor: PlayerAccessor
-  ): Game {
+  createGame(gameType: GameTypes, config: CreateGameConfig, playerAccessor: PlayerAccessor): Game {
     if (isTaboo(gameType, config)) {
       return new Taboo(config, this.socketGateway);
     }

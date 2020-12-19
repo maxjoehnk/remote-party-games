@@ -20,7 +20,7 @@ const StadtLandFlussSettings = () => {
     const columns = [...config.columns, column];
     updateGameConfiguration({
       ...config,
-      columns
+      columns,
     });
   };
 
@@ -28,42 +28,56 @@ const StadtLandFlussSettings = () => {
     const columns = config.columns.filter(c => c !== column);
     updateGameConfiguration({
       ...config,
-      columns
+      columns,
     });
   };
 
   return (
     <>
       <LobbySettingsGroup label={i18n`Columns`}>
-        {config.columns.map(column => <Column key={column} name={column} onRemove={removeColumn(column)}/>)}
+        {config.columns.map(column => (
+          <Column key={column} name={column} onRemove={removeColumn(column)} />
+        ))}
       </LobbySettingsGroup>
       <LobbySettingsGroup label={i18n`Add Column`}>
-        <AddColumn onAdd={addColumn}/>
+        <AddColumn onAdd={addColumn} />
       </LobbySettingsGroup>
     </>
-  )
+  );
 };
 
 const Column = ({ name, onRemove }: { name: string; onRemove: () => void }) => {
-  return <span className="stadt-land-fluss-settings__column">
-    {name}
-    <button className="icon-button icon-button--hint" onClick={onRemove}>
-      <Icon size="16px" path={mdiCloseCircle}/>
-    </button>
-  </span>
-}
+  return (
+    <span className="stadt-land-fluss-settings__column">
+      {name}
+      <button className="icon-button icon-button--hint" onClick={onRemove}>
+        <Icon size="16px" path={mdiCloseCircle} />
+      </button>
+    </span>
+  );
+};
 
-const AddColumn = ({ onAdd }: { onAdd: (column: string) => void; }) => {
+const AddColumn = ({ onAdd }: { onAdd: (column: string) => void }) => {
   const [column, setColumn] = useState('');
 
-  return <div className="stadt-land-fluss-settings__add-column">
-    <input className="input" value={column} onChange={e => setColumn(e.target.value)} placeholder={i18n`Column`}/>
-    <Button type="submit" onClick={e => {
-      e.preventDefault();
-      onAdd(column);
-      setColumn('');
-    }}>{i18n`Add`}</Button>
-  </div>
-}
+  return (
+    <div className="stadt-land-fluss-settings__add-column">
+      <input
+        className="input"
+        value={column}
+        onChange={e => setColumn(e.target.value)}
+        placeholder={i18n`Column`}
+      />
+      <Button
+        type="submit"
+        onClick={e => {
+          e.preventDefault();
+          onAdd(column);
+          setColumn('');
+        }}
+      >{i18n`Add`}</Button>
+    </div>
+  );
+};
 
 export default StadtLandFlussSettings;

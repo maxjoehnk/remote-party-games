@@ -4,82 +4,82 @@
 @import 'responsive';
 
 .body {
-    background: var(--page-background);
+  background: var(--page-background);
 }
 
 .button {
-    padding: var(--control-padding);
-    border-radius: var(--border-radius);
-    border: none;
-    background: var(--button-default);
-    color: var(--text-color-default);
-    cursor: pointer;
-    font-size: var(--font-size);
-    text-decoration: none;
-    line-height: 1;
+  padding: var(--control-padding);
+  border-radius: var(--border-radius);
+  border: none;
+  background: var(--button-default);
+  color: var(--text-color-default);
+  cursor: pointer;
+  font-size: var(--font-size);
+  text-decoration: none;
+  line-height: 1;
 }
 
 .icon-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: var(--default-transition);
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: var(--default-transition);
 }
 
 .icon-button--active {
-    color: var(--color-primary);
-    opacity: 1;
+  color: var(--color-primary);
+  opacity: 1;
 }
 
 .icon-button--hint,
 .icon-button--inactive {
-    opacity: 0.54;
+  opacity: 0.54;
 }
 
 .button--primary {
-    background-color: var(--color-primary);
-    color: var(--text-color-primary);
+  background-color: var(--color-primary);
+  color: var(--text-color-primary);
 }
 
 .button--error {
-    background-color: var(--color-error);
-    color: var(--text-color-primary);
+  background-color: var(--color-error);
+  color: var(--text-color-primary);
 }
 
 .button:disabled,
 .button--disabled {
-    cursor: not-allowed;
-    opacity: 0.54;
-    pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.54;
+  pointer-events: none;
 }
 
 .input,
 .select {
-    padding: calc(var(--control-padding) - var(--border-width));
-    border-radius: var(--border-radius);
-    background: var(--color-default);
-    border: var(--border-width) solid transparent;
-    transition: var(--default-transition);
+  padding: calc(var(--control-padding) - var(--border-width));
+  border-radius: var(--border-radius);
+  background: var(--color-default);
+  border: var(--border-width) solid transparent;
+  transition: var(--default-transition);
 
-    &:hover {
-        border-color: var(--color-primary);
-    }
+  &:hover {
+    border-color: var(--color-primary);
+  }
 }
 
 .card {
-    padding: 16px;
-    background: var(--card-background);
-    box-shadow: var(--default-shadow);
-    border-radius: var(--border-radius);
-    box-sizing: border-box;
+  padding: 16px;
+  background: var(--card-background);
+  box-shadow: var(--default-shadow);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
 }
 
 .dialog {
-    background: var(--page-background);
-    top: 32px;
-    bottom: 32px;
-    left: 32px;
-    right: 32px;
-    position: absolute;
-    border-radius: var(--border-radius);
+  background: var(--page-background);
+  top: 32px;
+  bottom: 32px;
+  left: 32px;
+  right: 32px;
+  position: absolute;
+  border-radius: var(--border-radius);
 }

@@ -14,9 +14,7 @@ export class StopGameHandler implements ICommandHandler<StopGameCommand> {
   ) {}
 
   async execute(command: StopGameCommand): Promise<any> {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (!lobbyCode) {
       return;
     }

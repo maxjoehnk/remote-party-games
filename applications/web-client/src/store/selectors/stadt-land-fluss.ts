@@ -4,18 +4,18 @@ import { LobbyState } from '../reducers/lobby';
 import { PlayerModel } from '../../contracts/player.model';
 
 export const selectCurrentStadtLandFlussLetter = createSelector(
-    (state: ApplicationState) => state.stadtLandFluss,
-    state => state.letter
+  (state: ApplicationState) => state.stadtLandFluss,
+  state => state.letter
 );
 
 export const selectStadtLandFlussColumns = createSelector<ApplicationState, LobbyState, string[]>(
-    (state: ApplicationState) => state.lobby,
-    lobby => lobby.game?.config.columns ?? []
+  (state: ApplicationState) => state.lobby,
+  lobby => lobby.game?.config.columns ?? []
 );
 
 export const selectStadtLandFlussTimeLeft = createSelector(
-    (state: ApplicationState) => state.stadtLandFluss,
-    state => 300
+  (state: ApplicationState) => state.stadtLandFluss,
+  state => 300
 );
 
 export const selectStadtLandFlussRunning = createSelector(
@@ -33,8 +33,8 @@ export const selectStadtLandFlussResults = createSelector(
         answer: playerState.columns[i],
         score: playerState.scores[i],
         upvotes: playerState.upvotes[i],
-        player: players.find(p => playerState.playerId === p.id)
-      }))
+        player: players.find(p => playerState.playerId === p.id),
+      })),
     }));
 
     return columns;
@@ -47,6 +47,6 @@ export interface ResultColumn {
     answer: string;
     score: number;
     upvotes: number;
-    player: PlayerModel
+    player: PlayerModel;
   }[];
 }

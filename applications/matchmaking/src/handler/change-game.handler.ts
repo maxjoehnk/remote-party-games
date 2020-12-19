@@ -8,9 +8,7 @@ export class ChangeGameHandler implements ICommandHandler<ChangeGameCommand> {
   constructor(private lobbyStore: LobbyStore, private eventBus: EventBus) {}
 
   async execute(command: ChangeGameCommand): Promise<any> {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (lobbyCode == null) {
       return;
     }

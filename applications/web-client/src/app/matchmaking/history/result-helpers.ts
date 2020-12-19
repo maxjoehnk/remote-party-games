@@ -13,7 +13,7 @@ export function getResult(entry: GameHistoryModel): string {
 function getWinner(entry: GameHistoryModel): PlayerModel | TeamModel {
   if (entry.score.type === 'team-score') {
     return entry.score.teams.find(t => t.id === entry.score.winner);
-  }else if (entry.score.type === 'player-score') {
+  } else if (entry.score.type === 'player-score') {
     return entry.players.find(p => p.id === entry.score.winner);
   }
 }

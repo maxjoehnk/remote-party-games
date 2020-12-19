@@ -7,19 +7,19 @@ const languageOverride = query.get('lang');
 let currentLanguage = languageOverride || navigator.language || navigator.userLanguage || 'en-US';
 
 export const locales = {
-    'de-DE': require('../translations/de-DE.json'),
-    'en-US': require('../translations/en-US.json'),
-    'en-GB': require('../translations/en-US.json')
+  'de-DE': require('../translations/de-DE.json'),
+  'en-US': require('../translations/en-US.json'),
+  'en-GB': require('../translations/en-US.json'),
 };
 
 export function setupInternationalization() {
-    setLocale(currentLanguage);
+  setLocale(currentLanguage);
 }
 
 export function setLocale(locale: string) {
-    i18nConfig({
-        locales: locale,
-        translations: locales[locale]
-    });
-    currentLanguage = locale;
+  i18nConfig({
+    locales: locale,
+    translations: locales[locale],
+  });
+  currentLanguage = locale;
 }

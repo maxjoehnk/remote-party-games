@@ -97,10 +97,7 @@ export class StadtLandFluss implements Game {
     };
   }
 
-  execute(
-    action: Action<StadtLandFlussActionTypes>,
-    playerId: string
-  ): Promise<void> {
+  execute(action: Action<StadtLandFlussActionTypes>, playerId: string): Promise<void> {
     return this.handler.execute(action, playerId);
   }
 
@@ -121,8 +118,8 @@ export class StadtLandFluss implements Game {
     let winnerPoints = -1;
     for (const playerId of players) {
       const score = this.pastRounds
-        .filter((r) => r.players.some((p) => p.playerId === playerId))
-        .flatMap((r) => r.players.find((p) => p.playerId === playerId).scores)
+        .filter(r => r.players.some(p => p.playerId === playerId))
+        .flatMap(r => r.players.find(p => p.playerId === playerId).scores)
         .reduce((a, b) => a + b, 0);
       scores[playerId] = score;
       if (score > winnerPoints) {
@@ -187,9 +184,7 @@ export class StadtLandFluss implements Game {
     if (playerId === action.playerId) {
       return;
     }
-    const state = this.currentRound.players.find(
-      (p) => p.playerId === action.playerId
-    );
+    const state = this.currentRound.players.find(p => p.playerId === action.playerId);
     state.columns[action.column] = '';
     state.upvotes[action.column] = 0;
     this.calculateScores();
@@ -203,9 +198,7 @@ export class StadtLandFluss implements Game {
     if (playerId === action.playerId) {
       return;
     }
-    const state = this.currentRound.players.find(
-      (p) => p.playerId === action.playerId
-    );
+    const state = this.currentRound.players.find(p => p.playerId === action.playerId);
     state.upvotes[action.column]++;
     this.calculateScores();
     this.broadcaster.broadcast({
@@ -269,9 +262,7 @@ export class StadtLandFluss implements Game {
   };
 
   private async getPlayerState(playerId) {
-    let playerState = this.currentRound.players.find(
-      (p) => p.playerId === playerId
-    );
+    let playerState = this.currentRound.players.find(p => p.playerId === playerId);
     if (playerState == null) {
       playerState = await this.getNewPlayerState(playerId);
       this.currentRound.players.push(playerState);
@@ -282,15 +273,13 @@ export class StadtLandFluss implements Game {
 
   private async getNewPlayerState(playerId: string) {
     const players = await this.playerAccessor.getPlayers();
-    const player = players.find((p) => p.id === playerId);
+    const player = players.find(p => p.id === playerId);
 
     return this.getDefaultRoundState(player);
   }
 
   private nextLetter(): string {
-    const availableLetters = LETTERS.filter(
-      (letter) => !this.pastLetters.includes(letter)
-    );
+    const availableLetters = LETTERS.filter(letter => !this.pastLetters.includes(letter));
     const index = randomInt(availableLetters.length - 1);
 
     return availableLetters[index];

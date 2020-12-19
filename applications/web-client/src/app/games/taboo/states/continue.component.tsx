@@ -5,15 +5,15 @@ import { continueGame } from '../taboo-api';
 import TabooCard from '../taboo-card.component';
 
 const TabooContinue = () => {
-    return (
-        <div>
-            <span>{i18n('taboo')`You're next`}</span>
-            <TabooCard />
-            <div className="game-taboo__actions">
-                <Button primary onClick={() => continueGame()}>{i18n('taboo')`Start`}</Button>
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <span>{i18n('taboo')`You're next`}</span>
+      <TabooCard />
+      <div className="game-taboo__actions">
+        <Button primary onClick={() => continueGame()}>{i18n('taboo')`Start`}</Button>
+      </div>
+    </div>
+  );
 };
 
 export default TabooContinue;

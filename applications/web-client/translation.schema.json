@@ -1,291 +1,291 @@
 {
-    "type": "object",
-    "properties": {
-        "$schema": {
-            "type": "string"
-        },
-        "${0} (You)": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "${0} Point(s)": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "${0} Points": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "${0} left": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "${0}s": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "Add": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Add Column": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Avatar": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Back to Lobby": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Cancel": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Column": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Columns": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Connect to Lobby": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Copied to Clipboard!": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Copy": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Create a Lobby": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Disconnected": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Enter Room Code": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Game": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Game History": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Join Team": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Join a Lobby": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Link": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Lobby Settings": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Lobby was closed": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Player setup": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Players": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Playing as ${0}": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "(?=.*?\\$\\{0\\})"
-        },
-        "Reconnected": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Room Code": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Save": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Seconds": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Start Game": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Timer": {
-            "type": "string",
-            "minLength": 1
-        },
-        "Username": {
-            "type": "string",
-            "minLength": 1
-        },
-        "or": {
-            "type": "string",
-            "minLength": 1
-        },
-        "stadt-land-fluss": {
-            "type": "object",
-            "properties": {
-                "${0} (+${1}) Points": {
-                    "type": "string",
-                    "minLength": 1,
-                    "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
-                },
-                "${0} starting with ${1}": {
-                    "type": "string",
-                    "minLength": 1,
-                    "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
-                },
-                "<empty>": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Deny": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Next round": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Stop": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Upvote": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Words starting with ${0}": {
-                    "type": "string",
-                    "minLength": 1,
-                    "pattern": "(?=.*?\\$\\{0\\})"
-                }
-            },
-            "required": [
-                "${0} (+${1}) Points",
-                "${0} starting with ${1}",
-                "<empty>",
-                "Deny",
-                "Next round",
-                "Stop",
-                "Upvote",
-                "Words starting with ${0}"
-            ]
-        },
-        "taboo": {
-            "type": "object",
-            "properties": {
-                "Guessed": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Skip": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "Start": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "You're explaining": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "You're guessing": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "You're next": {
-                    "type": "string",
-                    "minLength": 1
-                },
-                "You're observing": {
-                    "type": "string",
-                    "minLength": 1
-                }
-            },
-            "required": [
-                "Guessed",
-                "Skip",
-                "Start",
-                "You're explaining",
-                "You're guessing",
-                "You're next",
-                "You're observing"
-            ]
-        }
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
     },
-    "required": [
-        "${0} (You)",
-        "${0} Point(s)",
-        "${0} Points",
-        "${0} left",
-        "${0}s",
-        "Add",
-        "Add Column",
-        "Avatar",
-        "Back to Lobby",
-        "Cancel",
-        "Column",
-        "Columns",
-        "Connect to Lobby",
-        "Copied to Clipboard!",
-        "Copy",
-        "Create a Lobby",
-        "Disconnected",
-        "Enter Room Code",
-        "Game",
-        "Game History",
-        "Join Team",
-        "Join a Lobby",
-        "Link",
-        "Lobby Settings",
-        "Lobby was closed",
-        "Player setup",
-        "Players",
-        "Playing as ${0}",
-        "Reconnected",
-        "Room Code",
-        "Save",
-        "Seconds",
-        "Start Game",
-        "Timer",
-        "Username",
-        "or",
-        "stadt-land-fluss",
-        "taboo"
-    ],
-    "additionalProperties": false
+    "${0} (You)": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "${0} Point(s)": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "${0} Points": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "${0} left": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "${0}s": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "Add": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Add Column": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Avatar": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Back to Lobby": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Cancel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Column": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Columns": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Connect to Lobby": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Copied to Clipboard!": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Copy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Create a Lobby": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Disconnected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Enter Room Code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Game": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Game History": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Join Team": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Join a Lobby": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Link": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Lobby Settings": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Lobby was closed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Player setup": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Players": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Playing as ${0}": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*?\\$\\{0\\})"
+    },
+    "Reconnected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Room Code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Save": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Seconds": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Start Game": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Timer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Username": {
+      "type": "string",
+      "minLength": 1
+    },
+    "or": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stadt-land-fluss": {
+      "type": "object",
+      "properties": {
+        "${0} (+${1}) Points": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
+        },
+        "${0} starting with ${1}": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
+        },
+        "<empty>": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Deny": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Next round": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Stop": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Upvote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Words starting with ${0}": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})"
+        }
+      },
+      "required": [
+        "${0} (+${1}) Points",
+        "${0} starting with ${1}",
+        "<empty>",
+        "Deny",
+        "Next round",
+        "Stop",
+        "Upvote",
+        "Words starting with ${0}"
+      ]
+    },
+    "taboo": {
+      "type": "object",
+      "properties": {
+        "Guessed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Skip": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Start": {
+          "type": "string",
+          "minLength": 1
+        },
+        "You're explaining": {
+          "type": "string",
+          "minLength": 1
+        },
+        "You're guessing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "You're next": {
+          "type": "string",
+          "minLength": 1
+        },
+        "You're observing": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "Guessed",
+        "Skip",
+        "Start",
+        "You're explaining",
+        "You're guessing",
+        "You're next",
+        "You're observing"
+      ]
+    }
+  },
+  "required": [
+    "${0} (You)",
+    "${0} Point(s)",
+    "${0} Points",
+    "${0} left",
+    "${0}s",
+    "Add",
+    "Add Column",
+    "Avatar",
+    "Back to Lobby",
+    "Cancel",
+    "Column",
+    "Columns",
+    "Connect to Lobby",
+    "Copied to Clipboard!",
+    "Copy",
+    "Create a Lobby",
+    "Disconnected",
+    "Enter Room Code",
+    "Game",
+    "Game History",
+    "Join Team",
+    "Join a Lobby",
+    "Link",
+    "Lobby Settings",
+    "Lobby was closed",
+    "Player setup",
+    "Players",
+    "Playing as ${0}",
+    "Reconnected",
+    "Room Code",
+    "Save",
+    "Seconds",
+    "Start Game",
+    "Timer",
+    "Username",
+    "or",
+    "stadt-land-fluss",
+    "taboo"
+  ],
+  "additionalProperties": false
 }

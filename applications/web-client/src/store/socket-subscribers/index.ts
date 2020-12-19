@@ -11,21 +11,21 @@ import { gameStoppedSubscriber } from './game-stopped';
 type Subscriber = (store: Store<ApplicationState>) => void;
 
 const subscribers: Subscriber[] = [
-    updateLobbySubscriber,
-    lobbyClosedSubscriber,
-    tabooGameUpdateSubscriber,
-    stadtLandFlussGameUpdateSubscriber,
-    socketClosedSubscriber,
-    socketOpenedSubscriber,
-    gameStoppedSubscriber,
+  updateLobbySubscriber,
+  lobbyClosedSubscriber,
+  tabooGameUpdateSubscriber,
+  stadtLandFlussGameUpdateSubscriber,
+  socketClosedSubscriber,
+  socketOpenedSubscriber,
+  gameStoppedSubscriber,
 ];
 
 export const socketSubscriberMiddleware = (store: Store<ApplicationState>) => {
-    for (const subscriber of subscribers) {
-        subscriber(store);
-    }
+  for (const subscriber of subscribers) {
+    subscriber(store);
+  }
 
-    return next => action => {
-        return next(action);
-    };
+  return next => action => {
+    return next(action);
+  };
 };

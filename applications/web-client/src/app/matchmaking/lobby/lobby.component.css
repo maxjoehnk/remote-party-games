@@ -1,50 +1,50 @@
 .lobby {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
 }
 
 .lobby__card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 300px;
-    min-height: 500px;
-    margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 300px;
+  min-height: 500px;
+  margin: 16px;
 }
 
 .lobby__settings-group {
-    width: 100%;
-    margin-bottom: 4px;
+  width: 100%;
+  margin-bottom: 4px;
 }
 
 .lobby__settings-group-header {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .lobby__settings-group-title {
-    flex: 1;
+  flex: 1;
 }
 
 .lobby__copy-btn {
-    border: none;
-    text-transform: uppercase;
-    background: none;
-    cursor: pointer;
-    transition: var(--default-transition);
-    color: var(--text-color-hint);
+  border: none;
+  text-transform: uppercase;
+  background: none;
+  cursor: pointer;
+  transition: var(--default-transition);
+  color: var(--text-color-hint);
 }
 
 .lobby__copy-btn:hover {
-    color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 1);
 }
 
 .lobby__start-game-btn {
-    width: 100%;
+  width: 100%;
 }
 
 .lobby__game-selection {
-    width: 100%;
+  width: 100%;
 }

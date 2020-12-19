@@ -4,5 +4,5 @@ import { ApplicationState } from '../index';
 import { Store } from 'redux';
 
 export function socketClosedSubscriber(store: Store<ApplicationState>) {
-    onSocketClose(() => store.dispatch(leaveLobby()));
+  onSocketClose(() => store.dispatch(leaveLobby()));
 }

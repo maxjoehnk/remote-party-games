@@ -11,9 +11,7 @@ export class CustomWsAdapter extends WsAdapter {
     try {
       const message = JSON.parse(buffer.data);
       console.log('[Socket] Received message', message);
-      const messageHandler = handlers.find(
-        (handler) => handler.message === message.type
-      );
+      const messageHandler = handlers.find(handler => handler.message === message.type);
       if (!messageHandler) {
         console.warn('[Socket] No handler for message', message.type);
       }

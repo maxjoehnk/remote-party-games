@@ -5,12 +5,8 @@ import { LobbyBroadcaster } from '../sockets/lobby-broadcaster';
 import { lobbyChangedSocketMsg } from '../sockets/socket-messages';
 
 @EventsHandler(LobbyChangedEvent)
-export class LobbyChangedSubscriber
-  implements IEventHandler<LobbyChangedEvent> {
-  constructor(
-    private lobbyStore: LobbyStore,
-    private lobbyBroadcaster: LobbyBroadcaster
-  ) {}
+export class LobbyChangedSubscriber implements IEventHandler<LobbyChangedEvent> {
+  constructor(private lobbyStore: LobbyStore, private lobbyBroadcaster: LobbyBroadcaster) {}
 
   async handle(event: LobbyChangedEvent) {
     const lobby = await this.lobbyStore.getLobby(event.lobbyCode);

@@ -4,7 +4,7 @@ import { subscribeStadtLandFlussGameUpdates } from '../../app/games/stadt-land-f
 import { stadtLandFlussGameUpdate } from '../actions/stadt-land-fluss';
 
 export function stadtLandFlussGameUpdateSubscriber(store: Store<ApplicationState>) {
-    subscribeStadtLandFlussGameUpdates(state => {
-        store.dispatch(stadtLandFlussGameUpdate(state));
-    });
+  subscribeStadtLandFlussGameUpdates(state => {
+    store.dispatch(stadtLandFlussGameUpdate(state));
+  });
 }

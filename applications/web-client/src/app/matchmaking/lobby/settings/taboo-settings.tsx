@@ -16,15 +16,20 @@ const TabooSettings = () => {
   const setTimer = (value: number) => {
     updateGameConfiguration({
       ...config,
-      timer: value
+      timer: value,
     });
-  }
+  };
 
   return (
     <>
       <LobbySettingsGroup label={i18n`Timer`}>
         <div className="taboo-settings__timer">
-          <input className="input" type="number" value={config.timer} onChange={e => setTimer(parseInt(e.target.value, 10))} />
+          <input
+            className="input"
+            type="number"
+            value={config.timer}
+            onChange={e => setTimer(parseInt(e.target.value, 10))}
+          />
           <span>{i18n`Seconds`}</span>
         </div>
       </LobbySettingsGroup>

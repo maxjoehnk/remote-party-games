@@ -1,34 +1,34 @@
 .taboo-settings__timer {
-    position: relative;
+  position: relative;
 }
 
 .taboo-settings__timer input {
-    width: 100%;
+  width: 100%;
 }
 
 .taboo-settings__timer span {
-    position: absolute;
-    right: 8px;
-    height: 30px;
-    top: calc(50% - 15px);
-    color: var(--text-color-hint);
-    transition: 0.1s ease-in-out all;
-    pointer-events: none;
+  position: absolute;
+  right: 8px;
+  height: 30px;
+  top: calc(50% - 15px);
+  color: var(--text-color-hint);
+  transition: 0.1s ease-in-out all;
+  pointer-events: none;
 }
 
 /* This is an over-engineered fix for the label overlapping the input[type=number] buttons */
 
 /* Firefox always displays the nudge buttons */
 @supports (-moz-transition: all 1s ease) {
-    .taboo-settings__timer span {
-        right: 32px;
-    }
+  .taboo-settings__timer span {
+    right: 32px;
+  }
 }
 
 /* On iPad these buttons don't exist */
 @media screen and (min-device-width: 1024px) {
-    .taboo-settings__timer:hover span,
-    .taboo-settings__timer input:focus ~ span {
-        right: 32px;
-    }
+  .taboo-settings__timer:hover span,
+  .taboo-settings__timer input:focus ~ span {
+    right: 32px;
+  }
 }

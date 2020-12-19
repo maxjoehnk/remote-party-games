@@ -6,15 +6,10 @@ import { gameStartedSocketMsg } from '../sockets/socket-messages';
 
 @CommandHandler(StartGameCommand)
 export class StartGameHandler implements ICommandHandler<StartGameCommand> {
-  constructor(
-    private lobbyStore: LobbyStore,
-    private broadcaster: LobbyBroadcaster
-  ) {}
+  constructor(private lobbyStore: LobbyStore, private broadcaster: LobbyBroadcaster) {}
 
   async execute(command: StartGameCommand): Promise<any> {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(
-      command.playerId
-    );
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(command.playerId);
     if (!lobbyCode) {
       return;
     }

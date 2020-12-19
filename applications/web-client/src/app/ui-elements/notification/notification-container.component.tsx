@@ -4,24 +4,24 @@ import Notification from './notification.component';
 import { NotificationContext } from './notification.context';
 
 const NotificationContainer = ({ children }) => {
-    const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
-    const addNotification = content => {
-        setNotifications([...notifications, content]);
-    };
+  const addNotification = content => {
+    setNotifications([...notifications, content]);
+  };
 
-    const removeNotification = content => {
-        setNotifications(notifications.filter(n => n !== content));
-    };
+  const removeNotification = content => {
+    setNotifications(notifications.filter(n => n !== content));
+  };
 
-    return (
-        <NotificationContext.Provider value={{ addNotification, removeNotification }}>
-            {children}
-            {notifications.map((n, i) => (
-                <Notification key={i}>{n}</Notification>
-            ))}
-        </NotificationContext.Provider>
-    );
+  return (
+    <NotificationContext.Provider value={{ addNotification, removeNotification }}>
+      {children}
+      {notifications.map((n, i) => (
+        <Notification key={i}>{n}</Notification>
+      ))}
+    </NotificationContext.Provider>
+  );
 };
 
 export default NotificationContainer;

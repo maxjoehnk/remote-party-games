@@ -1,4 +1,4 @@
 export interface TabooCardModel {
-    term: string;
-    taboo: string[];
+  term: string;
+  taboo: string[];
 }

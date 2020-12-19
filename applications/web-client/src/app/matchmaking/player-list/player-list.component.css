@@ -1,44 +1,44 @@
 .player-list__player-list,
 .player-list__team-list {
-    padding: 0;
-    width: 100%;
+  padding: 0;
+  width: 100%;
 }
 
 .player-list__player-list-item {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .player-list__player-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
 }
 
 .player-list__player-list-item--self {
-    color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .player-list__team-header {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .player-list__team-name {
-    flex: 1;
+  flex: 1;
 }
 
 .player-list__join-team-btn {
-    border: none;
-    text-transform: uppercase;
-    background: none;
-    cursor: pointer;
-    transition: var(--default-transition);
-    color: var(--text-color-hint);
+  border: none;
+  text-transform: uppercase;
+  background: none;
+  cursor: pointer;
+  transition: var(--default-transition);
+  color: var(--text-color-hint);
 }
 
 .player-list__join-team-btn:hover {
-    color: rgba(0, 0, 0, 1);
+  color: rgba(0, 0, 0, 1);
 }
