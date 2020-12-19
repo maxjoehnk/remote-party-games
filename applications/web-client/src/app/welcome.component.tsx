@@ -24,17 +24,18 @@ const Welcome = () => {
                 <h2 className="subtitle">{i18n`Connect to Lobby`}</h2>
                 <Button onClick={() => createAndOpenLobby()} primary>{i18n`Create a Lobby`}</Button>
                 <span>{i18n`or`}</span>
-                <div className="home__join-game">
+                <form className="home__join-game" onSubmit={() => history.push(`/lobby/${code}`)}>
                     <input
+                        autoFocus={true}
                         className="input home__game-code-input"
                         placeholder={i18n`Enter Room Code`}
-                        onInput={e => setCode(e.target.value)}
+                        onChange={e => setCode(e.target.value)}
                     />
                     <Link
                         to={`/lobby/${(code || '').trim()}`}
                         className={`button ${code == null ? 'button--disabled' : ''}`}
                     >{i18n`Join a Lobby`}</Link>
-                </div>
+                </form>
             </div>
         </div>
     );
