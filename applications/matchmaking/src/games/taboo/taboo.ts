@@ -128,8 +128,9 @@ export class Taboo implements Game {
     return null; // Draw
   }
 
-  start(): Promise<void> {
-    return this.startTimer();
+  async start(): Promise<void> {
+    await this.startTimer();
+    this.broadcast();
   }
 
   execute(action: any): Promise<void> {
