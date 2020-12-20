@@ -1,29 +1,20 @@
 import React, { RefObject } from 'react';
+import { CanvasRef, DrawingContext, DrawingTool } from './drawing-context';
 import './drawing-area.component.css';
 
-const DEFAULT_THICKNESS = 4;
-const DEFAULT_COLOR = 'black';
-
-export enum DrawingTool {
-  Pen,
-  Eraser,
-  Fill,
-}
-
-export interface DrawingAreaProps {
-  width: number;
-  height: number;
-  tool?: DrawingTool;
-  color?: string;
-  thickness?: number;
-}
-
-export interface DrawingAreaState {
+export interface DrawingCanvasState {
   isMouseDown: boolean;
   context?: CanvasRenderingContext2D;
 }
 
-class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
+export interface DrawingCanvasProps {
+  width: number;
+  height: number;
+}
+
+class DrawingCanvas
+  extends React.Component<DrawingCanvasProps, DrawingCanvasState>
+  implements CanvasRef {
   private canvas: RefObject<HTMLCanvasElement>;
 
   constructor(props) {
@@ -40,16 +31,17 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
   }
 
   componentDidUpdate(): void {
-    const { tool, thickness, color } = this.props;
+    const { tool, thickness, color } = this.context;
     this.canvasContext.lineWidth = thickness;
     if (tool === DrawingTool.Pen) {
-      this.canvasContext.strokeStyle = color || DEFAULT_COLOR;
+      this.canvasContext.strokeStyle = color;
     } else if (tool === DrawingTool.Eraser) {
       this.canvasContext.strokeStyle = 'white';
     }
   }
 
   componentDidMount(): void {
+    this.context.setCanvas(this);
     const canvas = this.canvas.current;
     canvas.addEventListener('mousedown', this.onMouseDown);
     canvas.addEventListener('touchstart', this.onMouseDown);
@@ -58,8 +50,8 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('touchend', this.onMouseUp);
     const context = canvas.getContext('2d');
-    context.strokeStyle = this.props.color || DEFAULT_COLOR;
-    context.lineWidth = this.props.thickness || DEFAULT_THICKNESS;
+    context.strokeStyle = this.context.color;
+    context.lineWidth = this.context.thickness;
     context.lineCap = 'round';
     context.lineJoin = 'round';
     this.setState({
@@ -79,9 +71,9 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     );
   }
 
-  public clear() {
+  public clear = () => {
     this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
-  }
+  };
 
   public async save(): Promise<Blob> {
     return new Promise((resolve, reject) => {
@@ -136,5 +128,6 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     this.canvasContext.drawImage(img, 0, 0);
   }
 }
+DrawingCanvas.contextType = DrawingContext;
 
-export default DrawingArea;
+export default DrawingCanvas;

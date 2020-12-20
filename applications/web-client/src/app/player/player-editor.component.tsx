@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import i18n from 'es2015-i18n-tag';
 import { connect, useSelector } from 'react-redux';
-import './player-editor.component.css';
 import { selectPlayer } from '../../store/selectors/player';
 import Button from '../ui-elements/button/button.component';
 import { updatePlayerName } from '../../store/actions/player';
-import DrawingArea from '../game-widgets/drawing-area.component';
-import { mdiTrashCan } from '@mdi/js';
-import Icon from '@mdi/react';
+import DrawingArea from '../game-widgets/drawing/drawing-area.component';
 import { fetchUserImage, updateUserImage } from './player.api';
+import DrawingCanvas from '../game-widgets/drawing/drawing-canvas.component';
+import ClearCanvasButton from '../game-widgets/drawing/tools/clear-canvas-btn.component';
+import { CanvasRef } from '../game-widgets/drawing/drawing-context';
+import PencilTool from '../game-widgets/drawing/tools/pencil-tool.component';
+import EraserTool from '../game-widgets/drawing/tools/eraser-tool.component';
+import './player-editor.component.css';
 
 const PlayerEditor = ({ dispatch, onSave, onClose }) => {
   const player = useSelector(selectPlayer);
   const [state, setState] = useState(player || { name: '' });
 
-  const ref = useRef<DrawingArea>(null);
+  const ref = useRef<CanvasRef>(null);
 
   useEffect(() => {
     fetchUserImage(player.id).then(img => ref.current.load(img));
@@ -61,19 +64,17 @@ const PlayerEditor = ({ dispatch, onSave, onClose }) => {
   );
 };
 
-const PlayerAvatarEditor = React.forwardRef<DrawingArea>((props, ref) => {
-  const clear = () => {
-    ref.current.clear();
-  };
-
+const PlayerAvatarEditor = React.forwardRef<CanvasRef>((props, ref) => {
   return (
     <div className="player-editor__avatar-editor">
-      <DrawingArea ref={ref} width={300} height={300} thickness={4} />
-      <div className="player-editor__draw-tools">
-        <button type="button" onClick={() => clear()} className={`icon-button`}>
-          <Icon path={mdiTrashCan} size={1} />
-        </button>
-      </div>
+      <DrawingArea thickness={4}>
+        <DrawingCanvas ref={ref} width={300} height={300} />
+        <div className="player-editor__draw-tools">
+          <PencilTool />
+          <EraserTool />
+          <ClearCanvasButton />
+        </div>
+      </DrawingArea>
     </div>
   );
 });

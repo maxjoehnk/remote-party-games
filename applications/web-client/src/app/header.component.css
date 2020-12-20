@@ -33,6 +33,7 @@
 .header__player-settings {
   display: flex;
   flex-direction: row;
+  align-items: center;
   opacity: 0.54;
   border: none;
   background: none;

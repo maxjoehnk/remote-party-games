@@ -36,6 +36,10 @@
   opacity: 0.54;
 }
 
+.icon-button--hint:hover {
+  opacity: 1;
+}
+
 .button--primary {
   background-color: var(--color-primary);
   color: var(--text-color-primary);
