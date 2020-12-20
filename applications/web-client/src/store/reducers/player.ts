@@ -1,17 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { loadPlayer, updatePlayerName } from '../actions/player';
+import { PlayerModel } from '../../contracts/player.model';
 
-export interface PlayerState {
-  id: string;
-  name: string;
-}
-
-export const playerReducer = createReducer<PlayerState>(
-  { id: null, name: null },
-  {
-    [updatePlayerName]: (state, action) => {
+export const playerReducer = createReducer<PlayerModel>({ id: null, name: null }, builder =>
+  builder
+    .addCase(updatePlayerName, (state, action) => {
       state.name = action.payload;
-    },
-    [loadPlayer]: (state, action) => action.payload,
-  }
+    })
+    .addCase(loadPlayer, (state, action) => action.payload)
 );

@@ -21,10 +21,12 @@ import { MatchmakingMetrics } from './metrics/matchmaking';
 import { EventBusMetrics } from './metrics/event-bus';
 import { ChangeGameHandler } from './handler/change-game.handler';
 import { ChangeGameConfigurationHandler } from './handler/change-game-configuration.handler';
+import { PlayerController } from './controllers/player-controller';
+import { UpdateUserImageHandler } from './handler/update-user-image.handler';
 
 @Module({
   imports: [CqrsModule],
-  controllers: [LobbyController, MetricsController],
+  controllers: [LobbyController, MetricsController, PlayerController],
   providers: [
     LobbyStore,
     PlayerStore,
@@ -40,6 +42,7 @@ import { ChangeGameConfigurationHandler } from './handler/change-game-configurat
     StopGameHandler,
     SwitchTeamHandler,
     UpdateUsernameHandler,
+    UpdateUserImageHandler,
     ChangeGameHandler,
     ChangeGameConfigurationHandler,
     LobbyPlayerChangedSubscriber,

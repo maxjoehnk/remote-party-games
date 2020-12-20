@@ -8,13 +8,13 @@ export class LobbyPlayerChangedSubscriber implements IEventHandler<PlayerChanged
   constructor(private lobbyStore: LobbyStore, private eventBus: EventBus) {}
 
   async handle(event: PlayerChangedEvent) {
-    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(event.playerId);
+    const lobbyCode = await this.lobbyStore.getLobbyCodeForPlayer(event.player.id);
     if (!lobbyCode) {
       return;
     }
     const lobby = await this.lobbyStore.getLobby(lobbyCode);
-    const playerIndex = lobby.players.findIndex(p => p.id === event.playerId);
-    lobby.players[playerIndex].name = event.username;
+    const playerIndex = lobby.players.findIndex(p => p.id === event.player.id);
+    lobby.players[playerIndex].name = event.player.name;
     this.eventBus.publish(new LobbyChangedEvent(lobbyCode));
   }
 }

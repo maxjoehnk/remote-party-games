@@ -1,3 +1,5 @@
+import { Player } from '../contracts/player';
+
 export class PlayerChangedEvent {
-  constructor(public playerId: string, public username: string) {}
+  constructor(public player: Player) {}
 }

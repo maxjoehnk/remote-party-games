@@ -6,6 +6,7 @@ import i18n from 'es2015-i18n-tag';
 import Modal from 'react-modal';
 import PlayerEditor from './player/player-editor.component';
 import { Link } from 'react-router-dom';
+import PlayerAvatar from './player/player-avatar.component';
 
 const Header = () => {
   const [state, setState] = useState(false);
@@ -19,10 +20,7 @@ const Header = () => {
         </Link>
         <button className="header__player-settings" onClick={() => setState(true)}>
           <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
-          <img
-            className="header__player-img"
-            src={`${window.location.origin}/api/image/${player.id}`}
-          />
+          <PlayerAvatar className="header__player-img" player={player} />
         </button>
       </div>
       <Modal

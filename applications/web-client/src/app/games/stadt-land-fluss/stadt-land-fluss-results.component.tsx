@@ -8,6 +8,7 @@ import i18n from 'es2015-i18n-tag';
 import Button from '../../ui-elements/button/button.component';
 import { denyWord, upvoteWord } from './stadt-land-fluss-api';
 import { selectPlayer } from '../../../store/selectors/player';
+import PlayerAvatar from '../../player/player-avatar.component';
 
 const StadtLandFlussResults = () => {
   const columns = useSelector(selectStadtLandFlussResults);
@@ -38,10 +39,7 @@ const StadtLandFlussAnswer = ({ answer, column }) => {
 
   return (
     <div className="game-stadt-land-fluss-result-answer">
-      <img
-        className="player-list__player-avatar"
-        src={`${window.location.origin}/api/image/${answer.player.id}`}
-      />
+      <PlayerAvatar player={answer.player} />
       <b className="game-stadt-land-fluss-result-answer__player">{answer.player.name}:</b>
       <span
         className={`game-stadt-land-fluss-result-answer__answer ${

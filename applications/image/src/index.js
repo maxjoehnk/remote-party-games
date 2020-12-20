@@ -5,6 +5,7 @@ import { loggingMiddleware } from './middleware/logging.js';
 import { metricMiddleware } from './middleware/metric.js';
 import helmet from 'helmet';
 import { prepareStorage, readImage, storeImage } from './storage.js';
+import { announceImage } from './announcer.js';
 
 const port = 8091;
 
@@ -25,6 +26,7 @@ async function init() {
   app.post('/api/image', (req, res, next) => {
     const userId = req.get('X-UserId');
     storeImage(userId, req)
+      .then(() => announceImage(userId))
       .then(() => res.status(204).end())
       .catch(err => next(err));
   });

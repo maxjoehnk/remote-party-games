@@ -9,6 +9,7 @@ import { Players } from '../player-list/player-list.component';
 import './game-history.component.css';
 import { getResult } from './result-helpers';
 import { getGameName } from './game-names';
+import PlayerAvatar from '../../player/player-avatar.component';
 
 interface GameHistoryRouteParams {
   game: string;
@@ -71,10 +72,7 @@ const TeamScore = ({
 const PlayerScore = ({ score, player }: { score: number; player: PlayerModel }) => {
   return (
     <div className="game-history__player-score">
-      <img
-        className="player-list__player-avatar"
-        src={`${window.location.origin}/api/image/${player.id}`}
-      />
+      <PlayerAvatar player={player} />
       {player.name}
       <span className="game-history__score"> - {i18n`${score} Point(s)`}</span>
     </div>

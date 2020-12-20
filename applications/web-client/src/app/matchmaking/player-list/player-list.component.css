@@ -11,12 +11,6 @@
   align-items: center;
 }
 
-.player-list__player-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 100%;
-}
-
 .player-list__player-list-item--self {
   color: var(--color-primary);
 }

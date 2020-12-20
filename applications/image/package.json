@@ -4,10 +4,11 @@
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "STORAGE_PATH=.storage nodemon --watch",
+    "start": "STORAGE_PATH=.storage MATCHMAKING_URL=http://localhost:8090 nodemon --watch",
     "format": "prettier --write 'src/**/*.js'"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "on-response": "^1.0.1",

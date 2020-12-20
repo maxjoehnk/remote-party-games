@@ -7,6 +7,7 @@ import { selectPlayer } from '../../../store/selectors/player';
 import { switchTeam } from '../matchmaking.api';
 import { PlayerModel } from '../../../contracts/player.model';
 import { TeamModel } from '../../../contracts/team.model';
+import PlayerAvatar from '../../player/player-avatar.component';
 
 export interface PlayerListProps {
   canChangeTeam: boolean;
@@ -96,10 +97,7 @@ export const Players = ({ players, children }: PlayersProps) => {
 
         return (
           <li key={p.id} className="player-list__player-list-item">
-            <img
-              className="player-list__player-avatar"
-              src={`${window.location.origin}/api/image/${p.id}`}
-            />
+            <PlayerAvatar player={p} />
             {text}
           </li>
         );
