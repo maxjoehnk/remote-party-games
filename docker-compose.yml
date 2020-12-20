@@ -20,6 +20,8 @@ services:
       context: .
       dockerfile: applications/image/Dockerfile
     image: docker.pkg.github.com/maxjoehnk/remote-party-games/image:latest
+    volumes:
+      - images:/etc/party-games/storage
   proxy:
     restart: on-failure
     build: applications/proxy
@@ -35,6 +37,9 @@ services:
       traefik.http.routers.party-games-proxy.rule: "Host(`party.maxjoehnk.me`)"
       traefik.http.services.party-games-proxy.loadbalancer.server.port: "80"
       traefik.docker.network: "web"
+volumes:
+  images:
+
 networks:
   web:
     external:
