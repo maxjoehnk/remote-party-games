@@ -26,6 +26,10 @@ import { GameTypes } from '../games/types';
 import { ChangeGameCommand } from '../commands/change-game.command';
 import { GameConfiguration } from '../games/config';
 import { ChangeGameConfigurationCommand } from '../commands/change-game-configuration.command';
+import Timeout = NodeJS.Timeout;
+
+const SECOND = 1000;
+const KEEP_ALIVE = 30 * SECOND;
 
 interface JoinLobbyMessage {
   code: string;
@@ -51,6 +55,7 @@ interface ChangeGameConfigurationMessage {
 export class SocketGateway
   implements OnGatewayConnection<WebSocket>, OnGatewayDisconnect<WebSocket>, SocketBroadcaster {
   private sockets = new WeakMap<WebSocket, string>();
+  private socketKeepAlives = new WeakMap<WebSocket, Timeout>();
 
   @WebSocketServer()
   server: WebSocket.Server;
@@ -150,6 +155,10 @@ export class SocketGateway
     this.sockets.set(client, playerId);
     this.socketMetrics.openSocketGauge.inc();
     client.addEventListener('message', () => this.socketMetrics.socketRecvMessageCounter.inc());
+    const keepAlive = setInterval(() => {
+      client.send(JSON.stringify({ type: 'keep-alive' }));
+    }, KEEP_ALIVE);
+    this.socketKeepAlives.set(client, keepAlive);
   }
 
   handleDisconnect(client: WebSocket) {
@@ -157,6 +166,9 @@ export class SocketGateway
     this.sockets.delete(client);
     this.socketMetrics.openSocketGauge.dec();
     this.eventBus.publish(new PlayerDisconnectedEvent(playerId));
+    const keepAlive = this.socketKeepAlives.get(client);
+    clearInterval(keepAlive);
+    this.socketKeepAlives.delete(client);
   }
 
   broadcast(msg: any, clientFilter: (ws: WebSocket, playerId: string) => boolean = () => true) {
