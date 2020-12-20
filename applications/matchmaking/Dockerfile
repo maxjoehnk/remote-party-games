@@ -7,9 +7,11 @@ COPY ["applications/matchmaking/package.json", "/src/applications/matchmaking/"]
 
 RUN yarn
 
-COPY applications/matchmaking /src/applications/matchmaking
-
 WORKDIR /src/applications/matchmaking
+
+COPY applications/matchmaking/tsconfig.build.json ./
+COPY applications/matchmaking/tsconfig.json ./
+COPY applications/matchmaking/src ./src
 
 RUN yarn build
 

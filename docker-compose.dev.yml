@@ -1,0 +1,7 @@
+version: '3'
+services:
+  matchmaking:
+    volumes:
+      - ./applications/matchmaking/assets:/src/applications/matchmaking/assets
+networks:
+  web:

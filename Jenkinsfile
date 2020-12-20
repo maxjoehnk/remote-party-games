@@ -2,7 +2,7 @@ node {
     checkout scm
     docker.withRegistry('https://docker.pkg.github.com', 'github') {
         stage('Build Web Client') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/web-client:latest", './applications/web-client').push()
+            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/web-client:latest", '-f applications/web-client/Dockerfile .').push()
         }
 
         stage('Build Matchmaking') {
@@ -14,7 +14,7 @@ node {
         }
 
         stage('Build Image Service') {
-            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/image:latest", './applications/image').push()
+            docker.build("docker.pkg.github.com/maxjoehnk/remote-party-games/image:latest", '-f applications/image/Dockerfile .').push()
         }
     }
 }

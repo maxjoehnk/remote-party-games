@@ -2,11 +2,14 @@ FROM node:13 as build
 
 WORKDIR /src
 
-COPY package.json ./
+COPY ["package.json", "yarn.lock", "/src/"]
+COPY ["applications/image/package.json", "/src/applications/image/"]
 
 RUN yarn
 
-COPY ./ ./
+WORKDIR /src/applications/image
+
+COPY applications/image ./
 
 EXPOSE 8091
 
