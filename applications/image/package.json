@@ -2,7 +2,7 @@
   "name": "@party-games/image",
   "version": "1.0.0",
   "main": "src/index.js",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "scripts": {
     "start": "STORAGE_PATH=.storage MATCHMAKING_URL=http://localhost:8090 nodemon --watch",
     "format": "prettier --write 'src/**/*.js'"

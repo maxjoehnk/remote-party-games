@@ -1,7 +1,7 @@
 {
   "name": "@party-games/matchmaking",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "nodemon -e ts --exec ts-node src/main.ts",

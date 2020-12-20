@@ -4,5 +4,6 @@
   "repository": "git@github.com:maxjoehnk/activity-web.git",
   "author": "Max Jöhnk <maxjoehnk@gmail.com>",
   "workspaces": ["applications/*"],
-  "private": true
+  "private": true,
+  "license": "GPL-3.0"
 }
