@@ -55,6 +55,7 @@ export class Taboo implements Game {
   private teamOnePlayer = 0;
   private teamTwoPlayer = 0;
   private timeLeft: number;
+  private active = true;
 
   private timer: Timeout;
 
@@ -141,6 +142,7 @@ export class Taboo implements Game {
     if (this.timer != null) {
       return;
     }
+    this.active = true;
     this.timer = setInterval(() => {
       this.execute({
         actionType: TabooActionTypes.Timer,
@@ -160,6 +162,7 @@ export class Taboo implements Game {
     if (this.timer == null) {
       return;
     }
+    this.active = false;
     clearTimeout(this.timer);
     this.timer = null;
   }
@@ -186,6 +189,9 @@ export class Taboo implements Game {
   };
 
   private guess = () => {
+    if (!this.active) {
+      return;
+    }
     if (this.currentTeam === 1) {
       this.teamOnePoints++;
     } else {
@@ -195,6 +201,9 @@ export class Taboo implements Game {
   };
 
   private nextCard = () => {
+    if (!this.active) {
+      return;
+    }
     if (this.currentCard != null) {
       this.pastWords.push(this.currentCard.term);
     }
