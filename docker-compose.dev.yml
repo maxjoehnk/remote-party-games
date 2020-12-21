@@ -3,5 +3,8 @@ services:
   matchmaking:
     volumes:
       - ./applications/matchmaking/assets:/src/applications/matchmaking/assets
+  proxy:
+    ports:
+      - 8080:80
 networks:
   web:
