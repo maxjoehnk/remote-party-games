@@ -139,6 +139,9 @@ export class StadtLandFluss implements Game {
   }
 
   private startRound = async () => {
+    if (this.currentRound?.running) {
+      return;
+    }
     this.closePreviousRound();
     const players = await this.playerAccessor.getPlayers();
     const letter = this.nextLetter();
@@ -172,6 +175,9 @@ export class StadtLandFluss implements Game {
   };
 
   private stopRound = () => {
+    if (this.currentRound?.running === false) {
+      return;
+    }
     this.calculateScores();
     this.currentRound.running = false;
     this.broadcaster.broadcast({
