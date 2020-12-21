@@ -9,6 +9,7 @@ import Button from '../../ui-elements/button/button.component';
 import { denyWord, upvoteWord } from './stadt-land-fluss-api';
 import { selectPlayer } from '../../../store/selectors/player';
 import PlayerAvatar from '../../player/player-avatar.component';
+import NextRoundButton from './actions/next-round-button.component';
 
 const StadtLandFlussResults = () => {
   const columns = useSelector(selectStadtLandFlussResults);
@@ -18,6 +19,7 @@ const StadtLandFlussResults = () => {
       {columns.map((column, i) => (
         <StadtLandFlussResultColumn column={column} index={i} key={i} />
       ))}
+      <NextRoundButton />
     </div>
   );
 };

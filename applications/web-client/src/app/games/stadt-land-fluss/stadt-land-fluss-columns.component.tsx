@@ -5,6 +5,7 @@ import { mdiCheckCircleOutline, mdiCloseCircleOutline, mdiHelpCircleOutline } fr
 import i18n from 'es2015-i18n-tag';
 import { useSelector } from 'react-redux';
 import { selectStadtLandFlussColumns } from '../../../store/selectors/stadt-land-fluss';
+import StopRoundButton from './actions/stop-round-button.component';
 
 const SUBMIT_WORD_DEBOUNCE = 500;
 
@@ -22,6 +23,7 @@ const StadtLandFlussColumns = ({ letter }: { letter: string }) => {
           isFirst={i === 0}
         />
       ))}
+      <StopRoundButton />
     </div>
   );
 };

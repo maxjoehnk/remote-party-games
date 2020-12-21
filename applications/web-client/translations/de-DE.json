@@ -9,7 +9,7 @@
     "stadt-land-fluss": {
         "${0} starting with ${1}": "${0} mit ${1}",
         "Next round": "Nächste Runde",
-        "Stop": "Stop",
+        "Stop": "Fertig",
         "Words starting with ${0}": "Wörter mit ${0}",
         "${0} (+${1}) Points": "${0} (+${1}) Punkte",
         "<empty>": "<leer>",

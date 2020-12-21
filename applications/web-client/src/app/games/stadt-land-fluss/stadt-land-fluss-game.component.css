@@ -12,17 +12,20 @@
 }
 
 .game-stadt-land-fluss__header-content {
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.game-stadt-land-fluss__stop-btn {
+.game-stadt-land-fluss__stop-btn,
+.game-stadt-land-fluss__next-btn {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
-.game-stadt-land-fluss__stop-btn-icon {
+.game-stadt-land-fluss__stop-btn-icon,
+.game-stadt-land-fluss__next-btn-icon {
   margin-right: 4px;
 }
 
