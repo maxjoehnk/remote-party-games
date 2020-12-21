@@ -1,21 +1,40 @@
-import { useSelector } from 'react-redux';
-import { selectCurrentTabooCard } from '../../../store/selectors/taboo';
 import React from 'react';
 import './taboo-card.component.css';
+import { TabooCardModel } from '../../../contracts/taboo-card';
+import { PastCardAnswer } from '../../../contracts/taboo-game-configuration';
+import i18n from 'es2015-i18n-tag';
 
-const TabooCard = () => {
-  const currentCard = useSelector(selectCurrentTabooCard);
+const TabooCard = ({ card, answer }: { card: TabooCardModel; answer?: PastCardAnswer }) => {
+  const classes = [
+    'taboo-card',
+    answer === PastCardAnswer.Skipped && 'taboo-card--skipped',
+    answer === PastCardAnswer.Guessed && 'taboo-card--guessed',
+    answer === PastCardAnswer.TimedOut && 'taboo-card--timed-out',
+  ]
+    .filter(c => !!c)
+    .join(' ');
 
   return (
-    <div className="taboo-card">
-      <h3 className="taboo-card__term">{currentCard.term}</h3>
+    <div className={classes}>
+      <h3 className="taboo-card__term">{card.term}</h3>
       <div className="taboo-card__taboo-words">
-        {currentCard.taboo.map(t => (
+        {card.taboo.map(t => (
           <span className="taboo-card__taboo-word" key={t}>
             {t}
           </span>
         ))}
       </div>
+      {answer != null && <CardAnswerStamp answer={answer} />}
+    </div>
+  );
+};
+
+const CardAnswerStamp = ({ answer }: { answer: PastCardAnswer }) => {
+  return (
+    <div className="taboo-card__card-answer">
+      {answer === PastCardAnswer.Guessed && i18n('taboo')`Guessed`}
+      {answer === PastCardAnswer.Skipped && i18n('taboo')`Skipped`}
+      {answer === PastCardAnswer.TimedOut && i18n('taboo')`Timed Out`}
     </div>
   );
 };

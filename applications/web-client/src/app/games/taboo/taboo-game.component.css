@@ -77,6 +77,21 @@
   margin-right: 8px;
 }
 
+.game-taboo__actions :first-child:last-child {
+  margin-right: 0;
+}
+
 .game-taboo__actions * {
   flex: 1;
+}
+
+.game-taboo__card-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-taboo__card-list > div {
+  margin-right: 16px;
+  margin-bottom: 8px;
 }

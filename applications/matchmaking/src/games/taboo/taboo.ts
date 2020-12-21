@@ -15,6 +15,8 @@ enum TabooActionTypes {
   Guess = 'taboo/guess',
   SkipCard = 'taboo/skip',
   Continue = 'taboo/continue',
+  SkippedPastCard = 'taboo/skip-past',
+  GuessedPastCard = 'taboo/guess-past',
 }
 
 enum TabooView {
@@ -22,6 +24,7 @@ enum TabooView {
   Guessing = 1,
   Observing = 2,
   Continue = 3,
+  Waiting = 4,
 }
 
 let cards: TabooCard[] = [
@@ -45,6 +48,21 @@ interface GameConfig {
   teamTwo: Team;
 }
 
+interface PastCardState {
+  card: TabooCard;
+  answer: PastCardAnswer;
+}
+
+enum PastCardAnswer {
+  Guessed,
+  Skipped,
+  TimeOut,
+}
+
+interface UpdatePastCard extends Action<TabooActionTypes> {
+  term: string;
+}
+
 export class Taboo implements Game {
   private config: GameConfig;
   private pastWords: string[] = [];
@@ -56,6 +74,7 @@ export class Taboo implements Game {
   private teamTwoPlayer = 0;
   private timeLeft: number;
   private active = true;
+  private pastRoundCards: PastCardState[] = [];
 
   private timer: Timeout;
 
@@ -72,9 +91,11 @@ export class Taboo implements Game {
       teamTwo,
     };
     this.handler.add(TabooActionTypes.Timer, this.handleTimer);
-    this.handler.add(TabooActionTypes.SkipCard, this.nextCard);
+    this.handler.add(TabooActionTypes.SkipCard, this.skipCard);
     this.handler.add(TabooActionTypes.Guess, this.guess);
     this.handler.add(TabooActionTypes.Continue, this.continueGame);
+    this.handler.add(TabooActionTypes.GuessedPastCard, this.guessedPastCard);
+    this.handler.add(TabooActionTypes.SkippedPastCard, this.skippedPastCard);
     this.timeLeft = this.config.timer;
     this.nextCard();
   }
@@ -143,6 +164,7 @@ export class Taboo implements Game {
       return;
     }
     this.active = true;
+    this.pastRoundCards = [];
     this.timer = setInterval(() => {
       this.execute({
         actionType: TabooActionTypes.Timer,
@@ -165,6 +187,7 @@ export class Taboo implements Game {
     this.active = false;
     clearTimeout(this.timer);
     this.timer = null;
+    this.pastRoundCards.push({ card: this.currentCard, answer: PastCardAnswer.TimeOut });
   }
 
   private nextPlayer = () => {
@@ -192,6 +215,10 @@ export class Taboo implements Game {
     if (!this.active) {
       return;
     }
+    this.pastRoundCards.push({
+      card: this.currentCard,
+      answer: PastCardAnswer.Guessed,
+    });
     if (this.currentTeam === 1) {
       this.teamOnePoints++;
     } else {
@@ -200,10 +227,18 @@ export class Taboo implements Game {
     this.nextCard();
   };
 
-  private nextCard = () => {
+  private skipCard = () => {
     if (!this.active) {
       return;
     }
+    this.pastRoundCards.push({
+      card: this.currentCard,
+      answer: PastCardAnswer.Skipped,
+    });
+    this.nextCard();
+  };
+
+  private nextCard = () => {
     if (this.currentCard != null) {
       this.pastWords.push(this.currentCard.term);
     }
@@ -221,9 +256,32 @@ export class Taboo implements Game {
     return availableCards;
   }
 
+  private skippedPastCard = ({ term }: UpdatePastCard) => {
+    const pastCard = this.pastRoundCards.find(c => c.card.term === term);
+    pastCard.answer = PastCardAnswer.Skipped;
+    // currentTeam is already the next team when the other players are still waiting
+    if (this.currentTeam === 1) {
+      this.teamTwoPoints -= 1;
+    } else {
+      this.teamOnePoints -= 1;
+    }
+  };
+
+  private guessedPastCard = ({ term }: UpdatePastCard) => {
+    const pastCard = this.pastRoundCards.find(c => c.card.term === term);
+    pastCard.answer = PastCardAnswer.Guessed;
+    // currentTeam is already the next team when the other players are still waiting
+    if (this.currentTeam === 1) {
+      this.teamTwoPoints += 1;
+    } else {
+      this.teamOnePoints += 1;
+    }
+  };
+
   private broadcast = () => {
     if (this.timer == null) {
       this.broadcastToNextPlayer(this.state);
+      this.broadcastEndOfRound(this.state);
       return;
     }
     this.broadcastToExplaining(this.state);
@@ -243,6 +301,23 @@ export class Taboo implements Game {
       },
     };
     this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
+  };
+
+  private broadcastEndOfRound = state => {
+    const msg = {
+      type: 'taboo/update',
+      gameState: {
+        teamOne: state.teamOne,
+        teamTwo: state.teamTwo,
+        currentRound: state.currentRound,
+        view: TabooView.Waiting,
+        cards: this.pastRoundCards,
+      },
+    };
+    const players = [...this.config.teamOne.players, ...this.config.teamTwo.players].filter(
+      p => p !== state.currentRound.activePlayer
+    );
+    this.broadcaster.broadcast(msg, (c, playerId) => players.includes(playerId));
   };
 
   private broadcastToExplaining = state => {

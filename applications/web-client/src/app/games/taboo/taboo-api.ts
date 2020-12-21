@@ -22,6 +22,22 @@ export function continueGame() {
   });
 }
 
+export function skippedPastCard(term: string) {
+  emit({
+    type: 'game/action',
+    actionType: 'taboo/skip-past',
+    term,
+  });
+}
+
+export function guessedPastCard(term: string) {
+  emit({
+    type: 'game/action',
+    actionType: 'taboo/guess-past',
+    term,
+  });
+}
+
 export function subscribeTabooGameUpdates(callback: (state: TabooGameState) => void) {
   return onMessage('taboo/update', msg => callback(msg.gameState));
 }

@@ -215,7 +215,15 @@
           "type": "string",
           "minLength": 1
         },
+        "Skipped": {
+          "type": "string",
+          "minLength": 1
+        },
         "Start": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Timed Out": {
           "type": "string",
           "minLength": 1
         },
@@ -239,7 +247,9 @@
       "required": [
         "Guessed",
         "Skip",
+        "Skipped",
         "Start",
+        "Timed Out",
         "You're explaining",
         "You're guessing",
         "You're next",

@@ -3,6 +3,7 @@
   border-radius: 4px;
   width: 200px;
   height: 300px;
+  position: relative;
 }
 
 .taboo-card__term {
@@ -10,6 +11,8 @@
   border-top-right-radius: 4px;
   background: var(--color-primary);
   color: var(--text-color-primary);
+  height: 48px;
+  box-sizing: border-box;
   padding: 8px;
   text-align: center;
   text-transform: uppercase;
@@ -24,4 +27,40 @@
 .taboo-card__taboo-word {
   padding: 8px;
   text-transform: uppercase;
+}
+
+.taboo-card--skipped .taboo-card__taboo-words,
+.taboo-card--guessed .taboo-card__taboo-words,
+.taboo-card--timed-out .taboo-card__taboo-words {
+  color: var(--text-color-hint);
+  filter: blur(2px);
+  transition: var(--default-transition);
+}
+
+.taboo-card--skipped:hover .taboo-card__taboo-words,
+.taboo-card--guessed:hover .taboo-card__taboo-words,
+.taboo-card--timed-out:hover .taboo-card__taboo-words {
+  filter: blur(0);
+  color: var(--text-color-default);
+}
+
+.taboo-card__card-answer {
+  position: absolute;
+  transform: rotateZ(-45deg);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  top: 48px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 1;
+  transition: var(--default-transition);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.taboo-card:hover .taboo-card__card-answer {
+  opacity: 0;
 }

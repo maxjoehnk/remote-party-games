@@ -23,7 +23,9 @@
         "Skip": "Nächste",
         "You're explaining": "Du musst erklären",
         "You're guessing": "Du musst raten",
-        "You're observing": "Du beobachtest"
+        "You're observing": "Du beobachtest",
+        "Skipped": "Übersprungen",
+        "Timed Out": "Zeit ist abgelaufen"
     },
     "Playing as ${0}": "Benutzername: ${0}",
     "Game History": "Spielverlauf",

@@ -13,6 +13,7 @@ export interface TabooGameState {
     timeLeft: number;
   };
   currentCard: TabooCardModel | null;
+  cards?: PastCardState[];
   view: TabooView;
 }
 
@@ -21,9 +22,21 @@ export enum TabooView {
   Guessing = 1,
   Observing = 2,
   Continue = 3,
+  Waiting = 4,
 }
 
 export interface TabooTeamState {
   players: string[];
   points: number;
+}
+
+export interface PastCardState {
+  card: TabooCardModel;
+  answer: PastCardAnswer;
+}
+
+export enum PastCardAnswer {
+  Guessed,
+  Skipped,
+  TimedOut,
 }

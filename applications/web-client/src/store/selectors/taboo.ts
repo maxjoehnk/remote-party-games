@@ -25,3 +25,8 @@ export const selectTabooCurrentRound = createSelector(
   (state: ApplicationState) => state.taboo,
   taboo => taboo.currentRound
 );
+
+export const selectTabooPastCards = createSelector(
+  (state: ApplicationState) => state.taboo,
+  taboo => taboo.cards
+);
