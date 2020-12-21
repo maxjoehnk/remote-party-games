@@ -33,9 +33,10 @@ interface Round {
 
 interface PlayerRoundState {
   playerId: string;
-  columns: string[];
+  columns?: string[];
   scores?: number[];
   upvotes?: number[];
+  points: number;
 }
 
 interface SubmitWord extends Action<StadtLandFlussActionTypes.SubmitWord> {
@@ -89,6 +90,10 @@ export class StadtLandFluss implements Game {
         letter: this.currentRound.letter,
         columns: this.config.columns,
         running: this.currentRound.running,
+        players: this.currentRound.players.map(p => ({
+          playerId: p.playerId,
+          points: p.points,
+        })),
       };
     }
     return {
@@ -117,10 +122,7 @@ export class StadtLandFluss implements Game {
     let winner = null;
     let winnerPoints = -1;
     for (const playerId of players) {
-      const score = this.pastRounds
-        .filter(r => r.players.some(p => p.playerId === playerId))
-        .flatMap(r => r.players.find(p => p.playerId === playerId).scores)
-        .reduce((a, b) => a + b, 0);
+      const score = this.getPlayerScore(this.pastRounds, playerId);
       scores[playerId] = score;
       if (score > winnerPoints) {
         winner = playerId;
@@ -136,6 +138,13 @@ export class StadtLandFluss implements Game {
       winner,
     };
     return score;
+  }
+
+  private getPlayerScore(rounds: Round[], playerId: string): number {
+    return rounds
+      .filter(r => r.players.some(p => p.playerId === playerId))
+      .flatMap(r => r.players.find(p => p.playerId === playerId).scores)
+      .reduce((a, b) => a + b, 0);
   }
 
   private startRound = async () => {
@@ -169,8 +178,9 @@ export class StadtLandFluss implements Game {
   private getDefaultRoundState = (player: Player): PlayerRoundState => {
     return {
       playerId: player.id,
-      columns: this.config.columns.map(() => null),
+      columns: this.config.columns.map(() => ''),
       upvotes: this.config.columns.map(() => 0),
+      points: this.getPlayerScore(this.pastRounds, player.id),
     };
   };
 
@@ -219,6 +229,7 @@ export class StadtLandFluss implements Game {
       const words = this.getWordCounts(i);
       this.applyPoints(i, words);
     }
+    this.updatePoints();
   }
 
   private prepareScores() {
@@ -259,6 +270,12 @@ export class StadtLandFluss implements Game {
         player.scores[i] = DEFAULT_ANSWER_POINTS;
       }
       player.scores[i] += player.upvotes[i] * POINTS_PER_UPVOTE;
+    }
+  }
+
+  private updatePoints() {
+    for (const player of this.currentRound.players) {
+      player.points = this.getPlayerScore([...this.pastRounds, this.currentRound], player.playerId);
     }
   }
 

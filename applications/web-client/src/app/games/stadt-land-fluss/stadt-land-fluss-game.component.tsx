@@ -9,6 +9,7 @@ import {
 import './stadt-land-fluss-game.component.css';
 import StadtLandFlussColumns from './stadt-land-fluss-columns.component';
 import StadtLandFlussResults from './stadt-land-fluss-results.component';
+import StadtLandFlussPlayerList from './stadt-land-fluss-player-list.component';
 
 const StadtLandFlussGame = () => {
   const letter = useSelector(selectCurrentStadtLandFlussLetter);
@@ -22,6 +23,7 @@ const StadtLandFlussGame = () => {
       >
         {i18n('stadt-land-fluss')`Words starting with ${letter}`}
       </GameHeader>
+      <StadtLandFlussPlayerList />
       {running && <StadtLandFlussColumns letter={letter} />}
       {!running && <StadtLandFlussResults />}
     </div>

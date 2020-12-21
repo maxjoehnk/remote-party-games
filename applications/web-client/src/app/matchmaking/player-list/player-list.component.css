@@ -9,6 +9,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 8px;
+}
+
+.player-list__player-avatar {
+  margin-right: 8px;
+}
+
+.player-list__player-name {
+  flex: 1;
 }
 
 .player-list__player-list-item--self {

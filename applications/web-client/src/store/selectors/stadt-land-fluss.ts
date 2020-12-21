@@ -41,6 +41,18 @@ export const selectStadtLandFlussResults = createSelector(
   }
 );
 
+export const selectStadtLandFlussPlayerScores = createSelector(
+  (state: ApplicationState) => state.stadtLandFluss,
+  state => {
+    const players = {};
+    for (const player of state.players) {
+      players[player.playerId] = player.points;
+    }
+
+    return players;
+  }
+);
+
 export interface ResultColumn {
   name: string;
   answers: {

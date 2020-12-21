@@ -1,7 +1,8 @@
 .game-stadt-land-fluss {
   display: grid;
-  grid-template-areas: 'header' 'game-area';
+  grid-template-areas: 'header header' 'player-list game-area';
   grid-template-rows: 76px 1fr;
+  grid-template-columns: 250px 1fr;
   grid-gap: 16px;
   padding: 16px;
   height: 100%;
@@ -14,6 +15,10 @@
 .game-stadt-land-fluss__header-content {
   justify-content: center;
   align-items: center;
+}
+
+.game-stadt-land-fluss__player-list {
+  grid-area: player-list;
 }
 
 .game-stadt-land-fluss__stop-btn,

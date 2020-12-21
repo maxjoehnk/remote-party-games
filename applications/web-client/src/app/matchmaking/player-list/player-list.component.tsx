@@ -81,13 +81,14 @@ const Team = ({ team, players, canChangeTeam, children }: TeamProps) => {
 interface PlayersProps {
   players: PlayerModel[];
   children?: (text: string, player: PlayerModel) => any;
+  className?: string;
 }
 
-export const Players = ({ players, children }: PlayersProps) => {
+export const Players = ({ players, children, className }: PlayersProps) => {
   const user = useSelector(selectPlayer);
 
   return (
-    <ul className="player-list__player-list">
+    <ul className={`player-list__player-list ${className}`}>
       {players.map(p => {
         const text = user.id === p.id ? i18n`${p.name} (You)` : p.name;
 
@@ -96,13 +97,35 @@ export const Players = ({ players, children }: PlayersProps) => {
         }
 
         return (
-          <li key={p.id} className="player-list__player-list-item">
-            <PlayerAvatar player={p} />
+          <PlayerItem key={p.id} player={p}>
             {text}
-          </li>
+          </PlayerItem>
         );
       })}
     </ul>
+  );
+};
+
+export const PlayerItem = ({
+  player,
+  children,
+  className,
+}: {
+  player: PlayerModel;
+  children?: any;
+  className?: string;
+}) => {
+  const user = useSelector(selectPlayer);
+
+  return (
+    <li
+      className={`player-list__player-list-item ${
+        user.id === player.id && 'player-list__player-list-item--self'
+      } ${className}`}
+    >
+      <PlayerAvatar className="player-list__player-avatar" player={player} />
+      {children}
+    </li>
   );
 };
 

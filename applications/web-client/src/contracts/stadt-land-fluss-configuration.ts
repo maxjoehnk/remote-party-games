@@ -6,12 +6,13 @@ export interface StadtLandFlussGameState {
   letter: string;
   running: boolean;
   columns: string[];
-  players?: PlayerRoundState[];
+  players: PlayerRoundState[];
 }
 
 interface PlayerRoundState {
   playerId: string;
-  columns: string[];
+  points: number;
+  columns?: string[];
   scores?: number[];
   upvotes?: number[];
 }

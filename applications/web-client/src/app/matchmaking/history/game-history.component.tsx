@@ -5,11 +5,10 @@ import React from 'react';
 import i18n from 'es2015-i18n-tag';
 import { TeamModel } from '../../../contracts/team.model';
 import { PlayerModel } from '../../../contracts/player.model';
-import { Players } from '../player-list/player-list.component';
+import { PlayerItem, Players } from '../player-list/player-list.component';
 import './game-history.component.css';
 import { getResult } from './result-helpers';
 import { getGameName } from './game-names';
-import PlayerAvatar from '../../player/player-avatar.component';
 
 interface GameHistoryRouteParams {
   game: string;
@@ -36,11 +35,18 @@ const GameHistory = () => {
         </div>
       )}
       {game.score.type === 'player-score' && (
-        <div className="game-history__player-list">
-          {game.players.map(player => (
-            <PlayerScore player={player} score={game.score.scores[player.id]} />
-          ))}
-        </div>
+        <Players players={game.players}>
+          {(text, player) => {
+            const score = game.score.scores[player.id];
+
+            return (
+              <PlayerItem player={player}>
+                <span className="player-list__player-name">{text}</span>
+                <span className="game-history__score">{i18n`${score} Point(s)`}</span>
+              </PlayerItem>
+            );
+          }}
+        </Players>
       )}
     </div>
   );
@@ -62,19 +68,7 @@ const TeamScore = ({
         {team.name}
         <span className="game-history__score"> - {i18n`${score} Point(s)`}</span>
       </h4>
-      <div className="game-history__player-list">
-        <Players players={playerList} />
-      </div>
-    </div>
-  );
-};
-
-const PlayerScore = ({ score, player }: { score: number; player: PlayerModel }) => {
-  return (
-    <div className="game-history__player-score">
-      <PlayerAvatar player={player} />
-      {player.name}
-      <span className="game-history__score"> - {i18n`${score} Point(s)`}</span>
+      <Players players={playerList} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ const initialState: StadtLandFlussGameState = {
   letter: null,
   running: true,
   columns: [],
+  players: [],
 };
 
 export const stadtLandFlussReducer = createReducer<StadtLandFlussGameState>(initialState, builder =>

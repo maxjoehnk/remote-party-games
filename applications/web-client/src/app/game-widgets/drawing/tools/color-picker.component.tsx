@@ -41,8 +41,11 @@ const ColorPicker = ({ className }: { className?: string }) => {
               className={`color-picker__color ${
                 activeColor === color && 'color-picker__color--active'
               }`}
-              onClick={() => setColor(color)}>
-              {activeColor === color && <Icon className="color-picker__check" color={iconColor} size={1} path={mdiCheck}/>}
+              onClick={() => setColor(color)}
+            >
+              {activeColor === color && (
+                <Icon className="color-picker__check" color={iconColor} size={1} path={mdiCheck} />
+              )}
             </button>
           ))}
         </div>
