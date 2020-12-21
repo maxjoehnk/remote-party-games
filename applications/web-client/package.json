@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "start": "parcel serve --no-hmr src/index.html",
+    "build": "parcel build src/index.html --no-scope-hoist",
     "updateSchema": "run updateSchema",
     "updateTranslation": "run updateTranslation",
     "format": "prettier --write '{src/**/*,*}.{ts,tsx,scss,css,json,js,prettierrc,html}'"
