@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { Component, createContext } from 'react';
 
 const DEFAULT_THICKNESS = 4;
 const DEFAULT_COLOR = 'black';
@@ -19,11 +19,16 @@ export interface DrawingAreaState {
   setCanvas?: (canvas: CanvasRef) => void;
 }
 
-export interface CanvasRef {
+export interface CanvasRef extends Component<CanvasProps> {
   clear();
 
   save(): Promise<Blob>;
-  load(image: Image);
+  load(image: HTMLImageElement);
+}
+
+export interface CanvasProps {
+  width: number;
+  height: number;
 }
 
 export const defaultState: DrawingAreaState = {

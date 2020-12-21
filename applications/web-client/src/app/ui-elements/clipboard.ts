@@ -2,7 +2,7 @@ const copyText = text => {
   const inputElement = document.createElement('input');
   inputElement.value = text;
   inputElement.style.position = 'absolute';
-  inputElement.style.opacity = 0;
+  inputElement.style.opacity = '0';
   document.body.appendChild(inputElement);
 
   inputElement.setAttribute('readonly', '');

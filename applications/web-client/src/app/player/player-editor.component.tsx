@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import i18n from 'es2015-i18n-tag';
-import { connect, useSelector } from 'react-redux';
+import { connect, DispatchProp, useSelector } from 'react-redux';
 import { selectPlayer } from '../../store/selectors/player';
 import Button from '../ui-elements/button/button.component';
 import { updatePlayerName } from '../../store/actions/player';
@@ -8,12 +8,16 @@ import DrawingArea from '../game-widgets/drawing/drawing-area.component';
 import { fetchUserImage, updateUserImage } from './player.api';
 import DrawingCanvas from '../game-widgets/drawing/drawing-canvas.component';
 import ClearCanvasButton from '../game-widgets/drawing/tools/clear-canvas-btn.component';
-import { CanvasRef } from '../game-widgets/drawing/drawing-context';
 import PencilTool from '../game-widgets/drawing/tools/pencil-tool.component';
 import EraserTool from '../game-widgets/drawing/tools/eraser-tool.component';
 import './player-editor.component.css';
+import { CanvasRef } from '../game-widgets/drawing/drawing-context';
 
-const PlayerEditor = ({ dispatch, onSave, onClose }) => {
+const PlayerEditor = ({
+  dispatch,
+  onSave,
+  onClose,
+}: DispatchProp & { onSave?: () => void; onClose?: () => void }) => {
   const player = useSelector(selectPlayer);
   const [state, setState] = useState(player || { name: '' });
 

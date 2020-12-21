@@ -6,7 +6,7 @@ import i18n from 'es2015-i18n-tag';
 import * as matchmakingApi from './matchmaking/matchmaking.api';
 
 const Welcome = () => {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState<string>();
   const history = useHistory();
 
   const createAndOpenLobby = async () => {

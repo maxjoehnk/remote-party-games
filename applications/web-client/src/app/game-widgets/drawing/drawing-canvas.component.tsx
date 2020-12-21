@@ -1,5 +1,5 @@
 import React, { RefObject } from 'react';
-import { CanvasRef, DrawingContext, DrawingTool } from './drawing-context';
+import { CanvasProps, CanvasRef, DrawingContext, DrawingTool } from './drawing-context';
 import './drawing-area.component.css';
 
 export interface DrawingCanvasState {
@@ -7,14 +7,7 @@ export interface DrawingCanvasState {
   context?: CanvasRenderingContext2D;
 }
 
-export interface DrawingCanvasProps {
-  width: number;
-  height: number;
-}
-
-class DrawingCanvas
-  extends React.Component<DrawingCanvasProps, DrawingCanvasState>
-  implements CanvasRef {
+class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> implements CanvasRef {
   private canvas: RefObject<HTMLCanvasElement>;
 
   constructor(props) {
@@ -124,10 +117,12 @@ class DrawingCanvas
     this.startLine(x, y);
   };
 
-  load(img: Image) {
+  load(img: HTMLImageElement) {
     this.canvasContext.drawImage(img, 0, 0);
   }
 }
 DrawingCanvas.contextType = DrawingContext;
 
-export default DrawingCanvas;
+type DrawingCanvasClass = new (props: CanvasProps, context?: any) => CanvasRef;
+
+export default DrawingCanvas as DrawingCanvasClass;

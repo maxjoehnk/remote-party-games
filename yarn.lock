@@ -1866,6 +1866,16 @@
     serialize-to-js "^3.0.1"
     terser "^3.7.3"
 
+"@parcel/validator-typescript@^2.0.0-beta.1":
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@parcel/validator-typescript/-/validator-typescript-2.0.0-beta.1.tgz#5c1962231432c238aaf7842abd534e2fe447abfc"
+  integrity sha512-o4fMjDP7sb5YIKNAqx8ykn9vtheJNBmsE85OnVDBpP3jmKQg5oVUwpmuD1nDmyhpXlg/fZPjCXIaAPQGNB+5LA==
+  dependencies:
+    "@parcel/plugin" "2.0.0-beta.1"
+    "@parcel/ts-utils" "2.0.0-beta.1"
+    "@parcel/types" "2.0.0-beta.1"
+    "@parcel/utils" "2.0.0-beta.1"
+
 "@parcel/watcher@^2.0.0-alpha.5":
   version "2.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/@parcel/watcher/-/watcher-2.0.0-alpha.9.tgz#58010b069a8e64f0c3d0059263f6a525522398d2"

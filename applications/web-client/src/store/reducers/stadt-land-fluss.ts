@@ -6,6 +6,7 @@ import { gameStopped } from '../actions/game';
 const initialState: StadtLandFlussGameState = {
   letter: null,
   running: true,
+  columns: [],
 };
 
 export const stadtLandFlussReducer = createReducer<StadtLandFlussGameState>(initialState, builder =>

@@ -1,4 +1,6 @@
 import { i18nConfig } from 'es2015-i18n-tag';
+import de from '../translations/de-DE.json';
+import en from '../translations/en-US.json';
 
 const query = new URLSearchParams(window.location.search);
 const languageOverride = query.get('lang');
@@ -7,9 +9,9 @@ const languageOverride = query.get('lang');
 let currentLanguage = languageOverride || navigator.language || navigator.userLanguage || 'en-US';
 
 export const locales = {
-  'de-DE': require('../translations/de-DE.json'),
-  'en-US': require('../translations/en-US.json'),
-  'en-GB': require('../translations/en-US.json'),
+  'de-DE': de,
+  'en-US': en,
+  'en-GB': en,
 };
 
 export function setupInternationalization() {

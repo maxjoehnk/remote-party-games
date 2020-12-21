@@ -17,8 +17,8 @@ export async function updateUserImage(userId: string, img) {
   });
 }
 
-export function fetchUserImage(userId: string): Promise<Image> {
-  return new Promise<Image>((resolve, reject) => {
+export function fetchUserImage(userId: string): Promise<HTMLImageElement> {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
     img.src = `/api/image/${userId}`;
     img.addEventListener('error', err => reject(err));
