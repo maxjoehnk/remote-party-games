@@ -18,11 +18,12 @@ export interface DrawingAreaProps {
 class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
   state: DrawingAreaState = defaultState;
 
-  get contextState(): DrawingAreaState {
+  get contextState(): Required<DrawingAreaState> {
     return {
       ...this.state,
       selectTool: this.selectTool,
       setCanvas: this.setCanvas,
+      setColor: this.setColor,
     };
   }
 
@@ -49,6 +50,10 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
 
   private selectTool = (tool: DrawingTool) => {
     this.setState(state => ({ ...state, tool }));
+  };
+
+  private setColor = (color: string) => {
+    this.setState(state => ({ ...state, color }));
   };
 
   private setCanvas = (canvas: CanvasRef) => {

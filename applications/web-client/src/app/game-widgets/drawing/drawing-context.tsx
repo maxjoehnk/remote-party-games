@@ -13,9 +13,10 @@ export interface DrawingAreaState {
   tool: DrawingTool;
   color: string;
   thickness: number;
-  canvas?: CanvasRef;
+  canvas: CanvasRef | null;
 
   selectTool?: (tool: DrawingTool) => void;
+  setColor?: (color: string) => void;
   setCanvas?: (canvas: CanvasRef) => void;
 }
 
@@ -35,6 +36,7 @@ export const defaultState: DrawingAreaState = {
   tool: DrawingTool.Pen,
   color: DEFAULT_COLOR,
   thickness: DEFAULT_THICKNESS,
+  canvas: null,
 };
 
 export const DrawingContext = createContext<DrawingAreaState>(defaultState);

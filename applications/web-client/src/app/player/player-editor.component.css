@@ -8,6 +8,7 @@
 .player-editor__card {
   display: flex;
   flex-direction: column;
+  width: 340px;
 }
 
 .player-editor__actions {
@@ -18,4 +19,8 @@
 .player-editor__action-btn {
   flex: 1;
   margin: 4px;
+}
+
+.player-editor__color-picker {
+  margin-bottom: 8px;
 }

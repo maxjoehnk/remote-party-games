@@ -1,5 +1,5 @@
 import 'core-js/stable';
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 import React from 'react';
 import * as ReactDom from 'react-dom';
 import Modal from 'react-modal';
