@@ -92,15 +92,6 @@
   color: var(--text-color-hint);
 }
 
-.game-stadt-land-fluss-result-answer__actions {
-  opacity: 0;
-  transition: var(--default-transition);
-}
-
-.game-stadt-land-fluss-result-answer:hover .game-stadt-land-fluss-result-answer__actions {
-  opacity: 1;
-}
-
 .game-stadt-land-fluss-result-answer__actions .button {
   margin-right: 8px;
 }
