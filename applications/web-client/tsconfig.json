@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "es2016",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es6",
     "sourceMap": true,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
 import GameLobby from './matchmaking/lobby/lobby.component';
@@ -12,12 +12,10 @@ import {
   subscribeGameStopped,
   subscribeLobbyClosed,
 } from './matchmaking/matchmaking.api';
-import TabooGame from './games/taboo/taboo-game.component';
 import { NotificationContainer, useNotification } from './ui-elements/notification';
 import i18n from 'es2015-i18n-tag';
 import { onSocketClose, onSocketOpen } from '../socket';
 import GameHistory from './matchmaking/history/game-history.component';
-import StadtLandFlussGame from './games/stadt-land-fluss/stadt-land-fluss-game.component';
 
 let clearNotification;
 
@@ -73,6 +71,13 @@ const SocketListener = ({ children }) => {
   return children;
 };
 
+const Taboo = React.lazy(() => import('./games/taboo/taboo-game.component'));
+const StadtLandFluss = React.lazy(
+  () => import('./games/stadt-land-fluss/stadt-land-fluss-game.component')
+);
+
+const Loading = () => <div>{i18n`Loading...`}</div>;
+
 const ApplicationRoutes = () => {
   return (
     <SocketListener>
@@ -87,10 +92,14 @@ const ApplicationRoutes = () => {
           <GameHistory />
         </Route>
         <Route path="/play/taboo">
-          <TabooGame />
+          <Suspense fallback={<Loading />}>
+            <Taboo />
+          </Suspense>
         </Route>
         <Route path="/play/stadt-land-fluss">
-          <StadtLandFlussGame />
+          <Suspense fallback={<Loading />}>
+            <StadtLandFluss />
+          </Suspense>
         </Route>
       </Switch>
     </SocketListener>

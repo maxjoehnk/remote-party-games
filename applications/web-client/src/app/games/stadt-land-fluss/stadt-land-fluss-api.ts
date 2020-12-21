@@ -1,5 +1,4 @@
-import { emit, onMessage } from '../../../socket';
-import { StadtLandFlussGameState } from '../../../contracts/stadt-land-fluss-configuration';
+import { emit } from '../../../socket';
 
 export function submitWord(column: number, word: string) {
   emit({
@@ -40,26 +39,4 @@ export function upvoteWord(playerId: string, column: number) {
     playerId,
     column,
   });
-}
-
-export function subscribeStadtLandFlussGameUpdates(
-  callback: (state: StadtLandFlussGameState) => void
-) {
-  const startSubscription = onMessage('stadt-land-fluss/round-started', msg =>
-    callback(msg.gameState)
-  );
-  const finishSubscription = onMessage('stadt-land-fluss/round-finished', msg =>
-    callback(msg.gameState)
-  );
-  const scoreSubscription = onMessage('stadt-land-fluss/score-updated', msg =>
-    callback(msg.gameState)
-  );
-
-  return {
-    unsubscribe: () => {
-      startSubscription.unsubscribe();
-      finishSubscription.unsubscribe();
-      scoreSubscription.unsubscribe();
-    },
-  };
 }

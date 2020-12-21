@@ -1,5 +1,4 @@
-import { TabooGameState } from '../../../contracts/taboo-game-configuration';
-import { emit, onMessage } from '../../../socket';
+import { emit } from '../../../socket';
 
 export function rightGuess() {
   emit({
@@ -36,8 +35,4 @@ export function guessedPastCard(term: string) {
     actionType: 'taboo/guess-past',
     term,
   });
-}
-
-export function subscribeTabooGameUpdates(callback: (state: TabooGameState) => void) {
-  return onMessage('taboo/update', msg => callback(msg.gameState));
 }

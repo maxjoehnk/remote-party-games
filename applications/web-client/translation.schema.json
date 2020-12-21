@@ -101,6 +101,10 @@
       "type": "string",
       "minLength": 1
     },
+    "Loading...": {
+      "type": "string",
+      "minLength": 1
+    },
     "Lobby Settings": {
       "type": "string",
       "minLength": 1
@@ -281,6 +285,7 @@
     "Join Team",
     "Join a Lobby",
     "Link",
+    "Loading...",
     "Lobby Settings",
     "Lobby was closed",
     "Player setup",
