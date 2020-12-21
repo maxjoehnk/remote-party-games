@@ -20,7 +20,7 @@ const Header = () => {
         </Link>
         <button className="header__player-settings" onClick={() => setState(true)}>
           <span className="header__player-name">{i18n`Playing as ${player.name}`}</span>
-          <PlayerAvatar className="header__player-img" player={player} />
+          <PlayerAvatar className="header__player-img player-avatar--passive" player={player} />
         </button>
       </div>
       <Modal

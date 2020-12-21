@@ -2,4 +2,13 @@
   width: 32px;
   height: 32px;
   border-radius: 100%;
+  transition: var(--default-transition), border-radius 0.1s ease-in;
+}
+
+.player-avatar:not(.player-avatar--passive):hover {
+  background: white;
+  transform: scale(5);
+  border-radius: var(--border-radius);
+  padding: 4px;
+  box-shadow: var(--default-shadow);
 }
