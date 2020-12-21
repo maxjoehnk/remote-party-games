@@ -28,8 +28,10 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     this.canvasContext.lineWidth = thickness;
     if (tool === DrawingTool.Pen) {
       this.canvasContext.strokeStyle = color;
+      this.canvasContext.globalCompositeOperation = 'source-over';
     } else if (tool === DrawingTool.Eraser) {
       this.canvasContext.strokeStyle = 'white';
+      this.canvasContext.globalCompositeOperation = 'destination-out';
     }
   }
 
