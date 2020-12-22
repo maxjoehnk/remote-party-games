@@ -1,5 +1,12 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import { Provider, useSelector } from 'react-redux';
 import GameLobby from './matchmaking/lobby/lobby.component';
 import Welcome from './welcome.component';
@@ -79,9 +86,12 @@ const StadtLandFluss = React.lazy(
 const Loading = () => <div>{i18n`Loading...`}</div>;
 
 const ApplicationRoutes = () => {
+  const { pathname } = useLocation();
+
   return (
     <SocketListener>
       <Switch>
+        <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
         <Route path="/" exact>
           <Welcome />
         </Route>

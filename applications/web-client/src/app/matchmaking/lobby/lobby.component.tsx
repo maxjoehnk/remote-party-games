@@ -1,11 +1,9 @@
 import React from 'react';
 import PlayerList from '../player-list/player-list.component';
 import { selectGameType, selectLobbyCode } from '../../../store/selectors/lobby';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './lobby.component.css';
 import i18n from 'es2015-i18n-tag';
-import { useParams } from 'react-router-dom';
-import { joinLobby } from '../../../store/actions/lobby';
 import Button from '../../ui-elements/button/button.component';
 import { changeGame, startGame } from '../matchmaking.api';
 import { useNotification } from '../../ui-elements/notification';
@@ -14,17 +12,11 @@ import GameHistoryList from '../history/game-history-list.component';
 import StadtLandFlussSettings from './settings/stadt-land-fluss-settings';
 import TabooSettings from './settings/taboo-settings';
 import { getGameName } from '../history/game-names';
+import { withLobby } from '../lobby-loader';
 
 export interface GameLobbyRouteParams {
   code: string;
 }
-
-const LobbyLoader = ({ dispatch }) => {
-  const { code } = useParams<GameLobbyRouteParams>();
-  dispatch(joinLobby(code));
-
-  return <GameLobby />;
-};
 
 const games = ['taboo', 'stadt-land-fluss'];
 
@@ -100,4 +92,4 @@ export const LobbySettingsGroup = ({
   );
 };
 
-export default connect()(LobbyLoader);
+export default withLobby(GameLobby);

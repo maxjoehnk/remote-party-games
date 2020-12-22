@@ -3,6 +3,20 @@
   max-width: 1000px;
 }
 
+.game-history__header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.game-history__back-btn {
+  margin-right: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .game-history__team-list {
   display: flex;
   flex-direction: row;
