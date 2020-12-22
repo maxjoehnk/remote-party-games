@@ -4,6 +4,9 @@ import { PlayerModel } from '../../../contracts/player.model';
 import { TeamModel } from '../../../contracts/team.model';
 
 export function getResult(entry: GameHistoryModel): string {
+  if (entry.score == null) {
+    return;
+  }
   const winner = getWinner(entry);
   const result = winner == null ? i18n`Draw` : i18n`Winner: ${winner.name}`;
 

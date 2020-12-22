@@ -6,6 +6,15 @@ export const selectPlayerList = createSelector(
   lobby => lobby.players
 );
 
+const playerByIdSelector = createSelector(
+  (state: ApplicationState) => state.lobby,
+  (state, playerId) => playerId,
+  (lobby, playerId) => lobby.players.find(p => p.id === playerId)
+);
+
+export const selectPlayerById = (playerId: string) => (state: ApplicationState) =>
+  playerByIdSelector(state, playerId);
+
 export const selectTeams = createSelector(
   (state: ApplicationState) => state.lobby,
   lobby => lobby.teams

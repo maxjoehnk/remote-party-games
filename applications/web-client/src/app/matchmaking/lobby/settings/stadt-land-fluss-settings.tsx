@@ -8,13 +8,10 @@ import Icon from '@mdi/react';
 import { mdiCloseCircle } from '@mdi/js';
 import Button from '../../../ui-elements/button/button.component';
 import { updateGameConfiguration } from '../../matchmaking.api';
-
-interface StadtLandFlussConfig {
-  columns: string[];
-}
+import { StadtLandFlussConfiguration } from '../../../../contracts/stadt-land-fluss-configuration';
 
 const StadtLandFlussSettings = () => {
-  const config: StadtLandFlussConfig = useSelector(selectGameConfig);
+  const config: StadtLandFlussConfiguration = useSelector(selectGameConfig);
 
   const addColumn = (column: string) => {
     const columns = [...config.columns, column];

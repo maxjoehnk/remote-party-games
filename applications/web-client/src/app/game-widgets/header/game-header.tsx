@@ -8,7 +8,7 @@ import './game-header.css';
 
 export interface GameHeaderProps {
   timer?: Timer;
-  children: any;
+  children?: any;
   className?: string;
   contentClass?: string;
 }
@@ -26,7 +26,7 @@ const GameHeader = ({ timer, children, className, contentClass }: GameHeaderProp
       <div className="game-header__lobby">
         <Button className="game-header__back-btn" onClick={() => stopGame()}>
           <Icon path={mdiArrowLeft} size={1} />
-          {i18n`Back to Lobby`}
+          {i18n`Back to lobby`}
         </Button>
       </div>
       <div className={`game-header__content ${contentClass}`}>{children}</div>

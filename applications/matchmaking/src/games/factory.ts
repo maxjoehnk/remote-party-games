@@ -3,13 +3,15 @@ import { Team } from '../contracts/team';
 import { Game } from '../contracts/game';
 import { Taboo } from './taboo/taboo';
 import { SocketGateway } from '../sockets/socket-gateway';
-import { GameTypes, STADT_LAND_FLUSS, TABOO } from './types';
+import { STILLE_POST, GameTypes, STADT_LAND_FLUSS, TABOO } from './types';
 import { Player } from '../contracts/player';
 import { GameConfiguration } from './config';
 import { TabooGameConfiguration } from './taboo/config';
 import { StadtLandFluss } from './stadt-land-fluss/stadt-land-fluss';
 import { StadtLandFlussGameConfiguration } from './stadt-land-fluss/config';
 import { PlayerAccessor } from './player-accessor';
+import { StillePost } from './stille-post/stille-post';
+import { StillePostGameConfiguration } from './stille-post/config';
 
 export interface CreateGameConfig<TConfig = GameConfiguration> {
   teams: Team[];
@@ -28,6 +30,9 @@ export class GameFactory {
     if (isStadtLandFluss(gameType, config)) {
       return new StadtLandFluss(config, this.socketGateway, playerAccessor);
     }
+    if (isStillePost(gameType, config)) {
+      return new StillePost(config, this.socketGateway, playerAccessor);
+    }
   }
 }
 
@@ -43,4 +48,11 @@ function isStadtLandFluss(
   config: CreateGameConfig
 ): config is CreateGameConfig<StadtLandFlussGameConfiguration> {
   return gameType === STADT_LAND_FLUSS;
+}
+
+function isStillePost(
+  gameType: GameTypes,
+  config: CreateGameConfig
+): config is CreateGameConfig<StillePostGameConfiguration> {
+  return gameType === STILLE_POST;
 }

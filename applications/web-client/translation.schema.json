@@ -41,7 +41,7 @@
       "type": "string",
       "minLength": 1
     },
-    "Back to Lobby": {
+    "Back to lobby": {
       "type": "string",
       "minLength": 1
     },
@@ -208,6 +208,79 @@
         "Words starting with ${0}"
       ]
     },
+    "stille-post": {
+      "type": "object",
+      "properties": {
+        "Alternate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Close Book": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Draw": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Finish": {
+          "type": "string",
+          "minLength": 1
+        },
+        "First Page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Following Pages": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Next Page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Previous Page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Random": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Waiting for next page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Write": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Your Page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by ${0}": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})"
+        }
+      },
+      "required": [
+        "Alternate",
+        "Close Book",
+        "Draw",
+        "Finish",
+        "First Page",
+        "Following Pages",
+        "Next Page",
+        "Previous Page",
+        "Random",
+        "Waiting for next page",
+        "Write",
+        "Your Page",
+        "by ${0}"
+      ]
+    },
     "taboo": {
       "type": "object",
       "properties": {
@@ -270,7 +343,7 @@
     "Add",
     "Add Column",
     "Avatar",
-    "Back to Lobby",
+    "Back to lobby",
     "Cancel",
     "Column",
     "Columns",
@@ -300,6 +373,7 @@
     "Username",
     "or",
     "stadt-land-fluss",
+    "stille-post",
     "taboo"
   ],
   "additionalProperties": false

@@ -12,7 +12,8 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "on-response": "^1.0.1",
-    "prom-client": "^12.0.0"
+    "prom-client": "^12.0.0",
+    "uuid": "^7.0.3"
   },
   "type": "module",
   "devDependencies": {

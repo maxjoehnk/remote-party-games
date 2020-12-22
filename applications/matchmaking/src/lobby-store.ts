@@ -7,10 +7,11 @@ import { Lobby } from './contracts/lobby';
 import { v4 as uuid } from 'uuid';
 import { Team } from './contracts/team';
 import { CreateGameConfig, GameFactory } from './games/factory';
-import { GameTypes, STADT_LAND_FLUSS, TABOO } from './games/types';
+import { STILLE_POST, GameTypes, STADT_LAND_FLUSS, TABOO } from './games/types';
 import { defaultTabooConfig } from './games/taboo/config';
 import { defaultStadtLandFlussConfig } from './games/stadt-land-fluss/config';
 import { GameConfiguration } from './games/config';
+import { defaultStillePostConfig } from './games/stille-post/config';
 
 const randomBytes = promisify(crypto.randomBytes);
 
@@ -169,6 +170,8 @@ export class LobbyStore {
         return LobbyStore.updateTabooLobby(lobby);
       case STADT_LAND_FLUSS:
         return LobbyStore.updateStadtLandFlussLobby(lobby);
+      case STILLE_POST:
+        return LobbyStore.updateStillePostLobby(lobby);
     }
   }
 
@@ -193,6 +196,11 @@ export class LobbyStore {
   private static updateStadtLandFlussLobby(lobby: Lobby) {
     lobby.teams = [];
     lobby.gameConfiguration = defaultStadtLandFlussConfig;
+  }
+
+  private static updateStillePostLobby(lobby: Lobby) {
+    lobby.teams = [];
+    lobby.gameConfiguration = defaultStillePostConfig;
   }
 
   private static async createLobbyId(): Promise<string> {

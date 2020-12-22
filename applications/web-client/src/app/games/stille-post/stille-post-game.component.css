@@ -1,0 +1,119 @@
+.game-stille-post {
+  display: grid;
+  grid-template-areas: 'header header header' 'player-list prev-page next-page';
+  grid-template-columns: 250px minmax(600px, 1fr) minmax(600px, 1fr);
+  grid-template-rows: 76px 1fr;
+  grid-gap: 16px;
+  padding: 16px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1500px) {
+  .game-stille-post {
+    grid-template-areas: 'header header' 'player-list next-page' 'player-list prev-page';
+    grid-template-columns: 250px minmax(600px, 1fr);
+    grid-template-rows: 76px auto;
+  }
+}
+
+.game-stille-post--first-page {
+  grid-template-areas: 'header header' 'player-list next-page';
+  grid-template-columns: 250px minmax(600px, 1fr);
+}
+
+.game-stille-post__header {
+  padding-top: 8px;
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  grid-area: header;
+  display: grid;
+  align-items: center;
+  grid-template-areas: 'lobby . .' 'progress progress progress';
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+}
+
+.game-stille-post__lobby {
+  grid-area: lobby;
+  padding: 0 16px;
+}
+
+.game-stille-post__back-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.game-stille-post__progress-bar-container {
+  grid-area: progress;
+}
+
+.game-stille-post__progress-bar {
+  background: var(--color-primary);
+  height: 4px;
+  transition: 1s linear all;
+  border-bottom-left-radius: var(--border-radius);
+}
+
+/** PLAYER LIST */
+
+.game-stille-post__player-list {
+  grid-area: player-list;
+}
+
+.game-stille-post__next-page {
+  grid-area: next-page;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.game-stille-post__previous-page {
+  grid-area: prev-page;
+}
+
+.game-stille-post__finish-page-btn {
+  align-self: flex-end;
+}
+
+.game-stille-post__drawing-tools {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 8px 0;
+}
+
+.game-stille-post__color-picker {
+  width: 64px;
+}
+
+.game-stille-post__page {
+  width: 100%;
+}
+
+.game-stille-post__page--draw {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-stille-post__text-input {
+  width: 100%;
+}
+
+.game-stille-post__actions :first-child {
+  margin-right: 8px;
+}
+
+.game-stille-post__actions * {
+  flex: 1;
+}
+
+.game-stille-post__previous-page--drawing {
+  background: white;
+  padding: 4px;
+}
+
+.game-stille-post__previous-page--text {
+}

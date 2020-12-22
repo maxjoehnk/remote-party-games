@@ -5,6 +5,7 @@ import { TeamModel } from '../../contracts/team.model';
 import { StadtLandFlussConfiguration } from '../../contracts/stadt-land-fluss-configuration';
 import { LobbyGameConfigModel } from '../../contracts/lobby.model';
 import { GameHistoryModel } from '../../contracts/history.model';
+import { StillePostConfig } from '../../contracts/stille-post-configuration';
 
 export interface CreateLobbyResponse {
   code: string;
@@ -70,7 +71,7 @@ export function changeGame(game: string) {
 }
 
 export function updateGameConfiguration(
-  configuration: TabooGameConfiguration | StadtLandFlussConfiguration
+  configuration: TabooGameConfiguration | StadtLandFlussConfiguration | StillePostConfig
 ) {
   emit({
     type: 'lobby/update-game-config',

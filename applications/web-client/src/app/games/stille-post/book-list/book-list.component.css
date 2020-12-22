@@ -1,0 +1,23 @@
+.game-stille-post__book-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-stille-post__book {
+  margin-right: 16px;
+  margin-bottom: 16px;
+  width: 200px;
+  height: 300px;
+  transition: var(--default-transition);
+  cursor: pointer;
+  border: none;
+}
+
+.game-stille-post__book:hover {
+  filter: brightness(0.9);
+}
+
+.game-stille-post__book img {
+  width: 100%;
+}

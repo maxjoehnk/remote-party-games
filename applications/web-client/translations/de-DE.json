@@ -5,11 +5,11 @@
     "Reconnected": "Verbunden",
     "${0} left": "${0} left",
     "${0}s": "${0}s",
-    "Back to Lobby": "Zurück zur Lobby",
+    "Back to lobby": "Zurück zur Lobby",
     "stadt-land-fluss": {
-        "${0} starting with ${1}": "${0} mit ${1}",
         "Next round": "Nächste Runde",
         "Stop": "Fertig",
+        "${0} starting with ${1}": "${0} mit ${1}",
         "Words starting with ${0}": "Wörter mit ${0}",
         "${0} (+${1}) Points": "${0} (+${1}) Punkte",
         "<empty>": "<leer>",
@@ -17,6 +17,21 @@
         "Upvote": "Kreativ"
     },
     "${0} Points": "${0} Punkte",
+    "stille-post": {
+        "by ${0}": "von ${0}",
+        "Finish": "Fertig",
+        "Previous Page": "Vorherige Seite",
+        "Waiting for next page": "Warte auf nächste Seite...",
+        "Your Page": "Deine Seite",
+        "Close Book": "Buch schließen",
+        "Next Page": "Nächste Seite",
+        "Alternate": "Abwechselnd",
+        "Draw": "Zeichnen",
+        "First Page": "Erste Seite",
+        "Following Pages": "Folgende Seiten",
+        "Random": "Zufällig",
+        "Write": "Schreiben"
+    },
     "taboo": {
         "Start": "Start",
         "You're next": "Du bist als nächstes dran",

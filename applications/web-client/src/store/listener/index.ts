@@ -1,10 +1,15 @@
 import { joinLobbyListener } from './join-lobby';
 import { updateUsernameListener } from './update-username';
 import { ApplicationState } from '../index';
+import { stillePostFinishPageListener } from './stille-post-finish-page';
 
 type ActionListener = (state: ApplicationState, action, previousState?: ApplicationState) => void;
 
-const listeners: ActionListener[] = [joinLobbyListener, updateUsernameListener];
+const listeners: ActionListener[] = [
+  joinLobbyListener,
+  updateUsernameListener,
+  stillePostFinishPageListener,
+];
 
 export const listenerMiddleware = store => next => action => {
   const previous = store.getState();

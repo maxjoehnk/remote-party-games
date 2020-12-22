@@ -1,0 +1,25 @@
+.game-stille-post-open-book {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-stille-post-open-book__actions {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+
+.game-stille-post-open-book__page {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.game-stille-post-open-book__image {
+  width: max-content;
+}
+
+.game-stille-post-open-book__text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}

@@ -38,14 +38,14 @@ const GameHistory = () => {
       <div className="card">
         <h2>{getGameName(game.game)}</h2>
         <h3>{getResult(game)}</h3>
-        {game.score.type === 'team-score' && (
+        {game.score?.type === 'team-score' && (
           <div className="game-history__team-list">
             {game.score.teams.map(team => (
               <TeamScore team={team} score={game.score.scores[team.id]} players={game.players} />
             ))}
           </div>
         )}
-        {game.score.type === 'player-score' && (
+        {game.score?.type === 'player-score' && (
           <Players players={game.players}>
             {(text, player) => {
               const score = game.score.scores[player.id];

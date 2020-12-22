@@ -8,7 +8,7 @@ export function updateUsername(username: string) {
 }
 
 export async function updateUserImage(userId: string, img) {
-  await fetch('/api/image', {
+  await fetch('/api/image/user', {
     method: 'POST',
     headers: {
       'X-UserId': userId,

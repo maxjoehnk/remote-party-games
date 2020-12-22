@@ -5,11 +5,11 @@
     "Reconnected": "Reconnected",
     "${0} left": "${0} left",
     "${0}s": "${0}s",
-    "Back to Lobby": "Back to Lobby",
+    "Back to lobby": "Back to lobby",
     "stadt-land-fluss": {
-        "${0} starting with ${1}": "${0} starting with ${1}",
         "Next round": "Next round",
         "Stop": "Stop",
+        "${0} starting with ${1}": "${0} starting with ${1}",
         "Words starting with ${0}": "Words starting with ${0}",
         "${0} (+${1}) Points": "${0} (+${1}) Points",
         "<empty>": "<empty>",
@@ -17,6 +17,21 @@
         "Upvote": "Upvote"
     },
     "${0} Points": "${0} Points",
+    "stille-post": {
+        "by ${0}": "by ${0}",
+        "Finish": "Finish",
+        "Previous Page": "Previous Page",
+        "Waiting for next page": "Waiting for next page",
+        "Your Page": "Your Page",
+        "Close Book": "Close Book",
+        "Next Page": "Next Page",
+        "Alternate": "Alternate",
+        "Draw": "Draw",
+        "First Page": "First Page",
+        "Following Pages": "Following Pages",
+        "Random": "Random",
+        "Write": "Write"
+    },
     "taboo": {
         "Start": "Start",
         "You're next": "You're next",

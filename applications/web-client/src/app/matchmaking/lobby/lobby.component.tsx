@@ -13,12 +13,13 @@ import StadtLandFlussSettings from './settings/stadt-land-fluss-settings';
 import TabooSettings from './settings/taboo-settings';
 import { getGameName } from '../history/game-names';
 import { withLobby } from '../lobby-loader';
+import StillePostSettings from './settings/stille-post-settings';
 
 export interface GameLobbyRouteParams {
   code: string;
 }
 
-const games = ['taboo', 'stadt-land-fluss'];
+const games = ['taboo', 'stadt-land-fluss', 'stille-post'];
 
 const GameLobby = () => {
   const code = useSelector(selectLobbyCode);
@@ -46,6 +47,7 @@ const GameLobby = () => {
         </LobbySettingsGroup>
         {game === 'taboo' && <TabooSettings />}
         {game === 'stadt-land-fluss' && <StadtLandFlussSettings />}
+        {game === 'stille-post' && <StillePostSettings />}
         <div style={{ flex: 1 }} />
         <Button
           onClick={() => startGame()}

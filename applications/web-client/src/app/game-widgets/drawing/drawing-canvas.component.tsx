@@ -61,12 +61,16 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
         className="drawing-area"
         width={this.props.width}
         height={this.props.height}
+        style={{ width: `${this.props.width}px`, height: `${this.props.height}px` }}
         ref={this.canvas}
       />
     );
   }
 
   public clear = () => {
+    if (this.canvasContext == null) {
+      return;
+    }
     this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
   };
 

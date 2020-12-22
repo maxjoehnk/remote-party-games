@@ -82,6 +82,7 @@ const Taboo = React.lazy(() => import('./games/taboo/taboo-game.component'));
 const StadtLandFluss = React.lazy(
   () => import('./games/stadt-land-fluss/stadt-land-fluss-game.component')
 );
+const StillePost = React.lazy(() => import('./games/stille-post/stille-post-game.component'));
 
 const Loading = () => <div>{i18n`Loading...`}</div>;
 
@@ -109,6 +110,11 @@ const ApplicationRoutes = () => {
         <Route path="/play/stadt-land-fluss">
           <Suspense fallback={<Loading />}>
             <StadtLandFluss />
+          </Suspense>
+        </Route>
+        <Route path="/play/stille-post">
+          <Suspense fallback={<Loading />}>
+            <StillePost />
           </Suspense>
         </Route>
       </Switch>

@@ -9,12 +9,14 @@ import { TabooGameState } from '../contracts/taboo-game-configuration';
 import { StadtLandFlussGameState } from '../contracts/stadt-land-fluss-configuration';
 import { stadtLandFlussReducer } from './reducers/stadt-land-fluss';
 import { PlayerModel } from '../contracts/player.model';
+import { stillePostReducer, StillePostState } from './reducers/stille-post';
 
 export interface ApplicationState {
   lobby: LobbyState;
   player: PlayerModel;
   taboo: TabooGameState;
   stadtLandFluss: StadtLandFlussGameState;
+  stillePost: StillePostState;
 }
 
 const store = configureStore<ApplicationState>({
@@ -23,6 +25,7 @@ const store = configureStore<ApplicationState>({
     player: playerReducer,
     taboo: tabooReducer,
     stadtLandFluss: stadtLandFlussReducer,
+    stillePost: stillePostReducer,
   }),
   middleware: [listenerMiddleware, socketSubscriberMiddleware] as any,
 });
