@@ -96,8 +96,13 @@
   padding: 0 4px;
 }
 
-.game-stadt-land-fluss-result-answer__answer-empty {
+.game-stadt-land-fluss-result-answer__answer--empty {
   color: var(--text-color-hint);
+}
+
+.game-stadt-land-fluss-result-answer__answer--denied {
+  color: var(--text-color-hint);
+  text-decoration: line-through;
 }
 
 .game-stadt-land-fluss-result-answer__actions .button {

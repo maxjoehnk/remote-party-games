@@ -16,6 +16,7 @@ enum StadtLandFlussActionTypes {
   StartRound = 'stadt-land-fluss/start-round',
   StopRound = 'stadt-land-fluss/stop-round',
   DenyWord = 'stadt-land-fluss/deny-word',
+  ApproveWord = 'stadt-land-fluss/approve-word',
   UpvoteWord = 'stadt-land-fluss/upvote-word',
 }
 
@@ -36,6 +37,7 @@ interface PlayerRoundState {
   columns?: string[];
   scores?: number[];
   upvotes?: number[];
+  denied?: boolean[];
   points: number;
 }
 
@@ -45,6 +47,11 @@ interface SubmitWord extends Action<StadtLandFlussActionTypes.SubmitWord> {
 }
 
 interface DenyWord extends Action<StadtLandFlussActionTypes.DenyWord> {
+  column: number;
+  playerId: string;
+}
+
+interface ApproveWord extends Action<StadtLandFlussActionTypes.ApproveWord> {
   column: number;
   playerId: string;
 }
@@ -76,6 +83,7 @@ export class StadtLandFluss implements Game {
     this.handler.add(StadtLandFlussActionTypes.SubmitWord, this.submitWord);
     this.handler.add(StadtLandFlussActionTypes.StartRound, this.startRound);
     this.handler.add(StadtLandFlussActionTypes.StopRound, this.stopRound);
+    this.handler.add(StadtLandFlussActionTypes.ApproveWord, this.approveWord);
     this.handler.add(StadtLandFlussActionTypes.DenyWord, this.denyWord);
     this.handler.add(StadtLandFlussActionTypes.UpvoteWord, this.upvoteWord);
   }
@@ -180,6 +188,7 @@ export class StadtLandFluss implements Game {
       playerId: player.id,
       columns: this.config.columns.map(() => ''),
       upvotes: this.config.columns.map(() => 0),
+      denied: this.config.columns.map(() => false),
       points: this.getPlayerScore(this.pastRounds, player.id),
     };
   };
@@ -196,13 +205,25 @@ export class StadtLandFluss implements Game {
     });
   };
 
+  private approveWord = (action: ApproveWord, playerId: string) => {
+    if (playerId === action.playerId) {
+      return;
+    }
+    const state = this.currentRound.players.find(p => p.playerId === action.playerId);
+    state.denied[action.column] = false;
+    this.calculateScores();
+    this.broadcaster.broadcast({
+      type: StadtLandFlussEventTypes.ScoreUpdated,
+      gameState: this.state,
+    });
+  };
+
   private denyWord = (action: DenyWord, playerId: string) => {
     if (playerId === action.playerId) {
       return;
     }
     const state = this.currentRound.players.find(p => p.playerId === action.playerId);
-    state.columns[action.column] = '';
-    state.upvotes[action.column] = 0;
+    state.denied[action.column] = true;
     this.calculateScores();
     this.broadcaster.broadcast({
       type: StadtLandFlussEventTypes.ScoreUpdated,
@@ -241,6 +262,9 @@ export class StadtLandFluss implements Game {
   private getWordCounts(i: number): Map<string, number> {
     const words = new Map<string, number>();
     for (const player of this.currentRound.players) {
+      if (player.denied[i]) {
+        continue;
+      }
       const word = player.columns[i].toLowerCase().trim();
       if (!isValid(word, this.currentRound.letter)) {
         continue;
@@ -257,19 +281,22 @@ export class StadtLandFluss implements Game {
 
   private applyPoints(i: number, words: Map<string, number>) {
     for (const player of this.currentRound.players) {
+      player.scores[i] += player.upvotes[i] * POINTS_PER_UPVOTE;
+      if (player.denied[i]) {
+        continue;
+      }
       const word = player.columns[i].toLowerCase().trim();
       if (!isValid(word, this.currentRound.letter)) {
         continue;
       }
       const count = words.get(word);
       if (words.size === 1 && count === 1) {
-        player.scores[i] = SINGLE_ANSWER_POINTS;
+        player.scores[i] += SINGLE_ANSWER_POINTS;
       } else if (count === 1) {
-        player.scores[i] = UNIQUE_ANSWER_POINTS;
+        player.scores[i] += UNIQUE_ANSWER_POINTS;
       } else {
-        player.scores[i] = DEFAULT_ANSWER_POINTS;
+        player.scores[i] += DEFAULT_ANSWER_POINTS;
       }
-      player.scores[i] += player.upvotes[i] * POINTS_PER_UPVOTE;
     }
   }
 

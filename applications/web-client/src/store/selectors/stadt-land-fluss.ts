@@ -33,6 +33,7 @@ export const selectStadtLandFlussResults = createSelector(
         answer: playerState.columns[i],
         score: playerState.scores[i],
         upvotes: playerState.upvotes[i],
+        denied: playerState.denied[i],
         player: players.find(p => playerState.playerId === p.id),
       })),
     }));
@@ -59,6 +60,7 @@ export interface ResultColumn {
     answer: string;
     score: number;
     upvotes: number;
+    denied: boolean;
     player: PlayerModel;
   }[];
 }

@@ -23,6 +23,15 @@ export function stopRound() {
   });
 }
 
+export function approveWord(playerId: string, column: number) {
+  emit({
+    type: 'game/action',
+    actionType: 'stadt-land-fluss/approve-word',
+    playerId,
+    column,
+  });
+}
+
 export function denyWord(playerId: string, column: number) {
   emit({
     type: 'game/action',

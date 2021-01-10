@@ -6,7 +6,7 @@ import {
 } from '../../../store/selectors/stadt-land-fluss';
 import i18n from 'es2015-i18n-tag';
 import Button from '../../ui-elements/button/button.component';
-import { denyWord, upvoteWord } from './stadt-land-fluss-api';
+import { approveWord, denyWord, upvoteWord } from './stadt-land-fluss-api';
 import { selectPlayer } from '../../../store/selectors/player';
 import PlayerAvatar from '../../player/player-avatar.component';
 import NextRoundButton from './actions/next-round-button.component';
@@ -45,8 +45,8 @@ const StadtLandFlussAnswer = ({ answer, column }) => {
       <b className="game-stadt-land-fluss-result-answer__player">{answer.player.name}:</b>
       <span
         className={`game-stadt-land-fluss-result-answer__answer ${
-          !answer.answer && 'game-stadt-land-fluss-result-answer__answer-empty'
-        }`}
+          !answer.answer && 'game-stadt-land-fluss-result-answer__answer--empty'
+        } ${answer.denied && 'game-stadt-land-fluss-result-answer__answer--denied'}`}
       >
         {answer.answer || i18n('stadt-land-fluss')`<empty>`}
       </span>
@@ -55,10 +55,18 @@ const StadtLandFlussAnswer = ({ answer, column }) => {
           <Button onClick={() => upvoteWord(answer.player.id, column)}>{i18n(
             'stadt-land-fluss'
           )`Upvote`}</Button>
-          <Button
-            className="button--error"
-            onClick={() => denyWord(answer.player.id, column)}
-          >{i18n('stadt-land-fluss')`Deny`}</Button>
+          {answer.denied && (
+            <Button
+              className="button--primary"
+              onClick={() => approveWord(answer.player.id, column)}
+            >{i18n('stadt-land-fluss')`Approve`}</Button>
+          )}
+          {!answer.denied && (
+            <Button
+              className="button--error"
+              onClick={() => denyWord(answer.player.id, column)}
+            >{i18n('stadt-land-fluss')`Deny`}</Button>
+          )}
         </div>
       )}
       <AddedPoints score={answer.score} upvotes={answer.upvotes} />

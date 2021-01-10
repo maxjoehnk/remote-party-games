@@ -15,4 +15,5 @@ interface PlayerRoundState {
   columns?: string[];
   scores?: number[];
   upvotes?: number[];
+  denied?: boolean[];
 }
