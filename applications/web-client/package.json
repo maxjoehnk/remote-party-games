@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "parcel serve --no-hmr src/index.html",
-    "build": "parcel build src/index.html --no-scope-hoist",
+    "start": "parcel serve --hmr-port 1235 src/index.html",
+    "build": "parcel build src/index.html",
     "updateSchema": "run updateSchema",
     "updateTranslation": "run updateTranslation",
     "format": "prettier --write '{src/**/*,*}.{ts,tsx,scss,css,json,js,prettierrc,html}'"
@@ -17,7 +17,7 @@
     "glob": "^7.1.6",
     "http-proxy-middleware": "^1.0.3",
     "i18n-tag-schema": "^2.5.0",
-    "parcel": "^2.0.0-beta.1",
+    "parcel": "2.0.0-nightly.500",
     "prettier": "^2.0.5",
     "runjs": "^4.4.2",
     "sass": "^1.26.5",
