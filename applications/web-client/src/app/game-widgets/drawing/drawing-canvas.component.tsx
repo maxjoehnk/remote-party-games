@@ -5,6 +5,13 @@ import './drawing-area.component.css';
 export interface DrawingCanvasState {
   isMouseDown: boolean;
   context?: CanvasRenderingContext2D;
+  boundingRect?: DOMRect;
+}
+
+interface Coordinate {
+  x: number;
+  y: number;
+  pressure: number;
 }
 
 class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> implements CanvasRef {
@@ -39,19 +46,21 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     this.context.setCanvas(this);
     const canvas = this.canvas.current;
     canvas.addEventListener('mousedown', this.onMouseDown);
-    canvas.addEventListener('touchstart', this.onMouseDown);
     canvas.addEventListener('mousemove', this.onMouseMove);
-    canvas.addEventListener('touchmove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
-    window.addEventListener('touchend', this.onMouseUp);
+    canvas.addEventListener('touchstart', this.onTouchStart);
+    canvas.addEventListener('touchmove', this.onTouchMove);
+    window.addEventListener('touchend', this.onTouchEnd);
     const context = canvas.getContext('2d');
     context.strokeStyle = this.context.color;
     context.lineWidth = this.context.thickness;
     context.lineCap = 'round';
     context.lineJoin = 'round';
+    const boundingRect = canvas.getBoundingClientRect();
     this.setState({
       ...this.state,
       context,
+      boundingRect,
     });
   }
 
@@ -80,47 +89,94 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     });
   }
 
-  private onMouseDown = e => {
+  private onMouseDown = (e: MouseEvent) => this.onPointerStart(e, this.getMousePoint(e));
+
+  private onMouseMove = (e: MouseEvent) => this.onPointerMove(e, this.getMousePoint(e));
+
+  private onMouseUp = (e: MouseEvent) => this.onPointerEnd(e, this.getMousePoint(e));
+
+  private getMousePoint(e: MouseEvent): Coordinate {
+    return {
+      x: e.offsetX,
+      y: e.offsetY,
+      pressure: 1,
+    };
+  }
+
+  private onTouchStart = (e: TouchEvent) => {
+    const coordinate = this.getTouchPoint(e);
+
+    this.onPointerStart(e, coordinate);
+  };
+
+  private onTouchMove = (e: TouchEvent) => {
+    const coordinate = this.getTouchPoint(e);
+    this.onPointerMove(e, coordinate);
+  };
+
+  private onTouchEnd = (e: TouchEvent) => {
+    const coordinate = this.getTouchPoint(e);
+
+    this.onPointerEnd(e, coordinate);
+  };
+
+  private getTouchPoint(e: TouchEvent): Coordinate | null {
+    const touch = e.targetTouches.item(0);
+    if (touch == null) {
+      return null;
+    }
+    const x = touch.clientX - this.state.boundingRect.x;
+    const y = touch.clientY - this.state.boundingRect.y;
+    const pressure = touch.force === 0 ? 1 : touch.force;
+
+    return { x, y, pressure };
+  }
+
+  private onPointerStart = (e: TouchEvent | MouseEvent, coordinate: Coordinate) => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
       isMouseDown: true,
     });
-    this.startLine(e.layerX, e.layerY);
+    this.startLine(coordinate);
   };
 
-  private onMouseUp = e => {
+  private onPointerMove(e: MouseEvent | TouchEvent, coordinate: Coordinate) {
+    if (!this.state.isMouseDown) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    this.draw(coordinate);
+  }
+
+  private onPointerEnd = (e: MouseEvent | TouchEvent, coordinate: Coordinate) => {
     if (!this.state.isMouseDown) {
       return;
     }
     e.preventDefault();
     e.stopPropagation();
     this.setState({ isMouseDown: false });
-    this.stopLine(e.layerX, e.layerY);
-  };
-
-  private onMouseMove = e => {
-    if (!this.state.isMouseDown) {
+    if (coordinate == null) {
       return;
     }
-    e.preventDefault();
-    e.stopPropagation();
-    this.draw(e.layerX, e.layerY);
+    this.stopLine(coordinate);
   };
 
-  private stopLine = (x, y) => {
+  private stopLine = ({ x, y, pressure }: Coordinate) => {
     this.canvasContext.lineTo(x, y);
+    this.canvasContext.lineWidth = this.context.thickness * pressure;
     this.canvasContext.stroke();
   };
 
-  private startLine = (x, y) => {
+  private startLine = ({ x, y }: Coordinate) => {
     this.canvasContext.beginPath();
     this.canvasContext.moveTo(x, y);
   };
 
-  private draw = (x, y) => {
-    this.stopLine(x, y);
-    this.startLine(x, y);
+  private draw = (coordinate: Coordinate) => {
+    this.stopLine(coordinate);
+    this.startLine(coordinate);
   };
 
   load(img: HTMLImageElement) {
