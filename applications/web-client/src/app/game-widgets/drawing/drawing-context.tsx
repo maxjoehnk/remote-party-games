@@ -15,8 +15,18 @@ export interface DrawingAreaState {
   thickness: number;
   canvas: CanvasRef | null;
 
+  actions: DrawingAction[];
+  history: DrawingAction[];
+  historyPointer: number;
+
   selectTool?: (tool: DrawingTool) => void;
   setColor?: (color: string) => void;
+  setThickness?: (thickness: number) => void;
+  clear?: () => void;
+  undo?: () => void;
+  redo?: () => void;
+
+  pushAction?: (action: DrawingAction) => void;
   setCanvas?: (canvas: CanvasRef) => void;
 }
 
@@ -37,6 +47,29 @@ export const defaultState: DrawingAreaState = {
   color: DEFAULT_COLOR,
   thickness: DEFAULT_THICKNESS,
   canvas: null,
+  actions: [],
+  history: [],
+  historyPointer: 0,
 };
 
 export const DrawingContext = createContext<DrawingAreaState>(defaultState);
+
+export type DrawingAction = Line;
+
+export interface Coordinate {
+  x: number;
+  y: number;
+}
+
+export interface Line {
+  tool: DrawingTool.Pen | DrawingTool.Eraser;
+  start: Coordinate;
+  elements: LineElement[];
+  color: string;
+}
+
+export interface LineElement {
+  x: number;
+  y: number;
+  thickness: number;
+}

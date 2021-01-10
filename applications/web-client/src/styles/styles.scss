@@ -26,17 +26,22 @@
   transition: var(--default-transition);
 }
 
-.icon-button--active {
+.icon-button:disabled {
+  pointer-events: none;
+}
+
+.icon-button--active:not(:disabled) {
   color: var(--color-primary);
   opacity: 1;
 }
 
 .icon-button--hint,
-.icon-button--inactive {
+.icon-button--inactive,
+.icon-button:disabled {
   opacity: 0.54;
 }
 
-.icon-button--hint:hover {
+.icon-button--hint:hover:not(:disabled) {
   opacity: 1;
 }
 

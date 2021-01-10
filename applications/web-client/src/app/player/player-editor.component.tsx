@@ -13,6 +13,8 @@ import EraserTool from '../game-widgets/drawing/tools/eraser-tool.component';
 import './player-editor.component.css';
 import { CanvasRef } from '../game-widgets/drawing/drawing-context';
 import ColorPicker from '../game-widgets/drawing/tools/color-picker.component';
+import UndoButton from '../game-widgets/drawing/tools/undo-btn.component';
+import RedoButton from '../game-widgets/drawing/tools/redo-btn.component';
 
 const PlayerEditor = ({
   dispatch,
@@ -78,6 +80,8 @@ const PlayerAvatarEditor = React.forwardRef<CanvasRef>((props, ref) => {
           <PencilTool />
           <EraserTool />
           <ClearCanvasButton />
+          <UndoButton />
+          <RedoButton />
         </div>
         <ColorPicker className="player-editor__color-picker" />
       </DrawingArea>
