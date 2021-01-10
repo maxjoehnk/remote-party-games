@@ -142,9 +142,12 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   private onMouseUp = (e: MouseEvent) => this.onPointerEnd(e, this.getMousePoint(e));
 
   private getMousePoint(e: MouseEvent): PenPosition {
+    const x = e.clientX - this.state.boundingRect.x;
+    const y = e.clientY - this.state.boundingRect.y;
+    
     return {
-      x: e.offsetX,
-      y: e.offsetY,
+      x,
+      y,
       pressure: 1,
     };
   }
