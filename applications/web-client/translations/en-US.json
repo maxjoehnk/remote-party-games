@@ -13,6 +13,7 @@
         "Words starting with ${0}": "Words starting with ${0}",
         "${0} (+${1}) Points": "${0} (+${1}) Points",
         "<empty>": "<empty>",
+        "Approve": "Approve",
         "Deny": "Deny",
         "Upvote": "Upvote"
     },
