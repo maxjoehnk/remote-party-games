@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  CanvasRef,
-  defaultState,
-  DrawingAction,
-  DrawingAreaState,
-  DrawingContext,
-  DrawingTool,
-} from './drawing-context';
-import { DrawingAreaProps } from './drawing-area.component';
+import { defaultState, DrawingAction, DrawingAreaState, DrawingContext } from './drawing-context';
 
 export interface ReadOnlyAreaProps {
   children;
@@ -20,6 +12,7 @@ class ReadOnlyArea extends React.Component<ReadOnlyAreaProps, DrawingAreaState> 
   render() {
     const drawingState: DrawingAreaState = {
       ...this.state,
+      readOnly: true,
       actions: this.props.actions,
       setCanvas: () => {},
     };

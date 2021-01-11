@@ -10,6 +10,7 @@ export enum DrawingTool {
 }
 
 export interface DrawingAreaState {
+  readOnly: boolean;
   tool: DrawingTool;
   color: string;
   thickness: number;
@@ -44,6 +45,7 @@ export interface CanvasProps {
 }
 
 export const defaultState: DrawingAreaState = {
+  readOnly: false,
   tool: DrawingTool.Pen,
   color: DEFAULT_COLOR,
   thickness: DEFAULT_THICKNESS,

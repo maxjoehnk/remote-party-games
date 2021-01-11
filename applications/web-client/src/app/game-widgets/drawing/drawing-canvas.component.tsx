@@ -189,6 +189,9 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   }
 
   private onPointerStart = (e: TouchEvent | MouseEvent, position: PenPosition) => {
+    if (this.context.readOnly) {
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
     this.setState({
