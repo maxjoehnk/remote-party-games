@@ -1,10 +1,10 @@
 import { PictionaryGameState, PlayerRanking } from './contracts';
-import { PlayerModel } from '@party-games/web-client/src/contracts/player.model';
 import { POINTS_PER_ANSWER, POINTS_PER_FOLLOWING_ANSWERS } from './config';
+import { Player } from '../../contracts/player';
 
 export function calculateRanking(
   state: PictionaryGameState,
-  players: PlayerModel[]
+  players: Player[]
 ): PlayerRanking[] {
   const answerCount = state.answers.length;
   const drawer: PlayerRanking = {

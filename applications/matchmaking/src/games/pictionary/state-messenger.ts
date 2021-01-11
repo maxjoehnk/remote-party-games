@@ -1,26 +1,26 @@
 import { SocketBroadcaster, SocketMessage } from '../../sockets/socket-broadcaster';
 import { GamePhase, PictionaryGameState, PictionaryView, RoundState } from './contracts';
-import { PlayerModel } from '@party-games/web-client/src/contracts/player.model';
 import { PictionaryEventTypes } from './messages';
 import { ALWAYS_VISIBLE_LETTERS } from './config';
+import { Player } from '../../contracts/player';
 
 export class PictionaryRoundStateMessenger {
   constructor(private broadcaster: SocketBroadcaster) {}
 
-  public async broadcastUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  public async broadcastUpdate(state: PictionaryGameState, players: Player[]) {
     this.sendRunningUpdate(state, players);
     this.sendSelectionUpdate(state, players);
     this.sendScoresUpdate(state, players);
   }
 
-  private sendRunningUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendRunningUpdate(state: PictionaryGameState, players: Player[]) {
     if (state.phase === GamePhase.Running) {
       this.sendDrawingUpdate(state, players);
       this.sendGuessingUpdate(state, players);
     }
   }
 
-  private sendDrawingUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendDrawingUpdate(state: PictionaryGameState, players: Player[]) {
     {
       const roundState = this.getDrawingState(state);
       this.broadcast(
@@ -33,7 +33,7 @@ export class PictionaryRoundStateMessenger {
     }
   }
 
-  private sendGuessingUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendGuessingUpdate(state: PictionaryGameState, players: Player[]) {
     {
       const roundState = this.getGuessingState(state);
       this.broadcast(
@@ -46,7 +46,7 @@ export class PictionaryRoundStateMessenger {
     }
   }
 
-  private sendSelectionUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendSelectionUpdate(state: PictionaryGameState, players: Player[]) {
     if (state.phase === GamePhase.SelectingWord) {
       this.sendWordSelectionUpdate(state);
       this.sendIdleUpdate(state, players);
@@ -64,7 +64,7 @@ export class PictionaryRoundStateMessenger {
     );
   }
 
-  private sendIdleUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendIdleUpdate(state: PictionaryGameState, players: Player[]) {
     const roundState = this.getIdleState(state);
     this.broadcast(
       {
@@ -75,7 +75,7 @@ export class PictionaryRoundStateMessenger {
     );
   }
 
-  private sendScoresUpdate(state: PictionaryGameState, players: PlayerModel[]) {
+  private sendScoresUpdate(state: PictionaryGameState, players: Player[]) {
     if (state.phase === GamePhase.Scores) {
       const roundState = this.getScoresState(state);
       this.broadcast(
