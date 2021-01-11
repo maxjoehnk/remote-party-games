@@ -29,6 +29,8 @@ export interface DrawingAreaState {
 
   pushAction?: (action: DrawingAction) => void;
   setCanvas?: (canvas: CanvasRef) => void;
+
+  emitLiveDrawing?: (action: DrawingAction) => void;
 }
 
 export interface CanvasRef extends Component<CanvasProps> {

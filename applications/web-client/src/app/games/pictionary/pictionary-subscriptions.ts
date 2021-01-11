@@ -1,5 +1,6 @@
 import { onMessage } from '../../../socket';
 import { PictionaryRoundState } from '../../../store/reducers/pictionary';
+import { DrawingAction } from '../../game-widgets/drawing/drawing-context';
 
 export interface PictionaryChatMessage {
   type: 'pictionary/chat';
@@ -17,4 +18,8 @@ export function subscribeChat(callback: (msg: PictionaryChatMessage) => void) {
 
 export function subscribeGuessedRight(callback: () => void) {
   return onMessage('pictionary/guessed-right', callback);
+}
+
+export function subscribePictionaryImageUpdate(callback: (actions: DrawingAction[]) => void) {
+  return onMessage('pictionary/image-update', msg => callback(msg.drawing));
 }

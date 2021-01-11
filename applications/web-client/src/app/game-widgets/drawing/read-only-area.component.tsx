@@ -15,6 +15,7 @@ class ReadOnlyArea extends React.Component<ReadOnlyAreaProps, DrawingAreaState> 
       readOnly: true,
       actions: this.props.actions,
       setCanvas: () => {},
+      emitLiveDrawing: () => {},
     };
 
     return (

@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { gameStopped } from '../actions/game';
-import { DrawingAction } from '../../app/game-widgets/drawing/drawing-context';
 import { pictionaryChat, pictionaryGameUpdate, pictionaryRightGuess } from '../actions/pictionary';
 import i18n from 'es2015-i18n-tag';
 
@@ -21,7 +20,6 @@ export enum SystemMessage {
 
 export interface PictionaryRoundState {
   timeLeft?: number;
-  drawingActions?: DrawingAction[];
   drawingPlayer: string;
   letters?: string[];
   rankings?: PlayerRanking[];

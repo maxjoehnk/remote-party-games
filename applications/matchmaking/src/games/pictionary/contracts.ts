@@ -1,6 +1,5 @@
 export interface RoundState {
   timeLeft?: number;
-  drawingActions?: any[];
   drawingPlayer: string;
   letters?: string[];
   rankings?: PlayerRanking[];
@@ -32,7 +31,6 @@ export interface PictionaryGameState {
   phase: GamePhase;
   currentPlayer: string;
   currentWord: string;
-  currentDrawing: any[];
   visibleLetters: number[];
   timeLeft: number;
   answers: string[];

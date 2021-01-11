@@ -98,7 +98,6 @@ export class PictionaryRoundStateMessenger {
   private getScoresState(state: PictionaryGameState): RoundState {
     return {
       drawingPlayer: state.currentPlayer,
-      drawingActions: state.currentDrawing,
       view: PictionaryView.Scores,
       rankings: state.rankings,
       word: state.currentWord,
@@ -108,7 +107,6 @@ export class PictionaryRoundStateMessenger {
   private getDrawingState(state: PictionaryGameState): RoundState {
     return {
       drawingPlayer: state.currentPlayer,
-      drawingActions: state.currentDrawing,
       word: state.currentWord,
       timeLeft: state.timeLeft,
       view: PictionaryView.Drawing,
@@ -118,7 +116,6 @@ export class PictionaryRoundStateMessenger {
   private getGuessingState(state: PictionaryGameState): RoundState {
     return {
       drawingPlayer: state.currentPlayer,
-      drawingActions: state.currentDrawing,
       letters: state.currentWord.split('').map((letter, i) => {
         if (state.visibleLetters.includes(i)) {
           return letter;

@@ -14,8 +14,21 @@ export interface DrawingAreaProps {
   tool?: DrawingTool;
   thickness?: number;
   color?: string;
-  // TODO: emit while drawing
   onActionChange?: (actions: DrawingAction[]) => void;
+}
+
+function throttle<T>(action: (payload: T) => void, threshold: number): (payload: T) => void {
+  let timer = null;
+  let lastPayload = null;
+  return payload => {
+    lastPayload = payload;
+    if (timer == null) {
+      timer = setTimeout(() => {
+        action(lastPayload);
+        timer = null;
+      }, threshold);
+    }
+  };
 }
 
 class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
@@ -32,6 +45,7 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
       pushAction: this.pushAction,
       undo: this.undo,
       redo: this.redo,
+      emitLiveDrawing: throttle(this.emitLiveDrawing, 10),
     };
 
     return contextState;
@@ -49,7 +63,7 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
       this.setState(state => ({ ...state, color }));
     }
     if (prevState.actions !== this.state.actions) {
-      this.props.onActionChange && this.props.onActionChange(this.state.actions);
+      this.emitActions(this.state.actions);
     }
   }
 
@@ -110,6 +124,16 @@ class DrawingArea extends React.Component<DrawingAreaProps, DrawingAreaState> {
     this.state.canvas.clear();
     this.setState(state => updateActions({ ...state, history: [], historyPointer: 0 }));
   };
+
+  private emitLiveDrawing = (action: DrawingAction) => {
+    const actions = [...this.state.actions, action];
+
+    this.emitActions(actions);
+  };
+
+  private emitActions(actions: DrawingAction[]) {
+    this.props.onActionChange && this.props.onActionChange(actions);
+  }
 }
 
 function getActions(state: DrawingAreaState): DrawingAction[] {

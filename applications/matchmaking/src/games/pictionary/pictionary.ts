@@ -35,7 +35,6 @@ function getDefaultState(config: PictionaryGameConfiguration, player: string): P
   return {
     phase: GamePhase.SelectingWord,
     currentPlayer: player,
-    currentDrawing: [],
     currentWord: null,
     visibleLetters: [],
     timeLeft: config.timer,
@@ -85,8 +84,10 @@ export class Pictionary implements Game {
   }
 
   private handleAddDrawing = async (action: DrawAction) => {
-    this.state.currentDrawing = action.actions;
-    await this.broadcastUpdate();
+    await this.broadcast({
+      type: PictionaryEventTypes.ImageUpdate,
+      drawing: action.actions,
+    }, this.players.map(p => p.id));
   };
 
   private handleSelectWord = async (action: SelectWord) => {

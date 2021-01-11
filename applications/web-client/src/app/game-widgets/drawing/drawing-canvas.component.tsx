@@ -13,7 +13,6 @@ export interface DrawingCanvasState {
   isMouseDown: boolean;
   context?: CanvasRenderingContext2D;
   boundingRect?: DOMRect;
-  currentLine?: Line;
 }
 
 interface PenPosition {
@@ -25,6 +24,9 @@ interface PenPosition {
 class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> implements CanvasRef {
   private canvas: RefObject<HTMLCanvasElement>;
   private loadedImage: HTMLImageElement;
+  private currentLine?: Line;
+
+  context!: React.ContextType<typeof DrawingContext>;
 
   constructor(props) {
     super(props);
@@ -32,7 +34,6 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     this.state = {
       isMouseDown: false,
       context: null,
-      currentLine: null,
     };
   }
 
@@ -110,8 +111,8 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     for (const action of this.context.actions) {
       this.drawAction(action);
     }
-    if (this.state.currentLine) {
-      this.drawAction(this.state.currentLine);
+    if (this.currentLine) {
+      this.drawAction(this.currentLine);
     }
   }
 
@@ -238,40 +239,32 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   };
 
   private startNewLine(coordinate: PenPosition) {
-    this.setState(state => ({
-      ...state,
-      currentLine: {
-        color: this.context.color,
-        start: coordinate,
-        elements: [],
-        tool: this.context.tool,
-      },
-    }));
+    this.currentLine = {
+      color: this.context.color,
+      start: coordinate,
+      elements: [],
+      tool: this.context.tool as DrawingTool.Pen | DrawingTool.Eraser,
+    };
   }
 
   private pushLineElement({ x, y, pressure }: PenPosition) {
-    this.setState(state => ({
-      ...state,
-      currentLine: {
-        ...state.currentLine,
-        elements: [
-          ...state.currentLine.elements,
-          {
-            thickness: this.context.thickness * pressure,
-            x,
-            y,
-          },
-        ],
-      },
-    }));
+    this.currentLine = {
+      ...this.currentLine,
+      elements: [
+        ...this.currentLine.elements,
+        {
+          thickness: this.context.thickness * pressure,
+          x,
+          y,
+        },
+      ],
+    };
+    this.context.emitLiveDrawing(this.currentLine);
   }
 
   private finishLine() {
-    this.context.pushAction(this.state.currentLine);
-    this.setState(state => ({
-      ...state,
-      currentLine: null,
-    }));
+    this.context.pushAction(this.currentLine);
+    this.currentLine = null;
   }
 
   private onScroll = (event: WheelEvent) => {
@@ -284,6 +277,7 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     this.loadedImage = img;
   }
 }
+
 DrawingCanvas.contextType = DrawingContext;
 
 type DrawingCanvasClass = new (props: CanvasProps, context?: any) => CanvasRef;
