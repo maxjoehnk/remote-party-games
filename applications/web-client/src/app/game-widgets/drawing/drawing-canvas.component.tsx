@@ -36,6 +36,15 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     };
   }
 
+  private get boundingRect(): DOMRect {
+    if (this.state.boundingRect != null) {
+      return this.state.boundingRect;
+    }
+    const boundingRect = this.canvas.current.getBoundingClientRect();
+    this.setState(state => ({ ...state, boundingRect }));
+    return boundingRect;
+  }
+
   private get canvasContext(): CanvasRenderingContext2D {
     return this.state.context;
   }
@@ -71,11 +80,9 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     context.lineWidth = this.context.thickness;
     context.lineCap = 'round';
     context.lineJoin = 'round';
-    const boundingRect = canvas.getBoundingClientRect();
     this.setState({
       ...this.state,
       context,
-      boundingRect,
     });
   }
 
@@ -142,8 +149,8 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   private onMouseUp = (e: MouseEvent) => this.onPointerEnd(e, this.getMousePoint(e));
 
   private getMousePoint(e: MouseEvent): PenPosition {
-    const x = e.clientX - this.state.boundingRect.x;
-    const y = e.clientY - this.state.boundingRect.y;
+    const x = e.clientX - this.boundingRect.x;
+    const y = e.clientY - this.boundingRect.y;
 
     return {
       x,
@@ -174,8 +181,8 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     if (touch == null) {
       return null;
     }
-    const x = touch.clientX - this.state.boundingRect.x;
-    const y = touch.clientY - this.state.boundingRect.y;
+    const x = touch.clientX - this.boundingRect.x;
+    const y = touch.clientY - this.boundingRect.y;
     const pressure = touch.force === 0 ? 1 : touch.force;
 
     return { x, y, pressure };
