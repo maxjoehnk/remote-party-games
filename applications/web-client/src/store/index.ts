@@ -10,6 +10,7 @@ import { StadtLandFlussGameState } from '../contracts/stadt-land-fluss-configura
 import { stadtLandFlussReducer } from './reducers/stadt-land-fluss';
 import { PlayerModel } from '../contracts/player.model';
 import { stillePostReducer, StillePostState } from './reducers/stille-post';
+import { pictionaryReducer, PictionaryState } from './reducers/pictionary';
 
 export interface ApplicationState {
   lobby: LobbyState;
@@ -17,6 +18,7 @@ export interface ApplicationState {
   taboo: TabooGameState;
   stadtLandFluss: StadtLandFlussGameState;
   stillePost: StillePostState;
+  pictionary: PictionaryState;
 }
 
 const store = configureStore<ApplicationState>({
@@ -26,6 +28,7 @@ const store = configureStore<ApplicationState>({
     taboo: tabooReducer,
     stadtLandFluss: stadtLandFlussReducer,
     stillePost: stillePostReducer,
+    pictionary: pictionaryReducer,
   }),
   middleware: [listenerMiddleware, socketSubscriberMiddleware] as any,
 });

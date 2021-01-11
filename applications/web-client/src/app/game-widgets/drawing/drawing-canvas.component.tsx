@@ -83,7 +83,7 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     this.redrawCanvas();
     return (
       <canvas
-        className="drawing-area"
+        className={`drawing-area ${this.props.className}`}
         width={this.props.width}
         height={this.props.height}
         style={{ width: `${this.props.width}px`, height: `${this.props.height}px` }}
@@ -144,7 +144,7 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   private getMousePoint(e: MouseEvent): PenPosition {
     const x = e.clientX - this.state.boundingRect.x;
     const y = e.clientY - this.state.boundingRect.y;
-    
+
     return {
       x,
       y,

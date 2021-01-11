@@ -6,6 +6,7 @@ import { StadtLandFlussConfiguration } from '../../contracts/stadt-land-fluss-co
 import { LobbyGameConfigModel } from '../../contracts/lobby.model';
 import { GameHistoryModel } from '../../contracts/history.model';
 import { StillePostConfig } from '../../contracts/stille-post-configuration';
+import { PictionaryConfiguration } from '../../contracts/pictionary-configuration';
 
 export interface CreateLobbyResponse {
   code: string;
@@ -71,7 +72,11 @@ export function changeGame(game: string) {
 }
 
 export function updateGameConfiguration(
-  configuration: TabooGameConfiguration | StadtLandFlussConfiguration | StillePostConfig
+  configuration:
+    | TabooGameConfiguration
+    | StadtLandFlussConfiguration
+    | StillePostConfig
+    | PictionaryConfiguration
 ) {
   emit({
     type: 'lobby/update-game-config',

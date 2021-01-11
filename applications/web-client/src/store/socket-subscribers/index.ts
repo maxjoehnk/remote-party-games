@@ -11,6 +11,9 @@ import { stillePostViewBookSubscriber } from './stille-post-view-book';
 import { stillePostBookClosedSubscriber } from './stille-post-book-closed';
 import { ApplicationState } from '../index';
 import { Store } from 'redux';
+import { pictionaryGameUpdateSubscriber } from './pictionary-game-update';
+import { pictionaryChatSubscriber } from './pictionary-chat';
+import { pictionaryRightGuessSubscriber } from './pictionary-guessed-right';
 
 type Subscriber = (store: Store<ApplicationState>) => void;
 
@@ -26,6 +29,9 @@ const subscribers: Subscriber[] = [
   stillePostBooksReadySubscriber,
   stillePostViewBookSubscriber,
   stillePostBookClosedSubscriber,
+  pictionaryGameUpdateSubscriber,
+  pictionaryChatSubscriber,
+  pictionaryRightGuessSubscriber,
 ];
 
 export const socketSubscriberMiddleware = (store: Store<ApplicationState>) => {

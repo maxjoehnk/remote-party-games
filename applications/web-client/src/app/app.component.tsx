@@ -83,6 +83,7 @@ const StadtLandFluss = React.lazy(
   () => import('./games/stadt-land-fluss/stadt-land-fluss-game.component')
 );
 const StillePost = React.lazy(() => import('./games/stille-post/stille-post-game.component'));
+const Pictionary = React.lazy(() => import('./games/pictionary/pictionary-game.component'));
 
 const Loading = () => <div>{i18n`Loading...`}</div>;
 
@@ -115,6 +116,11 @@ const ApplicationRoutes = () => {
         <Route path="/play/stille-post">
           <Suspense fallback={<Loading />}>
             <StillePost />
+          </Suspense>
+        </Route>
+        <Route path="/play/pictionary">
+          <Suspense fallback={<Loading />}>
+            <Pictionary />
           </Suspense>
         </Route>
       </Switch>

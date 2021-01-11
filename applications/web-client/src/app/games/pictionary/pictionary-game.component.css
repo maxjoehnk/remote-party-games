@@ -1,0 +1,98 @@
+.game-pictionary {
+  display: grid;
+  grid-template-areas: 'header header header' 'player-list game-area chat';
+  grid-template-columns: 300px 1fr minmax(300px, 1fr);
+  grid-template-rows: 76px 1fr;
+  max-width: 1500px;
+  margin: 0 auto;
+  grid-gap: 16px;
+  padding: 16px;
+  height: 100%;
+  min-height: 600px;
+}
+
+.game-pictionary__header {
+  grid-area: header;
+}
+
+.game-pictionary__word-to-draw,
+.game-pictionary__word-to-guess {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.game-pictionary__word-to-guess {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-pictionary__letter {
+  width: 16px;
+  margin: 4px;
+  display: block;
+  text-align: center;
+}
+
+.game-pictionary__game-area {
+  grid-area: game-area;
+}
+
+.game-pictionary__chat {
+  grid-area: chat;
+}
+
+.game-pictionary__word-selection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 732px;
+}
+
+.game-pictionary__word-selection .button {
+  margin-right: 16px;
+}
+
+.game-pictionary__canvas {
+  background: white;
+}
+
+.pictionary-draw-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.pictionary-draw-area__tools {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-pictionary__player-list {
+  grid-area: player-list;
+}
+
+.game-pictionary__player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: var(--border-radius);
+  padding: 4px 8px;
+}
+
+.game-pictionary__player-icon {
+  opacity: 0.54;
+  margin: 0 8px 0 0;
+}
+
+.game-pictionary__player-avatar {
+  margin-right: 8px;
+}
+
+.game-pictionary__player-name {
+  flex: 1;
+}
+
+.game-pictionary__player--drawing {
+  color: var(--color-primary);
+}

@@ -40,6 +40,7 @@ export interface CanvasRef extends Component<CanvasProps> {
 export interface CanvasProps {
   width: number;
   height: number;
+  className?: string;
 }
 
 export const defaultState: DrawingAreaState = {

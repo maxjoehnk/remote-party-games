@@ -14,6 +14,7 @@ export interface DrawingAreaProps {
   tool?: DrawingTool;
   thickness?: number;
   color?: string;
+  // TODO: emit while drawing
   onActionChange?: (actions: DrawingAction[]) => void;
 }
 

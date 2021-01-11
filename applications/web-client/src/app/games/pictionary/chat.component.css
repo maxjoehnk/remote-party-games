@@ -1,0 +1,23 @@
+.pictionary-chat {
+  display: flex;
+  flex-direction: column;
+  max-height: 550px; /* TODO: remove hardcoded size */
+}
+
+.pictionary-chat__messages {
+  overflow-y: scroll;
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.pictionary-chat__message--system {
+  color: var(--color-primary);
+}
+
+.pictionary-chat-message__player {
+  font-weight: bold;
+}
+
+.pictionary-chat__input {
+  width: 100%;
+}

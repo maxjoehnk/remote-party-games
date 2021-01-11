@@ -19,7 +19,7 @@ export interface Timer {
 }
 
 const GameHeader = ({ timer, children, className, contentClass }: GameHeaderProps) => {
-  const hasTimer = timer != null;
+  const hasTimer = timer != null && timer.timeLeft != null;
 
   return (
     <div className={`game-header ${hasTimer && 'game-header--timer'} ${className}`}>

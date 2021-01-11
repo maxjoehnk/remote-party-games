@@ -1,0 +1,8 @@
+.pictionary-scores__entry {
+  display: flex;
+  flex-direction: row;
+}
+
+.pictionary-scores__player-name {
+  flex: 1;
+}
