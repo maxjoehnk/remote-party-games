@@ -35,10 +35,10 @@ services:
       - web
       - default
     labels:
-      traefik.enable: "true"
-      traefik.http.routers.party-games-proxy.rule: "Host(`${DOMAIN-party.maxjoehnk.me}`)"
-      traefik.http.services.party-games-proxy.loadbalancer.server.port: "80"
-      traefik.docker.network: "web"
+      - "traefik.enable=true"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-proxy.rule=Host(`${DOMAIN-party.maxjoehnk.me}`)"
+      - "traefik.http.services.party-games-${DEPLOYMENT-live}-proxy.loadbalancer.server.port=80"
+      - "traefik.docker.network=web"
 volumes:
   images:
 
