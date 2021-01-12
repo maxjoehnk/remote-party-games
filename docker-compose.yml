@@ -6,14 +6,24 @@ services:
       context: .
       dockerfile: applications/web-client/Dockerfile
     image: registry.gitlab.com/maxjoehnk/remote-party-games/web-client:latest
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-web-client.rule=Host(`${DOMAIN-party.maxjoehnk.me}`)"
   matchmaking:
     restart: on-failure
     build:
       context: .
       dockerfile: applications/matchmaking/Dockerfile
     image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:latest
+    networks:
+      - web
     volumes:
       - ./game_assets:/src/applications/matchmaking/assets
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-matchmaking.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix('/api')"
   image:
     restart: on-failure
     build:
@@ -22,23 +32,13 @@ services:
     image: registry.gitlab.com/maxjoehnk/remote-party-games/image:latest
     environment:
       MATCHMAKING_URL: http://matchmaking:8090
-    volumes:
-      - images:/etc/party-games/storage
-  proxy:
-    restart: on-failure
-    build: applications/proxy
-    depends_on:
-      - web-client
-      - matchmaking
-    image: registry.gitlab.com/maxjoehnk/remote-party-games/proxy:latest
     networks:
       - web
-      - default
+    volumes:
+      - images:/etc/party-games/storage
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-proxy.rule=Host(`${DOMAIN-party.maxjoehnk.me}`)"
-      - "traefik.http.services.party-games-${DEPLOYMENT-live}-proxy.loadbalancer.server.port=80"
-      - "traefik.docker.network=web"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-image.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix('/api/image')"
 volumes:
   images:
 

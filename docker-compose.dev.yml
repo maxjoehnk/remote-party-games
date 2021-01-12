@@ -4,6 +4,15 @@ services:
     volumes:
       - ./applications/matchmaking/assets:/src/applications/matchmaking/assets
   proxy:
+    restart: on-failure
+    build: applications/proxy
+    depends_on:
+      - web-client
+      - matchmaking
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/proxy:latest
+    networks:
+      - web
+      - default
     ports:
       - 8080:80
 networks:
