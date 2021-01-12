@@ -23,7 +23,7 @@ services:
       - ./game_assets:/src/applications/matchmaking/assets
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-matchmaking.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix('/api')"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-matchmaking.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix(`/api`)"
   image:
     restart: on-failure
     build:
@@ -38,7 +38,7 @@ services:
       - images:/etc/party-games/storage
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-image.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix('/api/image')"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-image.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix(`/api/image`)"
 volumes:
   images:
 
