@@ -33,7 +33,7 @@ build-matchmaking:
 build-proxy:
   stage: build
   script:
-    - docker build --pull -t "$PROXY_IMAGE" -f applications/proxy/Dockerfile .
+    - docker build --pull -t "$PROXY_IMAGE" ./applications/proxy
     - docker push "$PROXY_IMAGE"
   only:
     - master
@@ -41,7 +41,7 @@ build-proxy:
 build-images:
   stage: build
   script:
-    - docker build --pull -t "$IMAGES_IMAGE" -f applications/images/Dockerfile .
+    - docker build --pull -t "$IMAGES_IMAGE" -f applications/image/Dockerfile .
     - docker push "$IMAGES_IMAGE"
   only:
     - master
