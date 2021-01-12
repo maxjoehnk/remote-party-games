@@ -21,7 +21,10 @@ build-web-client:
     - docker build --pull -t "$WEB_CLIENT_IMAGE" -f applications/web-client/Dockerfile .
     - docker push "$WEB_CLIENT_IMAGE"
   only:
+    refs:
     - master
+    changes:
+    - applications/web-client/**/*
 
 build-matchmaking:
   stage: build
@@ -29,7 +32,10 @@ build-matchmaking:
     - docker build --pull -t "$MATCHMAKING_IMAGE" -f applications/matchmaking/Dockerfile .
     - docker push "$MATCHMAKING_IMAGE"
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - applications/matchmaking/**/*
 
 build-proxy:
   stage: build
@@ -37,7 +43,10 @@ build-proxy:
     - docker build --pull -t "$PROXY_IMAGE" ./applications/proxy
     - docker push "$PROXY_IMAGE"
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - applications/proxy/**/*
 
 build-images:
   stage: build
@@ -45,7 +54,10 @@ build-images:
     - docker build --pull -t "$IMAGES_IMAGE" -f applications/image/Dockerfile .
     - docker push "$IMAGES_IMAGE"
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - applications/image/**/*
 
 deploy-beta:
   stage: deploy-beta
