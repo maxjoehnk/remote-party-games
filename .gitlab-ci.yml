@@ -1,0 +1,47 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - build
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+variables:
+  WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:latest
+  MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:latest
+  PROXY_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/proxy:latest
+  IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/images:latest
+
+build-web-client:
+  stage: build
+  script:
+    - docker build --pull -t "$WEB_CLIENT_IMAGE" -f applications/web-client/Dockerfile .
+    - docker push "$WEB_CLIENT_IMAGE"
+  only:
+    - master
+
+build-matchmaking:
+  stage: build
+  script:
+    - docker build --pull -t "$MATCHMAKING_IMAGE" -f applications/matchmaking/Dockerfile .
+    - docker push "$MATCHMAKING_IMAGE"
+  only:
+    - master
+
+build-proxy:
+  stage: build
+  script:
+    - docker build --pull -t "$PROXY_IMAGE" -f applications/proxy/Dockerfile .
+    - docker push "$PROXY_IMAGE"
+  only:
+    - master
+
+build-images:
+  stage: build
+  script:
+    - docker build --pull -t "$IMAGES_IMAGE" -f applications/images/Dockerfile .
+    - docker push "$IMAGES_IMAGE"
+  only:
+    - master
