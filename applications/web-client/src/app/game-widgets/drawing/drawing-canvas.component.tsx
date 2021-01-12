@@ -106,7 +106,7 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
     }
     this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
     if (this.loadedImage) {
-      this.canvasContext.drawImage(this.loadedImage, 0, 0);
+      this.drawImage();
     }
     for (const action of this.context.actions) {
       this.drawAction(action);
@@ -273,8 +273,13 @@ class DrawingCanvas extends React.Component<CanvasProps, DrawingCanvasState> imp
   };
 
   load(img: HTMLImageElement) {
-    this.canvasContext.drawImage(img, 0, 0);
     this.loadedImage = img;
+    this.drawImage();
+  }
+
+  private drawImage() {
+    this.canvasContext.globalCompositeOperation = 'source-over';
+    this.canvasContext.drawImage(this.loadedImage, 0, 0);
   }
 }
 
