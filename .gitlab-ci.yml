@@ -70,6 +70,9 @@ deploy-beta:
     - echo "$BETA_SERVER $BETA_SERVER_HOST_KEY" > ~/.ssh/known_hosts
   script:
     - ssh root@$BETA_SERVER "cd remote-party-games && ./deploy-beta.sh"
+  environment:
+    name: beta
+    url: https://beta.party.maxjoehnk.me
   only:
     refs:
       - master
