@@ -75,12 +75,7 @@ deploy-beta:
     name: beta
     url: https://beta.party.maxjoehnk.me
   only:
-    refs:
-      - master
-    changes:
-      - applications/**/*
-      - gitlab-ci.yml
-      - docker-compose.yml
+    - master
 
 deploy-live:
   stage: deploy-live
