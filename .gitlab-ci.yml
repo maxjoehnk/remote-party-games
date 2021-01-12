@@ -5,6 +5,7 @@ services:
 stages:
   - build
   - deploy-beta
+  - deploy-live
 
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -80,3 +81,14 @@ deploy-beta:
       - applications/**/*
       - gitlab-ci.yml
       - docker-compose.yml
+
+deploy-live:
+  stage: deploy-live
+  script:
+    - echo "deploying live system..."
+  environment:
+    name: live
+    url: https://party.maxjoehnk.me
+  when: manual
+  only:
+    - master
