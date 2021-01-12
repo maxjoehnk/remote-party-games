@@ -1,6 +1,6 @@
 import { Game } from '../../contracts/game';
 import { PICTIONARY } from '../types';
-import { GameScore } from '../../contracts/game-history';
+import { GameScore, PlayerBasedScore } from '../../contracts/game-history';
 import { CreateGameConfig } from '../factory';
 import { ALWAYS_VISIBLE_LETTERS, LETTER_THRESHOLDS, PictionaryGameConfiguration } from './config';
 import { SocketBroadcaster, SocketMessage } from '../../sockets/socket-broadcaster';
@@ -53,6 +53,7 @@ export class Pictionary implements Game {
   private players: Player[] = [];
   private currentPlayerIndex: number = 0;
   private pastRounds: CompletedRound[] = [];
+  private scores: PlayerRanking[] = [];
 
   state: PictionaryGameState;
 
@@ -84,10 +85,13 @@ export class Pictionary implements Game {
   }
 
   private handleAddDrawing = async (action: DrawAction) => {
-    await this.broadcast({
-      type: PictionaryEventTypes.ImageUpdate,
-      drawing: action.actions,
-    }, this.players.map(p => p.id));
+    await this.broadcast(
+      {
+        type: PictionaryEventTypes.ImageUpdate,
+        drawing: action.actions,
+      },
+      this.players.map(p => p.id)
+    );
   };
 
   private handleSelectWord = async (action: SelectWord) => {
@@ -138,11 +142,33 @@ export class Pictionary implements Game {
         rankings: this.state.rankings,
         drawer: this.state.currentPlayer,
       });
+      this.updateScores();
       this.state.phase = GamePhase.Scores;
       await this.broadcastUpdate();
       return true;
     }
     return false;
+  }
+
+  private updateScores() {
+    this.scores = this.pastRounds
+      .flatMap(round => round.rankings)
+      .reduce((rankings, ranking) => {
+        const current = rankings.find(r => r.player === ranking.player);
+        if (current == null) {
+          return [...rankings, ranking];
+        }
+        current.points += ranking.points;
+        return rankings;
+      }, []);
+    this.scores.sort((a, b) => b.points - a.points);
+    this.broadcast(
+      {
+        type: PictionaryEventTypes.Scores,
+        scores: this.scores,
+      },
+      this.players.map(p => p.id)
+    );
   }
 
   private updateHints() {
@@ -201,7 +227,16 @@ export class Pictionary implements Game {
 
   async stop(): Promise<GameScore> {
     this.stopTimer();
-    return null;
+    const score: PlayerBasedScore = {
+      type: 'player-score',
+      scores: {},
+      winner: this.scores[0].player,
+    };
+    for (const ranking of this.scores) {
+      score.scores[ranking.player] = ranking.points;
+    }
+
+    return score;
   }
 
   private async startNextRound() {

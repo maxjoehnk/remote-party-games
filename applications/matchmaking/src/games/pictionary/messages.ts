@@ -25,5 +25,5 @@ export enum PictionaryEventTypes {
   Update = 'pictionary/update',
   GuessedRight = 'pictionary/guessed-right',
   Scores = 'pictionary/scores',
-  ImageUpdate = 'pictionary/image-update'
+  ImageUpdate = 'pictionary/image-update',
 }

@@ -7,7 +7,7 @@ import React from 'react';
 export const WordSelectionView = () => {
   const words = useSelector(selectPictionaryAvailableWords);
   return (
-    <div className="card game-pictionary__word-selection">
+    <div className="game-pictionary__word-selection">
       {words.map(word => (
         <Button onClick={() => selectWord(word)} key={word}>
           {word}

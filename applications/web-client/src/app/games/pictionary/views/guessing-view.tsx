@@ -13,7 +13,7 @@ export const PictionaryGuessingView = () => {
   });
 
   return (
-    <div className="card">
+    <div className="pictionary-guessing-view">
       <ReadOnlyArea actions={drawing}>
         <DrawingCanvas
           className="game-pictionary__canvas"

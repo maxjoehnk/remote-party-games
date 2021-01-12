@@ -1,11 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { gameStopped } from '../actions/game';
-import { pictionaryChat, pictionaryGameUpdate, pictionaryRightGuess } from '../actions/pictionary';
+import {
+  pictionaryChat,
+  pictionaryGameUpdate,
+  pictionaryRightGuess,
+  pictionaryScores,
+} from '../actions/pictionary';
 import i18n from 'es2015-i18n-tag';
 
 export interface PictionaryState {
   currentRound?: PictionaryRoundState;
   chat: ChatMessage[];
+  scores: PlayerRanking[];
 }
 
 export interface ChatMessage {
@@ -44,6 +50,7 @@ export enum PictionaryView {
 const initialState: PictionaryState = {
   currentRound: null,
   chat: [],
+  scores: [],
 };
 
 export const pictionaryReducer = createReducer<PictionaryState>(initialState, builder =>
@@ -66,6 +73,10 @@ export const pictionaryReducer = createReducer<PictionaryState>(initialState, bu
           message: i18n('pictionary')`Guessed right`,
         },
       ],
+    }))
+    .addCase(pictionaryScores, (state, action) => ({
+      ...state,
+      scores: action.payload,
     }))
     .addCase(gameStopped, () => initialState)
 );

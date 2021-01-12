@@ -10,7 +10,7 @@ import { nextRound } from '../pictionary-api';
 export const PictionaryScoresView = () => {
   const rankings = useSelector(selectPictionaryScores);
   return (
-    <div className="card pictionary-scores">
+    <div className="pictionary-scores">
       <h2>{i18n('pictionary')`Scores`}</h2>
       {rankings.map(r => (
         <PictionaryScoreEntry ranking={r} key={r.player.id} />

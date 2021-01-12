@@ -14,6 +14,7 @@ import { Store } from 'redux';
 import { pictionaryGameUpdateSubscriber } from './pictionary-game-update';
 import { pictionaryChatSubscriber } from './pictionary-chat';
 import { pictionaryRightGuessSubscriber } from './pictionary-guessed-right';
+import { pictionaryScoresSubscriber } from './pictionary-scores';
 
 type Subscriber = (store: Store<ApplicationState>) => void;
 
@@ -32,6 +33,7 @@ const subscribers: Subscriber[] = [
   pictionaryGameUpdateSubscriber,
   pictionaryChatSubscriber,
   pictionaryRightGuessSubscriber,
+  pictionaryScoresSubscriber,
 ];
 
 export const socketSubscriberMiddleware = (store: Store<ApplicationState>) => {

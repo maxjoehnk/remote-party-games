@@ -12,7 +12,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../pictionary-constants';
 
 export const PictionaryDrawingView = () => {
   return (
-    <div className="card pictionary-draw-area">
+    <div className="pictionary-draw-area">
       <DrawingArea onActionChange={actions => draw(actions)}>
         <DrawingCanvas
           className="game-pictionary__canvas"

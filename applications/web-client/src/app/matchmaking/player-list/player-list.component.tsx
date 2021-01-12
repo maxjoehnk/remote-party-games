@@ -9,14 +9,15 @@ import { PlayerModel } from '../../../contracts/player.model';
 import { TeamModel } from '../../../contracts/team.model';
 import PlayerAvatar from '../../player/player-avatar.component';
 
-export interface PlayerListProps {
+export interface PlayerListProps<T extends PlayerModel = PlayerModel> {
   canChangeTeam: boolean;
+  players?: T[];
   className?: string;
-  children?: (text: string, player: PlayerModel, team?: TeamModel) => any;
+  children?: (text: string, player: T, team?: TeamModel) => any;
 }
 
 const PlayerList = ({ canChangeTeam, className, ...props }: PlayerListProps) => {
-  const players = useSelector(selectPlayerList);
+  const players = props.players ?? useSelector(selectPlayerList);
   const teams = useSelector(selectTeams);
 
   const isTeamBased = teams.length > 0;
