@@ -5,13 +5,13 @@ services:
     build:
       context: .
       dockerfile: applications/web-client/Dockerfile
-    image: docker.pkg.github.com/maxjoehnk/remote-party-games/web-client:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/web-client:latest
   matchmaking:
     restart: on-failure
     build:
       context: .
       dockerfile: applications/matchmaking/Dockerfile
-    image: docker.pkg.github.com/maxjoehnk/remote-party-games/matchmaking:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:latest
     volumes:
       - ./game_assets:/src/applications/matchmaking/assets
   image:
@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: applications/image/Dockerfile
-    image: docker.pkg.github.com/maxjoehnk/remote-party-games/image:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/image:latest
     environment:
       MATCHMAKING_URL: http://matchmaking:8090
     volumes:
@@ -30,7 +30,7 @@ services:
     depends_on:
       - web-client
       - matchmaking
-    image: docker.pkg.github.com/maxjoehnk/remote-party-games/proxy:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/proxy:latest
     networks:
       - web
       - default
