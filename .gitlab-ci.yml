@@ -71,4 +71,9 @@ deploy-beta:
   script:
     - ssh root@$BETA_SERVER "cd remote-party-games && ./deploy-beta.sh"
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - applications/**/*
+      - gitlab-ci.yml
+      - docker-compose.yml
