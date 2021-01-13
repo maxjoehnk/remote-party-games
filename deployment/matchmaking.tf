@@ -13,6 +13,11 @@ resource "docker_container" "matchmaking" {
     value = "Host(`${var.domain}`) && PathPrefix(`/api`)"
   }
 
+  labels {
+    label = "traefik.docker.network"
+    value = var.web_network
+  }
+
   networks_advanced {
     name = var.web_network
   }
