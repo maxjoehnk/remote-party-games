@@ -76,6 +76,10 @@ prepare-deploy-beta:
   stage: prepare-deploy
   before_script:
     - cd ${TF_ROOT}
+  variables:
+    TF_VAR_docker_host: ssh://root@$BETA_SERVER
+    TF_VAR_environment: $CI_ENVIRONMENT_NAME
+    TF_VAR_domain: beta.party.maxjoehnk.me
   script:
     - gitlab-terraform init
     - gitlab-terraform plan
