@@ -4,6 +4,7 @@ services:
 
 stages:
   - build
+  - prepare-deploy
   - deploy
 
 before_script:
@@ -14,6 +15,10 @@ variables:
   MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:latest
   PROXY_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/proxy:latest
   IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/images:latest
+  TF_ROOT: ${CI_PROJECT_DIR}/deployment
+  TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_ENVIRONMENT_NAME}
+
+# Docker Builds
 
 build-web-client:
   stage: build
@@ -59,6 +64,33 @@ build-images:
     changes:
       - applications/image/**/*
 
+# Deployment
+
+cache:
+  key: "${TF_ROOT}"
+  paths:
+    - ${TF_ROOT}/.terraform/
+
+prepare-deploy-beta:
+  stage: prepare-deploy
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform init
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  artifacts:
+    name: plan
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+  resource_group: beta
+  environment:
+    name: beta
+    url: https://beta.party.maxjoehnk.me
+    action: prepare
+
 deploy-beta:
   stage: deploy
   before_script:
@@ -68,8 +100,15 @@ deploy-beta:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$BETA_SERVER $BETA_SERVER_HOST_KEY" > ~/.ssh/known_hosts
+    - cd ${TF_ROOT}
+  variables:
+    TF_VAR_docker_host: ssh://root@$BETA_SERVER
+    TF_VAR_environment: $CI_ENVIRONMENT_NAME
+    TF_VAR_domain: beta.party.maxjoehnk.me
   script:
-    - ssh root@$BETA_SERVER "cd remote-party-games && ./deploy-beta.sh"
+    - gitlab-terraform apply
+  dependencies:
+    - prepare-deploy-beta
   resource_group: beta
   environment:
     name: beta
