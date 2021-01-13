@@ -72,6 +72,7 @@ cache:
     - ${TF_ROOT}/.terraform/
 
 prepare-deploy-beta:
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: prepare-deploy
   before_script:
     - cd ${TF_ROOT}
@@ -92,6 +93,7 @@ prepare-deploy-beta:
     action: prepare
 
 deploy-beta:
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
