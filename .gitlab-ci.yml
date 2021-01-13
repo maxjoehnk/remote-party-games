@@ -13,8 +13,7 @@ before_script:
 variables:
   WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:latest
   MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:latest
-  PROXY_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/proxy:latest
-  IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/images:latest
+  IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/image:latest
   TF_ROOT: ${CI_PROJECT_DIR}/deployment
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_ENVIRONMENT_NAME}
 
@@ -30,6 +29,7 @@ build-web-client:
     - master
     changes:
     - applications/web-client/**/*
+    - .gitlab-ci.yml
 
 build-matchmaking:
   stage: build
@@ -41,17 +41,7 @@ build-matchmaking:
       - master
     changes:
       - applications/matchmaking/**/*
-
-build-proxy:
-  stage: build
-  script:
-    - docker build --pull -t "$PROXY_IMAGE" ./applications/proxy
-    - docker push "$PROXY_IMAGE"
-  only:
-    refs:
-      - master
-    changes:
-      - applications/proxy/**/*
+      - .gitlab-ci.yml
 
 build-images:
   stage: build
@@ -63,6 +53,7 @@ build-images:
       - master
     changes:
       - applications/image/**/*
+      - .gitlab-ci.yml
 
 # Deployment
 
