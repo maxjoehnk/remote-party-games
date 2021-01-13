@@ -17,4 +17,6 @@ RUN yarn build
 
 EXPOSE 8090
 
+COPY applications/matchmaking/assets ./assets
+
 ENTRYPOINT ["node", "dist/main.js"]
