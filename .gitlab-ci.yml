@@ -143,8 +143,9 @@ stop-deploy-beta:
     name: beta
     url: https://beta.party.maxjoehnk.me
     action: stop
-  only:
-    - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: manual
 
 deploy-live:
   stage: deploy
