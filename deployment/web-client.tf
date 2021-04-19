@@ -21,6 +21,7 @@ resource "docker_container" "web-client" {
 resource "docker_image" "web-client" {
   name = data.docker_registry_image.web-client.name
   pull_triggers = [data.docker_registry_image.web-client.sha256_digest]
+  keep_locally = true
 }
 
 data "docker_registry_image" "web-client" {

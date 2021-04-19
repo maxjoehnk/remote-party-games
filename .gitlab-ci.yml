@@ -18,6 +18,7 @@ variables:
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_ENVIRONMENT_NAME}
   TF_VAR_unleash_url: $UNLEASH_URL
   TF_VAR_unleash_instance_id: $UNLEASH_INSTANCE_ID
+  TF_VAR_tag: $CI_COMMIT_SHORT_SHA
 
 # Docker Builds
 

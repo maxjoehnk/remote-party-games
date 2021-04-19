@@ -40,6 +40,7 @@ resource "docker_container" "image" {
 resource "docker_image" "image" {
   name = data.docker_registry_image.image.name
   pull_triggers = [data.docker_registry_image.image.sha256_digest]
+  keep_locally = true
 }
 
 data "docker_registry_image" "image" {

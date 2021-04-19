@@ -37,6 +37,7 @@ resource "docker_container" "matchmaking" {
 resource "docker_image" "matchmaking" {
   name = data.docker_registry_image.matchmaking.name
   pull_triggers = [data.docker_registry_image.matchmaking.sha256_digest]
+  keep_locally = true
 }
 
 data "docker_registry_image" "matchmaking" {
