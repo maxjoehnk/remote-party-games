@@ -23,10 +23,16 @@ import { ChangeGameHandler } from './handler/change-game.handler';
 import { ChangeGameConfigurationHandler } from './handler/change-game-configuration.handler';
 import { PlayerController } from './controllers/player-controller';
 import { UpdateUserImageHandler } from './handler/update-user-image.handler';
+import { UnleashModule } from 'nestjs-unleash';
+import { GamesController } from './controllers/games-controller';
 
 @Module({
-  imports: [CqrsModule],
-  controllers: [LobbyController, MetricsController, PlayerController],
+  imports: [CqrsModule, UnleashModule.forRoot({
+    url: process.env.UNLEASH_URL,
+    instanceId: process.env.UNLEASH_INSTANCE_ID,
+    appName: process.env.UNLEASH_ENVIRONMENT
+  })],
+  controllers: [LobbyController, MetricsController, PlayerController, GamesController],
   providers: [
     LobbyStore,
     PlayerStore,

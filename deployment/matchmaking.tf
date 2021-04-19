@@ -3,6 +3,12 @@ resource "docker_container" "matchmaking" {
   name = "remote-party-games-matchmaking-${var.environment}"
   restart = "always"
 
+  env = [
+    "UNLEASH_ENVIRONMENT=${var.environment}",
+    "UNLEASH_URL=${var.unleash_url}",
+    "UNLEASH_INSTANCE_ID=${var.unleash_instance_id}"
+  ]
+
   labels {
     label = "traefik.enable"
     value = "true"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PlayerList from '../player-list/player-list.component';
 import { selectGameType, selectLobbyCode } from '../../../store/selectors/lobby';
 import { useSelector } from 'react-redux';
@@ -20,11 +20,15 @@ export interface GameLobbyRouteParams {
   code: string;
 }
 
-const games = ['taboo', 'stadt-land-fluss', 'stille-post', 'pictionary'];
-
 const GameLobby = () => {
   const code = useSelector(selectLobbyCode);
   const game = useSelector(selectGameType);
+  const [games, setGames] = useState([]);
+  useEffect(() => {
+    fetch('/api/games')
+      .then(res => res.json())
+      .then(games => setGames(games));
+  }, []);
   return (
     <div className="lobby">
       <div className="lobby__card lobby__card--settings card">

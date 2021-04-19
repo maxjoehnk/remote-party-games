@@ -15,6 +15,14 @@ variable "web_network" {
   default = "web"
 }
 
+variable "unleash_url" {
+  description = "api url of unleash instance"
+}
+
+variable "unleash_instance_id" {
+  description = "instance id to use against unleash instance"
+}
+
 provider "docker" {
   host = var.docker_host
 }
