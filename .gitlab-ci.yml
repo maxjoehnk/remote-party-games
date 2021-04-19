@@ -11,9 +11,9 @@ before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 variables:
-  WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:latest
-  MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:latest
-  IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/image:latest
+  WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:$CI_COMMIT_SHORT_SHA
+  MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:$CI_COMMIT_SHORT_SHA
+  IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/image:$CI_COMMIT_SHORT_SHA
   TF_ROOT: ${CI_PROJECT_DIR}/deployment
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_ENVIRONMENT_NAME}
   TF_VAR_unleash_url: $UNLEASH_URL
