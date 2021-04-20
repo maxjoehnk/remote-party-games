@@ -31,9 +31,9 @@ build-web-client:
   only:
     refs:
     - master
-    changes:
-    - applications/web-client/**/*
-    - .gitlab-ci.yml
+#    changes:
+#    - applications/web-client/**/*
+#    - .gitlab-ci.yml
 
 build-matchmaking:
   stage: build
@@ -43,9 +43,9 @@ build-matchmaking:
   only:
     refs:
       - master
-    changes:
-      - applications/matchmaking/**/*
-      - .gitlab-ci.yml
+#    changes:
+#      - applications/matchmaking/**/*
+#      - .gitlab-ci.yml
 
 build-images:
   stage: build
@@ -55,9 +55,9 @@ build-images:
   only:
     refs:
       - master
-    changes:
-      - applications/image/**/*
-      - .gitlab-ci.yml
+#    changes:
+#      - applications/image/**/*
+#      - .gitlab-ci.yml
 
 # Deployment
 
