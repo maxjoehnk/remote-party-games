@@ -6,6 +6,7 @@ stages:
   - build
   - prepare-deploy
   - deploy
+  - deploy-live
 
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -66,91 +67,61 @@ cache:
     - ${TF_ROOT}/.terraform/
 
 prepare-deploy-beta:
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  stage: prepare-deploy
-  before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$BETA_SERVER $BETA_SERVER_HOST_KEY" > ~/.ssh/known_hosts
-    - cd ${TF_ROOT}
+  extends: .prepare-deployment
   variables:
-    TF_VAR_docker_host: ssh://root@$BETA_SERVER
-    TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: beta.party.maxjoehnk.me
-  script:
-    - gitlab-terraform init
-    - gitlab-terraform plan
-    - gitlab-terraform plan-json
-  artifacts:
-    name: plan
-    paths:
-      - ${TF_ROOT}/plan.cache
-    reports:
-      terraform: ${TF_ROOT}/plan.json
-  resource_group: beta
-  environment:
-    name: beta
-    url: https://beta.party.maxjoehnk.me
-    action: prepare
+    ENVIRONMENT: beta
+    DOMAIN: beta.party.maxjoehnk.me
 
 deploy-beta:
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  stage: deploy
-  before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$BETA_SERVER $BETA_SERVER_HOST_KEY" > ~/.ssh/known_hosts
-    - cd ${TF_ROOT}
+  extends: .deployment
   variables:
-    TF_VAR_docker_host: ssh://root@$BETA_SERVER
-    TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: beta.party.maxjoehnk.me
-  script:
-    - gitlab-terraform apply
+    ENVIRONMENT: beta
+    DOMAIN: beta.party.maxjoehnk.me
+  environment:
+    on_stop: stop-deploy-beta
   dependencies:
     - prepare-deploy-beta
-  resource_group: beta
-  environment:
-    name: beta
-    url: https://beta.party.maxjoehnk.me
-    on_stop: stop-deploy-beta
   only:
     - master
 
 stop-deploy-beta:
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  stage: deploy
-  before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$BETA_SERVER $BETA_SERVER_HOST_KEY" > ~/.ssh/known_hosts
-    - cd ${TF_ROOT}
+  extends: .stop-deployment
   variables:
-    TF_VAR_docker_host: ssh://root@$BETA_SERVER
-    TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: beta.party.maxjoehnk.me
-  script:
-    - gitlab-terraform init
-    - gitlab-terraform destroy
-  resource_group: beta
-  environment:
-    name: beta
-    url: https://beta.party.maxjoehnk.me
-    action: stop
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      when: manual
+    ENVIRONMENT: beta
+    DOMAIN: beta.party.maxjoehnk.me
+  only:
+    - master
 
 prepare-deploy-live:
+  extends: .prepare-deployment
+  variables:
+    DOMAIN: party.maxjoehnk.me
+    ENVIRONMENT: live
+
+deploy-live:
+  extends: .deployment
+  stage: deploy-live
+  variables:
+    DOMAIN: party.maxjoehnk.me
+    ENVIRONMENT: live
+  environment:
+    on_stop: stop-deploy-live
+  dependencies:
+    - prepare-deploy-live
+  only:
+    - master
+  when: manual
+
+stop-deploy-live:
+  extends: .stop-deployment
+  stage: deploy-live
+  variables:
+    ENVIRONMENT: live
+    DOMAIN: party.maxjoehnk.me
+  only:
+    - master
+
+.prepare-deployment:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: prepare-deploy
   before_script:
@@ -164,7 +135,7 @@ prepare-deploy-live:
   variables:
     TF_VAR_docker_host: ssh://root@$BETA_SERVER
     TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: party.maxjoehnk.me
+    TF_VAR_domain: $DOMAIN
   script:
     - gitlab-terraform init
     - gitlab-terraform plan
@@ -175,13 +146,13 @@ prepare-deploy-live:
       - ${TF_ROOT}/plan.cache
     reports:
       terraform: ${TF_ROOT}/plan.json
-  resource_group: live
+  resource_group: $ENVIRONMENT
   environment:
-    name: live
-    url: https://party.maxjoehnk.me
+    name: $ENVIRONMENT
+    url: https://$DOMAIN
     action: prepare
 
-deploy-live:
+.deployment:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
@@ -195,21 +166,15 @@ deploy-live:
   variables:
     TF_VAR_docker_host: ssh://root@$BETA_SERVER
     TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: party.maxjoehnk.me
+    TF_VAR_domain: $DOMAIN
   script:
     - gitlab-terraform apply
-  dependencies:
-    - prepare-deploy-live
-  resource_group: live
+  resource_group: $ENVIRONMENT
   environment:
-    name: live
-    url: https://party.maxjoehnk.me
-    on_stop: stop-deploy-live
-  when: manual
-  only:
-    - master
+    name: $ENVIRONMENT
+    url: https://$DOMAIN
 
-stop-deploy-live:
+.stop-deployment:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
@@ -223,15 +188,13 @@ stop-deploy-live:
   variables:
     TF_VAR_docker_host: ssh://root@$BETA_SERVER
     TF_VAR_environment: $CI_ENVIRONMENT_NAME
-    TF_VAR_domain: party.maxjoehnk.me
+    TF_VAR_domain: $DOMAIN
   script:
     - gitlab-terraform init
     - gitlab-terraform destroy
   resource_group: live
   environment:
-    name: live
-    url: https://live.party.maxjoehnk.me
+    name: $ENVIRONMENT
+    url: https://$DOMAIN
     action: stop
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      when: manual
+  when: manual
