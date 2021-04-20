@@ -15,6 +15,7 @@ import { StillePostGameConfiguration } from './stille-post/config';
 import { PictionaryGameConfiguration } from './pictionary/config';
 import { Pictionary } from './pictionary/pictionary';
 import { UnleashService } from 'nestjs-unleash/dist/src/unleash/unleash.service';
+import { ModuleRef } from '@nestjs/core';
 
 export interface CreateGameConfig<TConfig = GameConfiguration> {
   teams: Team[];
@@ -24,7 +25,7 @@ export interface CreateGameConfig<TConfig = GameConfiguration> {
 
 @Injectable()
 export class GameFactory {
-  constructor(private socketGateway: SocketGateway, private unleash: UnleashService) {}
+  constructor(private socketGateway: SocketGateway, private moduleRef: ModuleRef) {}
 
   createGame(gameType: GameTypes, config: CreateGameConfig, playerAccessor: PlayerAccessor): Game {
     if (isTaboo(gameType, config) && this.isEnabled('taboo')) {
@@ -42,7 +43,9 @@ export class GameFactory {
   }
 
   private isEnabled(game: string): boolean {
-    return this.unleash.isEnabled(`game-${game}`);
+    const unleash = this.moduleRef.get(UnleashService);
+
+    return unleash.isEnabled(`game-${game}`);
   }
 }
 
