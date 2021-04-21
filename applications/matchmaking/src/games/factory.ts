@@ -14,8 +14,6 @@ import { StillePost } from './stille-post/stille-post';
 import { StillePostGameConfiguration } from './stille-post/config';
 import { PictionaryGameConfiguration } from './pictionary/config';
 import { Pictionary } from './pictionary/pictionary';
-import { UnleashService } from 'nestjs-unleash/dist/src/unleash/unleash.service';
-import { ModuleRef } from '@nestjs/core';
 
 export interface CreateGameConfig<TConfig = GameConfiguration> {
   teams: Team[];
@@ -25,27 +23,21 @@ export interface CreateGameConfig<TConfig = GameConfiguration> {
 
 @Injectable()
 export class GameFactory {
-  constructor(private socketGateway: SocketGateway, private moduleRef: ModuleRef) {}
+  constructor(private socketGateway: SocketGateway) {}
 
   createGame(gameType: GameTypes, config: CreateGameConfig, playerAccessor: PlayerAccessor): Game {
-    if (isTaboo(gameType, config) && this.isEnabled('taboo')) {
+    if (isTaboo(gameType, config)) {
       return new Taboo(config, this.socketGateway);
     }
-    if (isStadtLandFluss(gameType, config) && this.isEnabled('stadt-land-fluss')) {
+    if (isStadtLandFluss(gameType, config)) {
       return new StadtLandFluss(config, this.socketGateway, playerAccessor);
     }
-    if (isStillePost(gameType, config) && this.isEnabled('stille-post')) {
+    if (isStillePost(gameType, config)) {
       return new StillePost(config, this.socketGateway, playerAccessor);
     }
-    if (isPictionary(gameType, config) && this.isEnabled('pictionary')) {
+    if (isPictionary(gameType, config)) {
       return new Pictionary(config, this.socketGateway, playerAccessor);
     }
-  }
-
-  private isEnabled(game: string): boolean {
-    const unleash = this.moduleRef.get(UnleashService);
-
-    return unleash.isEnabled(`game-${game}`);
   }
 }
 
