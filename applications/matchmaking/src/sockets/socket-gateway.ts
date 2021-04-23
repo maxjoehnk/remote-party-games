@@ -171,10 +171,10 @@ export class SocketGateway
     this.socketKeepAlives.delete(client);
   }
 
-  broadcast(msg: any, clientFilter: (ws: WebSocket, playerId: string) => boolean = () => true) {
+  broadcast(msg: any, playerIds: string[] = null) {
     this.server.clients.forEach(ws => {
       const playerId = this.sockets.get(ws);
-      if (!clientFilter(ws, playerId)) {
+      if (playerIds != null && !playerIds.includes(playerId)) {
         return;
       }
       this.sendMessage(ws, msg);

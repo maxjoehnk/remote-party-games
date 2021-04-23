@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Team } from '../contracts/team';
 import { Game } from '../contracts/game';
 import { Taboo } from './taboo/taboo';
-import { SocketGateway } from '../sockets/socket-gateway';
 import { GameTypes, PICTIONARY, STADT_LAND_FLUSS, STILLE_POST, TABOO } from './types';
 import { Player } from '../contracts/player';
 import { GameConfiguration } from './config';
@@ -14,6 +13,7 @@ import { StillePost } from './stille-post/stille-post';
 import { StillePostGameConfiguration } from './stille-post/config';
 import { PictionaryGameConfiguration } from './pictionary/config';
 import { Pictionary } from './pictionary/pictionary';
+import { SocketBroadcaster } from '../sockets/socket-broadcaster';
 
 export interface CreateGameConfig<TConfig = GameConfiguration> {
   teams: Team[];
@@ -23,20 +23,20 @@ export interface CreateGameConfig<TConfig = GameConfiguration> {
 
 @Injectable()
 export class GameFactory {
-  constructor(private socketGateway: SocketGateway) {}
+  constructor(private socketBroadcaster: SocketBroadcaster) {}
 
   createGame(gameType: GameTypes, config: CreateGameConfig, playerAccessor: PlayerAccessor): Game {
     if (isTaboo(gameType, config)) {
-      return new Taboo(config, this.socketGateway);
+      return new Taboo(config, this.socketBroadcaster);
     }
     if (isStadtLandFluss(gameType, config)) {
-      return new StadtLandFluss(config, this.socketGateway, playerAccessor);
+      return new StadtLandFluss(config, this.socketBroadcaster, playerAccessor);
     }
     if (isStillePost(gameType, config)) {
-      return new StillePost(config, this.socketGateway, playerAccessor);
+      return new StillePost(config, this.socketBroadcaster, playerAccessor);
     }
     if (isPictionary(gameType, config)) {
-      return new Pictionary(config, this.socketGateway, playerAccessor);
+      return new Pictionary(config, this.socketBroadcaster, playerAccessor);
     }
   }
 }

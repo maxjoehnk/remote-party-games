@@ -136,6 +136,6 @@ export class PictionaryRoundStateMessenger {
   }
 
   private broadcast(message: SocketMessage, players: string[]) {
-    this.broadcaster.broadcast(message, (ws, playerId) => players.includes(playerId));
+    this.broadcaster.broadcast(message, players);
   }
 }

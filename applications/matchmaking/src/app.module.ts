@@ -25,6 +25,7 @@ import { PlayerController } from './controllers/player-controller';
 import { UpdateUserImageHandler } from './handler/update-user-image.handler';
 import { UnleashModule } from 'nestjs-unleash';
 import { GamesController } from './controllers/games-controller';
+import { SocketBroadcaster } from './sockets/socket-broadcaster';
 
 @Module({
   imports: [CqrsModule, UnleashModule.forRoot({
@@ -38,6 +39,10 @@ import { GamesController } from './controllers/games-controller';
     PlayerStore,
     LobbyBroadcaster,
     SocketGateway,
+    {
+      provide: SocketBroadcaster,
+      useExisting: SocketGateway,
+    },
     GameFactory,
     SocketMetrics,
     MatchmakingMetrics,

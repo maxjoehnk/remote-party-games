@@ -125,7 +125,7 @@ export class StillePost implements Game {
         previous,
       },
     };
-    this.broadcaster.broadcast(msg, (ws, id) => id === playerId);
+    this.broadcaster.broadcast(msg, [playerId]);
   };
 
   private currentPage(playerId: string, bookId: string = playerId): { bookId: string; page: Page } {
@@ -231,6 +231,6 @@ export class StillePost implements Game {
     const players = await this.playerAccessor.getPlayers();
     const playerIds = players.map(p => p.id);
 
-    this.broadcaster.broadcast(msg, (ws, playerId) => playerIds.includes(playerId));
+    this.broadcaster.broadcast(msg, playerIds);
   }
 }

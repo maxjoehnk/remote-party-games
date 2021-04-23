@@ -123,7 +123,7 @@ export class Pictionary implements Game {
         {
           type: PictionaryEventTypes.GuessedRight,
         },
-        (ws, player) => player === playerId
+        [playerId]
       );
       await this.checkRoundFinished();
     } else {
@@ -279,6 +279,6 @@ export class Pictionary implements Game {
   }
 
   private broadcast(message: SocketMessage, players: string[]) {
-    this.broadcaster.broadcast(message, (ws, playerId) => players.includes(playerId));
+    this.broadcaster.broadcast(message, players);
   }
 }

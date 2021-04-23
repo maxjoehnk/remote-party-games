@@ -300,7 +300,7 @@ export class Taboo implements Game {
         currentCard: state.currentCard,
       },
     };
-    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
+    this.broadcaster.broadcast(msg, [state.currentRound.activePlayer]);
   };
 
   private broadcastEndOfRound = state => {
@@ -317,7 +317,7 @@ export class Taboo implements Game {
     const players = [...this.config.teamOne.players, ...this.config.teamTwo.players].filter(
       p => p !== state.currentRound.activePlayer
     );
-    this.broadcaster.broadcast(msg, (c, playerId) => players.includes(playerId));
+    this.broadcaster.broadcast(msg, players);
   };
 
   private broadcastToExplaining = state => {
@@ -331,7 +331,7 @@ export class Taboo implements Game {
         currentCard: state.currentCard,
       },
     };
-    this.broadcaster.broadcast(msg, (c, playerId) => playerId === state.currentRound.activePlayer);
+    this.broadcaster.broadcast(msg, [state.currentRound.activePlayer]);
   };
 
   private broadcastToGuessing = state => {
@@ -350,7 +350,7 @@ export class Taboo implements Game {
     const allGuessingPlayers = currentTeam.filter(
       playerId => playerId !== state.currentRound.activePlayer
     );
-    this.broadcaster.broadcast(msg, (c, playerId) => allGuessingPlayers.includes(playerId));
+    this.broadcaster.broadcast(msg, allGuessingPlayers);
   };
 
   private broadcastToObserving = state => {
@@ -365,6 +365,6 @@ export class Taboo implements Game {
       },
     };
     const otherTeam = state.currentRound.team !== 1 ? state.teamOne.players : state.teamTwo.players;
-    this.broadcaster.broadcast(msg, (c, playerId) => otherTeam.includes(playerId));
+    this.broadcaster.broadcast(msg, otherTeam);
   };
 }
