@@ -10,7 +10,9 @@ RUN yarn
 WORKDIR /src/applications/web-client
 
 COPY applications/web-client/tsconfig.json ./
+COPY applications/web-client/.parcelrc ./
 COPY applications/web-client/src ./src
+COPY applications/web-client/assets ./assets
 COPY applications/web-client/translations ./translations
 
 RUN yarn build
