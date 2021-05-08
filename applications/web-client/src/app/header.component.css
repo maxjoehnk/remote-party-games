@@ -1,10 +1,13 @@
 .header {
   display: flex;
   flex-direction: row;
-  padding: 4px;
+  align-items: center;
+  background: var(--card-background);
+  box-shadow: var(--default-shadow);
 }
 
 .header__title {
+  margin-left: 16px;
   font-size: 16px;
 }
 
@@ -32,17 +35,20 @@
 
 .header__player-settings {
   display: flex;
+  padding: 8px;
+  grid-gap: 8px;
   flex-direction: row;
   align-items: center;
-  opacity: 0.54;
+  opacity: 1;
   border: none;
   background: none;
   cursor: pointer;
   transition: var(--default-transition);
+  color: black;
 }
 
 .header__player-settings:hover {
-  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .header__player-img {

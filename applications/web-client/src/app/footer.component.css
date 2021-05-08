@@ -1,0 +1,33 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+}
+
+.background-selector {
+  display: flex;
+  flex-direction: row;
+  grid-gap: 8px;
+}
+
+.background-selector__background {
+  border: 2px solid var(--button-default);
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  background: none;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.links {
+  text-decoration: none;
+  color: var(--footer-color);
+  padding: 0 8px;
+}

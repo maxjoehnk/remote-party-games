@@ -3,21 +3,23 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "parcel serve --hmr-port 1235 src/index.html",
+    "start": "parcel serve --hmr-port 1235 --no-autoinstall src/index.html",
     "build": "parcel build src/index.html",
     "updateSchema": "run updateSchema",
     "updateTranslation": "run updateTranslation",
     "format": "prettier --write '{src/**/*,*}.{ts,tsx,scss,css,json,js,prettierrc,html}'"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.0.0-beta.2",
     "@parcel/validator-typescript": "^2.0.0-beta.1",
     "@types/react-modal": "^3.10.5",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.4",
+    "@types/use-persisted-state": "^0.3.0",
     "glob": "^7.1.6",
     "http-proxy-middleware": "^1.0.3",
     "i18n-tag-schema": "^2.5.0",
-    "parcel": "2.0.0-nightly.500",
+    "parcel": "2.0.0-beta.2",
     "prettier": "^2.0.5",
     "runjs": "^4.4.2",
     "sass": "^1.26.5",
@@ -37,6 +39,7 @@
     "reconnecting-websocket": "^4.4.0",
     "redux": "^4",
     "regenerator-runtime": "^0.13.7",
+    "use-persisted-state": "^0.3.3",
     "uuid": "^7.0.3"
   }
 }

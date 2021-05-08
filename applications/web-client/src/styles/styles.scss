@@ -5,6 +5,8 @@
 
 .body {
   background: var(--page-background);
+  min-height: 100vh;
+  height: 100%;
 }
 
 .button {

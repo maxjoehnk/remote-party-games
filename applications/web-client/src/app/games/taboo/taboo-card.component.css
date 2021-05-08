@@ -1,5 +1,5 @@
 .taboo-card {
-  background: var(--color-default);
+  background: var(--card-background);
   border-radius: 4px;
   width: 200px;
   height: 300px;

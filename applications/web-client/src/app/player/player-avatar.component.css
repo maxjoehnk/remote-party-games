@@ -11,4 +11,5 @@
   border-radius: var(--border-radius);
   padding: 4px;
   box-shadow: var(--default-shadow);
+  z-index: 2;
 }

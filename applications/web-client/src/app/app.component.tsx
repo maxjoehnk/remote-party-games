@@ -23,6 +23,7 @@ import { NotificationContainer, useNotification } from './ui-elements/notificati
 import i18n from 'es2015-i18n-tag';
 import { onSocketClose, onSocketOpen } from '../socket';
 import GameHistory from './matchmaking/history/game-history.component';
+import Footer from './footer.component';
 
 let clearNotification;
 
@@ -144,6 +145,7 @@ const App = () => (
         <PlayerSetup>
           <Header />
           <ApplicationRoutes />
+          <Footer/>
         </PlayerSetup>
       </Router>
     </NotificationContainer>
