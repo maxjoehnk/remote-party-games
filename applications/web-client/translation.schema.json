@@ -158,6 +158,44 @@
       "type": "string",
       "minLength": 1
     },
+    "pictionary": {
+      "type": "object",
+      "properties": {
+        "Enter message...": {
+          "type": "string",
+          "minLength": 1
+        },
+        "German": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Next Round": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Scores": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Waiting for ${0}": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})"
+        },
+        "Wordlist": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "Enter message...",
+        "German",
+        "Next Round",
+        "Scores",
+        "Waiting for ${0}",
+        "Wordlist"
+      ]
+    },
     "stadt-land-fluss": {
       "type": "object",
       "properties": {
@@ -187,11 +225,16 @@
           "type": "string",
           "minLength": 1
         },
-        "Stop": {
+        "Stop ${0}/${1}": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "(?=.*?\\$\\{0\\})(?=.*?\\$\\{1\\})"
+        },
+        "Upvote": {
           "type": "string",
           "minLength": 1
         },
-        "Upvote": {
+        "Upvoted": {
           "type": "string",
           "minLength": 1
         },
@@ -208,8 +251,9 @@
         "Approve",
         "Deny",
         "Next round",
-        "Stop",
+        "Stop ${0}/${1}",
         "Upvote",
+        "Upvoted",
         "Words starting with ${0}"
       ]
     },
@@ -377,6 +421,7 @@
     "Timer",
     "Username",
     "or",
+    "pictionary",
     "stadt-land-fluss",
     "stille-post",
     "taboo"

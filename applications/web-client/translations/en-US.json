@@ -6,16 +6,25 @@
     "${0} left": "${0} left",
     "${0}s": "${0}s",
     "Back to lobby": "Back to lobby",
+    "pictionary": {
+        "Enter message...": "Enter message...",
+        "Waiting for ${0}": "Waiting for ${0}",
+        "Next Round": "Next Round",
+        "Scores": "Scores",
+        "German": "German",
+        "Wordlist": "Wordlist"
+    },
     "stadt-land-fluss": {
         "Next round": "Next round",
-        "Stop": "Stop",
+        "Stop ${0}/${1}": "Stop ${0}/${1}",
         "${0} starting with ${1}": "${0} starting with ${1}",
         "Words starting with ${0}": "Words starting with ${0}",
         "${0} (+${1}) Points": "${0} (+${1}) Points",
         "<empty>": "<empty>",
         "Approve": "Approve",
         "Deny": "Deny",
-        "Upvote": "Upvote"
+        "Upvote": "Upvote",
+        "Upvoted": "Upvoted"
     },
     "${0} Points": "${0} Points",
     "stille-post": {
@@ -54,12 +63,12 @@
     "Lobby Settings": "Lobby Settings",
     "Room Code": "Room Code",
     "Start Game": "Start Game",
+    "Seconds": "Seconds",
+    "Timer": "Timer",
     "Add": "Add",
     "Add Column": "Add Column",
     "Column": "Column",
     "Columns": "Columns",
-    "Seconds": "Seconds",
-    "Timer": "Timer",
     "${0} (You)": "${0} (You)",
     "Join Team": "Join Team",
     "Players": "Players",
