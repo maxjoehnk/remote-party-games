@@ -227,6 +227,9 @@ export class Pictionary implements Game {
 
   async stop(): Promise<GameScore> {
     this.stopTimer();
+    if (this.scores.length == 0) {
+      return null;
+    }
     const score: PlayerBasedScore = {
       type: 'player-score',
       scores: {},
