@@ -84,6 +84,7 @@
 
 .game-pictionary__player-list {
   grid-area: player-list;
+  align-self: start;
 }
 
 .game-pictionary__player {

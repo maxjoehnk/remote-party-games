@@ -22,18 +22,6 @@
   grid-template-columns: 250px minmax(600px, 1fr);
 }
 
-.game-stille-post__header {
-  padding-top: 8px;
-  background: var(--card-background);
-  border-radius: var(--border-radius);
-  grid-area: header;
-  display: grid;
-  align-items: center;
-  grid-template-areas: 'lobby . .' 'progress progress progress';
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px;
-}
-
 .game-stille-post__lobby {
   grid-area: lobby;
   padding: 0 16px;

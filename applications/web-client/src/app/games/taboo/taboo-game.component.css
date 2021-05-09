@@ -16,6 +16,7 @@
 
 .game-taboo__player-list {
   grid-area: player-list;
+  align-self: start;
 }
 
 .game-taboo__player {

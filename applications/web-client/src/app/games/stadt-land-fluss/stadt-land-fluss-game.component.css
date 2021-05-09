@@ -19,6 +19,7 @@
 
 .game-stadt-land-fluss__player-list {
   grid-area: player-list;
+  align-self: start;
 }
 
 .game-stadt-land-fluss__stop-btn,

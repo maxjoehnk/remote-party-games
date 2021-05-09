@@ -23,7 +23,7 @@ const StillePostGame = () => {
         currentPage?.previous == null && 'game-stille-post--first-page'
       }`}
     >
-      <GameHeader className="game-stille-post__header" />
+      <GameHeader/>
       <StillePostPlayerList />
       {running && <StillePostEditor />}
       {!running && openBook == null && <StillePostBookList />}
