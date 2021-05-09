@@ -5,15 +5,20 @@ import { mdiCloseOctagonOutline } from '@mdi/js';
 import i18n from 'es2015-i18n-tag';
 import React from 'react';
 
-const StopRoundButton = () => {
+export interface StopRoundButtonProps {
+  answered: number;
+  total: number;
+}
+
+const StopRoundButton = ({ answered, total }) => {
   return (
-    <Button className="game-stadt-land-fluss__stop-btn" onClick={() => stopRound()}>
+    <Button className={`game-stadt-land-fluss__stop-btn ${answered === total && 'game-stadt-land-fluss__stop-btn--ready'}`} onClick={() => stopRound()}>
       <Icon
         className="game-stadt-land-fluss__stop-btn-icon"
         size="24px"
         path={mdiCloseOctagonOutline}
       />
-      {i18n('stadt-land-fluss')`Stop`}
+      {i18n('stadt-land-fluss')`Stop ${answered}/${total}`}
     </Button>
   );
 };

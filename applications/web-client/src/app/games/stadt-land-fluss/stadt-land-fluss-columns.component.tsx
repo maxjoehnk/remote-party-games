@@ -11,6 +11,15 @@ const SUBMIT_WORD_DEBOUNCE = 500;
 
 const StadtLandFlussColumns = ({ letter }: { letter: string }) => {
   const columns = useSelector(selectStadtLandFlussColumns);
+  const [validColumns, setValidColumns] = useState(columns.map(() => false))
+
+  const setValidityForColumn = (index, valid) => {
+    setValidColumns(c => [
+      ...c.slice(0, index),
+      valid,
+      ...c.slice(index + 1)
+    ])
+  }
 
   return (
     <div className="game-stadt-land-fluss__columns">
@@ -21,9 +30,11 @@ const StadtLandFlussColumns = ({ letter }: { letter: string }) => {
           column={column}
           key={column}
           isFirst={i === 0}
+          onIsValid={() => setValidityForColumn(i, true)}
+          onIsInvalid={() => setValidityForColumn(i, false)}
         />
       ))}
-      <StopRoundButton />
+      <StopRoundButton answered={validColumns.filter(c => c).length} total={columns.length} />
     </div>
   );
 };
@@ -33,11 +44,15 @@ const StadtLandFlussColumn = ({
   index,
   letter,
   isFirst,
+  onIsValid,
+  onIsInvalid,
 }: {
   column: string;
   index: number;
   letter: string;
   isFirst: boolean;
+  onIsInvalid: () => void;
+  onIsValid: () => void;
 }) => {
   const inputId = `column-${column}-input`;
   const [value, setValue] = useState('');
@@ -52,6 +67,15 @@ const StadtLandFlussColumn = ({
   const valid = isValid(value, letter);
   const empty = value === '' || value === letter;
   const invalid = !valid && !empty;
+
+  useEffect(() => {
+    if (valid) {
+      onIsValid();
+    }
+    if (invalid || empty) {
+      onIsInvalid();
+    }
+  }, [value]);
 
   return (
     <div
