@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
+  ResultAnswer,
   ResultColumn,
-  selectStadtLandFlussResults,
+  selectStadtLandFlussResults
 } from '../../../store/selectors/stadt-land-fluss';
 import i18n from 'es2015-i18n-tag';
 import Button from '../../ui-elements/button/button.component';
-import { approveWord, denyWord, upvoteWord } from './stadt-land-fluss-api';
+import { approveWord, denyWord, toggleWordUpvote } from './stadt-land-fluss-api';
 import { selectPlayer } from '../../../store/selectors/player';
 import PlayerAvatar from '../../player/player-avatar.component';
 import NextRoundButton from './actions/next-round-button.component';
@@ -35,7 +36,7 @@ const StadtLandFlussResultColumn = ({ column, index }: { column: ResultColumn; i
   );
 };
 
-const StadtLandFlussAnswer = ({ answer, column }) => {
+const StadtLandFlussAnswer = ({ answer, column }: { answer: ResultAnswer, column: number }) => {
   const player = useSelector(selectPlayer);
   const actionsEnabled = player.id !== answer.player.id && !!answer.answer;
 
@@ -52,7 +53,8 @@ const StadtLandFlussAnswer = ({ answer, column }) => {
       </span>
       {actionsEnabled && (
         <div className="game-stadt-land-fluss-result-answer__actions">
-          <Button onClick={() => upvoteWord(answer.player.id, column)}>{i18n(
+          <Button primary={answer.upvoted}
+                  onClick={() => toggleWordUpvote(answer.player.id, column)}>{answer.upvoted ? i18n('stadt-land-fluss')`Upvoted` : i18n(
             'stadt-land-fluss'
           )`Upvote`}</Button>
           {answer.denied && (

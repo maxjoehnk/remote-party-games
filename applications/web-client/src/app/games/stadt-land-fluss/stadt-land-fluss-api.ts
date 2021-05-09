@@ -41,7 +41,7 @@ export function denyWord(playerId: string, column: number) {
   });
 }
 
-export function upvoteWord(playerId: string, column: number) {
+export function toggleWordUpvote(playerId: string, column: number) {
   emit({
     type: 'game/action',
     actionType: 'stadt-land-fluss/upvote-word',

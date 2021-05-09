@@ -24,15 +24,17 @@ export const selectStadtLandFlussRunning = createSelector(
 );
 
 export const selectStadtLandFlussResults = createSelector(
+  (state: ApplicationState) => state.player.id,
   (state: ApplicationState) => state.stadtLandFluss,
   (state: ApplicationState) => state.lobby.players,
-  (state, players) => {
+  (playerId: string, state, players) => {
     const columns: ResultColumn[] = state.columns.map((name, i) => ({
       name,
       answers: state.players.map(playerState => ({
         answer: playerState.columns[i],
         score: playerState.scores[i],
-        upvotes: playerState.upvotes[i],
+        upvotes: playerState.upvotes[i].voterIds.length,
+        upvoted: playerState.upvotes[i].voterIds.includes(playerId),
         denied: playerState.denied[i],
         player: players.find(p => playerState.playerId === p.id),
       })),
@@ -56,11 +58,14 @@ export const selectStadtLandFlussPlayerScores = createSelector(
 
 export interface ResultColumn {
   name: string;
-  answers: {
-    answer: string;
-    score: number;
-    upvotes: number;
-    denied: boolean;
-    player: PlayerModel;
-  }[];
+  answers: ResultAnswer[];
+}
+
+export interface ResultAnswer {
+  answer: string;
+  score: number;
+  upvotes: number;
+  upvoted: boolean;
+  denied: boolean;
+  player: PlayerModel;
 }

@@ -17,7 +17,7 @@ enum StadtLandFlussActionTypes {
   StopRound = 'stadt-land-fluss/stop-round',
   DenyWord = 'stadt-land-fluss/deny-word',
   ApproveWord = 'stadt-land-fluss/approve-word',
-  UpvoteWord = 'stadt-land-fluss/upvote-word',
+  ToggleWordUpvote = 'stadt-land-fluss/upvote-word',
 }
 
 enum StadtLandFlussEventTypes {
@@ -36,9 +36,13 @@ interface PlayerRoundState {
   playerId: string;
   columns?: string[];
   scores?: number[];
-  upvotes?: number[];
+  upvotes?: UpvoteState[];
   denied?: boolean[];
   points: number;
+}
+
+interface UpvoteState {
+  voterIds: string[]
 }
 
 interface SubmitWord extends Action<StadtLandFlussActionTypes.SubmitWord> {
@@ -56,7 +60,7 @@ interface ApproveWord extends Action<StadtLandFlussActionTypes.ApproveWord> {
   playerId: string;
 }
 
-interface UpvoteWord extends Action<StadtLandFlussActionTypes.UpvoteWord> {
+interface UpvoteWord extends Action<StadtLandFlussActionTypes.ToggleWordUpvote> {
   column: number;
   playerId: string;
 }
@@ -85,7 +89,7 @@ export class StadtLandFluss implements Game {
     this.handler.add(StadtLandFlussActionTypes.StopRound, this.stopRound);
     this.handler.add(StadtLandFlussActionTypes.ApproveWord, this.approveWord);
     this.handler.add(StadtLandFlussActionTypes.DenyWord, this.denyWord);
-    this.handler.add(StadtLandFlussActionTypes.UpvoteWord, this.upvoteWord);
+    this.handler.add(StadtLandFlussActionTypes.ToggleWordUpvote, this.toggleWordUpvote);
   }
 
   get type() {
@@ -187,7 +191,7 @@ export class StadtLandFluss implements Game {
     return {
       playerId: player.id,
       columns: this.config.columns.map(() => ''),
-      upvotes: this.config.columns.map(() => 0),
+      upvotes: this.config.columns.map(() => ({ voterIds: [] })),
       denied: this.config.columns.map(() => false),
       points: this.getPlayerScore(this.pastRounds, player.id),
     };
@@ -231,12 +235,17 @@ export class StadtLandFluss implements Game {
     });
   };
 
-  private upvoteWord = (action: UpvoteWord, playerId: string) => {
+  private toggleWordUpvote = (action: UpvoteWord, playerId: string) => {
     if (playerId === action.playerId) {
       return;
     }
     const state = this.currentRound.players.find(p => p.playerId === action.playerId);
-    state.upvotes[action.column]++;
+    const upvoteState = state.upvotes[action.column]
+    if (upvoteState.voterIds.includes(playerId)) {
+      upvoteState.voterIds = upvoteState.voterIds.filter(id => id !== playerId);
+    }else {
+      upvoteState.voterIds.push(playerId);
+    }
     this.calculateScores();
     this.broadcaster.broadcast({
       type: StadtLandFlussEventTypes.ScoreUpdated,
@@ -281,7 +290,8 @@ export class StadtLandFluss implements Game {
 
   private applyPoints(i: number, words: Map<string, number>) {
     for (const player of this.currentRound.players) {
-      player.scores[i] += player.upvotes[i] * POINTS_PER_UPVOTE;
+      const votes = player.upvotes[i].voterIds.length;
+      player.scores[i] += votes * POINTS_PER_UPVOTE;
       if (player.denied[i]) {
         continue;
       }

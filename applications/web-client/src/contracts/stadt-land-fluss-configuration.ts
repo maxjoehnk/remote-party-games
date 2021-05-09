@@ -14,6 +14,10 @@ interface PlayerRoundState {
   points: number;
   columns?: string[];
   scores?: number[];
-  upvotes?: number[];
+  upvotes?: UpvoteState[];
   denied?: boolean[];
+}
+
+interface UpvoteState {
+  voterIds: string[];
 }
