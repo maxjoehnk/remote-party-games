@@ -7,7 +7,7 @@ import React from 'react';
 
 const NextRoundButton = () => {
   return (
-    <Button className="game-stadt-land-fluss__next-btn" onClick={() => startRound()}>
+    <Button primary={true} className="game-stadt-land-fluss__next-btn" onClick={() => startRound()}>
       <Icon className="game-stadt-land-fluss__next-btn-icon" size="24px" path={mdiPlay} />
       {i18n('stadt-land-fluss')`Next round`}
     </Button>
