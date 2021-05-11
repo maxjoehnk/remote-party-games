@@ -22,10 +22,12 @@ variables:
   TF_VAR_tag: $CI_COMMIT_SHORT_SHA
 
 publish-storybook:
+  image: node:14
   stage: build
   script:
+    - yarn install --frozen-lockfile --prefer-offline
     - cd applications/web-client
-    - npx chromatic --project-token=$CHROMATIC_TOKEN
+    - yarn chromatic --project-token=$CHROMATIC_TOKEN
 
 # Docker Builds
 
