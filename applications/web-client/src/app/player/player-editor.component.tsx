@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import i18n from 'es2015-i18n-tag';
-import { connect, DispatchProp, useSelector } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
 import { selectPlayer } from '../../store/selectors/player';
 import Button from '../ui-elements/button/button.component';
 import { updatePlayerName } from '../../store/actions/player';
@@ -15,13 +15,20 @@ import { CanvasRef } from '../game-widgets/drawing/drawing-context';
 import ColorPicker from '../game-widgets/drawing/tools/color-picker.component';
 import UndoButton from '../game-widgets/drawing/tools/undo-btn.component';
 import RedoButton from '../game-widgets/drawing/tools/redo-btn.component';
+import { PlayerModel } from '../../contracts/player.model';
 
-const PlayerEditor = ({
+export interface PlayerEditorProps {
+  player: PlayerModel;
+  onSave?: () => void;
+  onClose?: () => void;
+}
+
+export const PlayerEditor = ({
+  player,
   dispatch,
   onSave,
   onClose,
-}: DispatchProp & { onSave?: () => void; onClose?: () => void }) => {
-  const player = useSelector(selectPlayer);
+}: DispatchProp & PlayerEditorProps) => {
   const [state, setState] = useState(player || { name: '' });
 
   const ref = useRef<CanvasRef>(null);
@@ -89,4 +96,8 @@ const PlayerAvatarEditor = React.forwardRef<CanvasRef>((props, ref) => {
   );
 });
 
-export default connect()(PlayerEditor);
+const mapStateToProps = () => (state) => ({
+  player: selectPlayer(state),
+});
+
+export default connect(mapStateToProps)(PlayerEditor);

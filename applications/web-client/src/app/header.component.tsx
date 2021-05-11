@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { selectPlayer } from '../store/selectors/player';
 import React, { useState } from 'react';
 import './header.component.css';
@@ -7,10 +7,14 @@ import Modal from 'react-modal';
 import PlayerEditor from './player/player-editor.component';
 import { Link } from 'react-router-dom';
 import PlayerAvatar from './player/player-avatar.component';
+import { PlayerModel } from '../contracts/player.model';
 
-const Header = () => {
+export interface HeaderProps {
+  player: PlayerModel;
+}
+
+export const Header = ({ player }: HeaderProps) => {
   const [state, setState] = useState(false);
-  const player = useSelector(selectPlayer);
 
   return (
     <>
@@ -34,4 +38,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = () => (state) => ({
+  player: selectPlayer(state),
+});
+
+export default connect(mapStateToProps)(Header);
