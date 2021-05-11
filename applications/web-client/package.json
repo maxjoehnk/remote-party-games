@@ -9,7 +9,7 @@
     "updateTranslation": "run updateTranslation",
     "format": "prettier --write '{src/**/*,*}.{ts,tsx,scss,css,json,js,prettierrc,html}'",
     "storybook": "start-storybook -s ./.storybook/assets -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -s ./.storybook/assets"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
