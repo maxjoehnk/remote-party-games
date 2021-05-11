@@ -21,6 +21,12 @@ variables:
   TF_VAR_unleash_instance_id: $UNLEASH_INSTANCE_ID
   TF_VAR_tag: $CI_COMMIT_SHORT_SHA
 
+publish-storybook:
+  stage: build
+  script:
+    - cd applications/web-client
+    - npx chromatic --project-token=$CHROMATIC_TOKEN
+
 # Docker Builds
 
 build-web-client:
