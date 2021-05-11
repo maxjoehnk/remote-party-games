@@ -8,9 +8,6 @@ stages:
   - deploy
   - deploy-live
 
-before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-
 variables:
   WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:$CI_COMMIT_SHORT_SHA
   MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:$CI_COMMIT_SHORT_SHA
@@ -32,7 +29,7 @@ publish-storybook:
 # Docker Builds
 
 build-web-client:
-  stage: build
+  extends: .build-docker
   script:
     - docker build --pull -t "$WEB_CLIENT_IMAGE" -f applications/web-client/Dockerfile .
     - docker push "$WEB_CLIENT_IMAGE"
@@ -44,7 +41,7 @@ build-web-client:
 #    - .gitlab-ci.yml
 
 build-matchmaking:
-  stage: build
+  extends: .build-docker
   script:
     - docker build --pull -t "$MATCHMAKING_IMAGE" -f applications/matchmaking/Dockerfile .
     - docker push "$MATCHMAKING_IMAGE"
@@ -56,7 +53,7 @@ build-matchmaking:
 #      - .gitlab-ci.yml
 
 build-images:
-  stage: build
+  extends: .build-docker
   script:
     - docker build --pull -t "$IMAGES_IMAGE" -f applications/image/Dockerfile .
     - docker push "$IMAGES_IMAGE"
@@ -133,6 +130,7 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: prepare-deploy
   before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
@@ -164,6 +162,7 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
@@ -186,6 +185,7 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
@@ -206,3 +206,8 @@ stop-deploy-live:
     url: https://$DOMAIN
     action: stop
   when: manual
+
+.build-docker:
+  stage: build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
