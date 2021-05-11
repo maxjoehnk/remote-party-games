@@ -130,7 +130,6 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: prepare-deploy
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
@@ -162,7 +161,6 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
@@ -185,7 +183,6 @@ stop-deploy-live:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: deploy
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_DEPLOY_KEY" | tr -d '\r' | ssh-add -
