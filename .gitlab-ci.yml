@@ -24,7 +24,7 @@ publish-storybook:
   script:
     - yarn install --frozen-lockfile --prefer-offline
     - cd applications/web-client
-    - yarn chromatic --project-token=$CHROMATIC_TOKEN
+    - yarn chromatic --project-token=$CHROMATIC_TOKEN --exit-zero-on-changes
 
 # Docker Builds
 
