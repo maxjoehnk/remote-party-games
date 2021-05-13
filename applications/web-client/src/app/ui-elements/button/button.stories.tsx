@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import React from 'react';
 
 export default {
-  title: 'UI Elements/Button',
+  title: 'Shared/UI Elements/Button',
   component: Button,
 } as Meta;
 

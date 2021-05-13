@@ -4,7 +4,7 @@ import React from 'react';
 import { DispatchProp } from 'react-redux';
 
 export default {
-  title: 'Player/Player Editor',
+  title: 'Shared/Page Elements/Player Editor',
   component: PlayerEditor,
 } as Meta;
 

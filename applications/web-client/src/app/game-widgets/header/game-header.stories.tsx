@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import React from 'react';
 
 export default {
-  title: 'Game Widgets/Header',
+  title: 'Shared/Game Widgets/Header',
   component: GameHeader,
 } as Meta;
 

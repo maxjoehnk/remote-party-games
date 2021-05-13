@@ -7,14 +7,16 @@ export interface TabooGameConfiguration {
 export interface TabooGameState {
   teamOne: TabooTeamState;
   teamTwo: TabooTeamState;
-  currentRound?: {
-    team: 1 | 2;
-    activePlayer: string;
-    timeLeft: number;
-  };
+  currentRound?: TabooCurrentRoundState;
   currentCard: TabooCardModel | null;
   cards?: PastCardState[];
   view: TabooView;
+}
+
+export interface TabooCurrentRoundState {
+  team: 1 | 2;
+  activePlayer: string;
+  timeLeft: number;
 }
 
 export enum TabooView {

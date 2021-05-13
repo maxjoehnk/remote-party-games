@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react';
 import React from 'react';
 
 export default {
-  title: 'Page Elements/Header',
+  title: 'Shared/Page Elements/Header',
   component: Header,
 } as Meta;
 

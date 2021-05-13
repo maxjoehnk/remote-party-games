@@ -4,7 +4,12 @@ import { TabooCardModel } from '../../../contracts/taboo-card';
 import { PastCardAnswer } from '../../../contracts/taboo-game-configuration';
 import i18n from 'es2015-i18n-tag';
 
-const TabooCard = ({ card, answer }: { card: TabooCardModel; answer?: PastCardAnswer }) => {
+export interface TabooCardProps {
+  card: TabooCardModel;
+  answer?: PastCardAnswer;
+}
+
+const TabooCard = ({ card, answer }: TabooCardProps) => {
   const classes = [
     'taboo-card',
     answer === PastCardAnswer.Skipped && 'taboo-card--skipped',
