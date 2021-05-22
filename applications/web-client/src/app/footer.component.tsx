@@ -13,7 +13,7 @@ const Footer = () => <div className="footer">
 </div>;
 
 const Links = () => <div className="links">
-  <a href="https://github.com/maxjoehnk/remote-party-games">Github</a>
+  <a target="_blank" href="https://github.com/maxjoehnk/remote-party-games">Github</a>
 </div>
 
 const BackgroundSelector = () => {
