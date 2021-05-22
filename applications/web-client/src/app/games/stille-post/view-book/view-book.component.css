@@ -7,6 +7,11 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 16px;
+  grid-gap: 16px;
+}
+
+.game-stille-post-open-book__action-spacer {
+  flex: 1;
 }
 
 .game-stille-post-open-book__page {

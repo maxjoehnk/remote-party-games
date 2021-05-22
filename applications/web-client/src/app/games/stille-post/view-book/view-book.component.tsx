@@ -2,7 +2,7 @@ import React from 'react';
 import { Page, PageType } from '../../../../contracts/stille-post-page';
 import Button from '../../../ui-elements/button/button.component';
 import i18n from 'es2015-i18n-tag';
-import { closeBook, viewNextPage } from '../stille-post-api';
+import { closeBook, viewNextPage, viewPreviousPage } from '../stille-post-api';
 import { OpenBook } from '../../../../store/selectors/stille-post';
 import { useSelector } from 'react-redux';
 import { selectPlayerById } from '../../../../store/selectors/lobby';
@@ -12,12 +12,18 @@ const StillePostViewBook = ({ book }: { book: OpenBook }) => {
   const pages = [...book.pages].reverse();
   return (
     <div className="game-stille-post-open-book">
-      <div className="game-stille-post-open-book__actions">
+      <div className="game-stille-post-open-book__actions card">
+        {!book.isFirstPage && (
+          <Button onClick={() => viewPreviousPage(book.id, book.currentPage)}>{i18n(
+            'stille-post'
+          )`Previous Page`}</Button>
+        )}
         {book.hasPagesLeft && (
           <Button primary={true} onClick={() => viewNextPage(book.id, book.currentPage)}>{i18n(
             'stille-post'
           )`Next Page`}</Button>
         )}
+        <div className="game-stille-post-open-book__action-spacer"/>
         <Button onClick={() => closeBook()}>{i18n('stille-post')`Close Book`}</Button>
       </div>
       {pages.map(page => (

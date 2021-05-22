@@ -18,6 +18,15 @@ export function openBook(bookId: string) {
   });
 }
 
+export function viewPreviousPage(bookId: string, currentPage: number) {
+  emit({
+    type: 'game/action',
+    actionType: 'stille-post/view-previous-page',
+    bookId,
+    currentPage,
+  });
+}
+
 export function viewNextPage(bookId: string, currentPage: number) {
   emit({
     type: 'game/action',

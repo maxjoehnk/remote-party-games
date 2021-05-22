@@ -30,6 +30,7 @@ export const selectStillePostOpenBook = createSelector<ApplicationState, StilleP
     return {
       id: book.id,
       pages,
+      isFirstPage: state.openBook.page === 0,
       hasPagesLeft: pages.length < book.pages.length,
       currentPage: state.openBook.page,
     };
@@ -39,6 +40,7 @@ export const selectStillePostOpenBook = createSelector<ApplicationState, StilleP
 export interface OpenBook {
   id: string;
   pages: Page[];
+  isFirstPage: boolean;
   hasPagesLeft: boolean;
   currentPage: number;
 }

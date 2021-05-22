@@ -11,6 +11,7 @@ enum StillePostActionTypes {
   FinishPage = 'stille-post/finish-page',
   OpenBook = 'stille-post/open-book',
   CloseBook = 'stille-post/close-book',
+  ViewPreviousPage = 'stille-post/view-previous-page',
   ViewNextPage = 'stille-post/view-next-page',
 }
 
@@ -28,6 +29,11 @@ interface FinishPageAction extends Action<StillePostActionTypes.FinishPage> {
 
 interface OpenBookAction extends Action<StillePostActionTypes.OpenBook> {
   bookId: string;
+}
+
+interface ViewPreviousPageAction extends Action<StillePostActionTypes.ViewPreviousPage> {
+  bookId: string;
+  currentPage: number;
 }
 
 interface ViewNextPageAction extends Action<StillePostActionTypes.ViewNextPage> {
@@ -68,6 +74,7 @@ export class StillePost implements Game {
     this.handler.add(StillePostActionTypes.FinishPage, this.finishPage);
     this.handler.add(StillePostActionTypes.OpenBook, this.openBook);
     this.handler.add(StillePostActionTypes.CloseBook, this.closeBook);
+    this.handler.add(StillePostActionTypes.ViewPreviousPage, this.viewPreviousPage);
     this.handler.add(StillePostActionTypes.ViewNextPage, this.viewNextPage);
   }
 
@@ -157,6 +164,15 @@ export class StillePost implements Game {
     await this.broadcastToLobby({
       type: StillePostEventTypes.BookClosed,
     });
+  };
+
+  private viewPreviousPage = async (action: ViewPreviousPageAction) => {
+    const msg: ViewBookEvent = {
+      type: StillePostEventTypes.ViewBook,
+      bookId: action.bookId,
+      page: Math.max(action.currentPage - 1, 0),
+    };
+    await this.broadcastToLobby(msg);
   };
 
   private viewNextPage = async (action: ViewNextPageAction) => {
