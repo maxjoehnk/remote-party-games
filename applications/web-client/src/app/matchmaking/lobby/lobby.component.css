@@ -38,7 +38,7 @@
 }
 
 .lobby__copy-btn:hover {
-  color: rgba(0, 0, 0, 1);
+  color: var(--text-color-default);
 }
 
 .lobby__start-game-btn {

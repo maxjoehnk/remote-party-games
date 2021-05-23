@@ -1,13 +1,9 @@
 .footer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  position: fixed;
   z-index: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   padding: 8px;
+  grid-gap: 8px;
 }
 
 .background-selector {
@@ -24,6 +20,11 @@
   background: none;
   background-size: cover;
   cursor: pointer;
+}
+
+.theme-selector {
+  padding: 2px;
+  color: var(--footer-color);
 }
 
 .links {

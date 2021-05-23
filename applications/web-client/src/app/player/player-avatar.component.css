@@ -3,6 +3,7 @@
   height: 32px;
   border-radius: 100%;
   transition: var(--default-transition), border-radius 0.1s ease-in;
+  background: white;
 }
 
 .player-avatar:not(.player-avatar--passive):hover {

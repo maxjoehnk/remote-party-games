@@ -1,6 +1,13 @@
+.pictionary-scores {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 8px;
+}
+
 .pictionary-scores__entry {
   display: flex;
   flex-direction: row;
+  grid-gap: 8px;
 }
 
 .pictionary-scores__player-name {

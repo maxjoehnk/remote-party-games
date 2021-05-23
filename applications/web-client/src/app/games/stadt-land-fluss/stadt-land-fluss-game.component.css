@@ -44,7 +44,8 @@
 .game-stadt-land-fluss__columns,
 .game-stadt-land-fluss__results {
   grid-area: game-area;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-gap: 16px;
   max-width: 1000px;
   width: 100%;
@@ -91,6 +92,7 @@
   flex-direction: row;
   align-items: center;
   padding: 4px;
+  grid-gap: 8px;
   border-radius: var(--border-radius);
 }
 

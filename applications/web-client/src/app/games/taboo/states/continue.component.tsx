@@ -11,7 +11,7 @@ const TabooContinue = () => {
 
   return (
     <div>
-      <span>{i18n('taboo')`You're next`}</span>
+      <span className="game-taboo__state-hint">{}</span>
       <TabooCard card={currentCard} />
       <div className="game-taboo__actions">
         <Button primary onClick={() => continueGame()}>{i18n('taboo')`Start`}</Button>

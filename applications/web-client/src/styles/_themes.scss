@@ -1,0 +1,36 @@
+$shadow_size: 4px;
+$hover_offset: 2px;
+$active_offset: 4px;
+
+.theme--playful {
+  --border-radius: 8px;
+  --card-background: rgba(0, 0, 0, 0.5);
+  --text-color-default: white;
+  --text-color-hint: rgba(255, 255, 255, 0.54);
+  --color-default: rgba(0, 0, 0, 0.3);
+  --button-default: rgba(0, 0, 0, 0.3);
+  --dialog-background: #555;
+
+  .button {
+    transition: 0.05s ease-in-out all;
+    box-shadow: $shadow_size $shadow_size 0 rgba(0, 0, 0, 0.2);
+
+    $hover_shadow_size: $shadow_size - $hover_offset;
+    $active_shadow_size: $shadow_size - $active_offset;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
+    &:active {
+      transform: translate($active_offset, $active_offset);
+      box-shadow: $active_shadow_size $active_shadow_size 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .input,
+  .select {
+    background: transparent;
+    border: var(--border-width) solid var(--color-default);
+  }
+}

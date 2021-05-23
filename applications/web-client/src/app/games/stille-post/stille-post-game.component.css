@@ -79,6 +79,7 @@
 
 .game-stille-post__page {
   width: 100%;
+  grid-gap: 16px;
 }
 
 .game-stille-post__page--draw {
@@ -104,4 +105,8 @@
 }
 
 .game-stille-post__previous-page--text {
+}
+
+.game-stille-post__page-container {
+  grid-gap: 8px;
 }

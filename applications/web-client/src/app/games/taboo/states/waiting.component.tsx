@@ -25,13 +25,13 @@ const TabooPastCard = ({ card }: { card: PastCardState }) => {
       <TabooCard key={card.card.term} card={card.card} answer={card.answer} />
       <div className="game-taboo__actions">
         {card.answer === PastCardAnswer.Guessed && (
-          <Button onClick={() => skippedPastCard(card.card.term)}>{i18n('taboo')`Skipped`}</Button>
+          <Button card onClick={() => skippedPastCard(card.card.term)}>{i18n('taboo')`Skipped`}</Button>
         )}
         {card.answer === PastCardAnswer.Skipped && (
-          <Button onClick={() => guessedPastCard(card.card.term)}>{i18n('taboo')`Guessed`}</Button>
+          <Button card onClick={() => guessedPastCard(card.card.term)}>{i18n('taboo')`Guessed`}</Button>
         )}
         {card.answer === PastCardAnswer.TimedOut && (
-          <Button onClick={() => guessedPastCard(card.card.term)}>{i18n('taboo')`Guessed`}</Button>
+          <Button card onClick={() => guessedPastCard(card.card.term)}>{i18n('taboo')`Guessed`}</Button>
         )}
       </div>
     </div>

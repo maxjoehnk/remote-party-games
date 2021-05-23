@@ -13,7 +13,6 @@
 
 .header__title-link {
   text-decoration: none;
-  color: black;
   flex: 1;
   padding: 4px;
 }
@@ -44,7 +43,6 @@
   background: none;
   cursor: pointer;
   transition: var(--default-transition);
-  color: black;
 }
 
 .header__player-settings:hover {

@@ -2,11 +2,23 @@
 @import 'font';
 @import 'variables';
 @import 'responsive';
+@import 'themes';
 
 .body {
   background: var(--page-background);
+  color: var(--text-color-default);
   min-height: 100vh;
   height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__content {
+  flex: 1;
 }
 
 .button {
@@ -19,6 +31,11 @@
   font-size: var(--font-size);
   text-decoration: none;
   line-height: 1;
+
+  &:focus {
+    outline: 2px solid var(--color-primary);
+    filter: brightness(0.9);
+  }
 }
 
 .icon-button {
@@ -50,6 +67,14 @@
 .button--primary {
   background-color: var(--color-primary);
   color: var(--text-color-primary);
+
+  &:focus {
+    outline: 2px solid var(--text-color-primary);
+  }
+}
+
+.button--card {
+  background-color: var(--card-background);
 }
 
 .button--error {
@@ -71,9 +96,11 @@
   background: var(--color-default);
   border: var(--border-width) solid transparent;
   transition: var(--default-transition);
+  color: var(--text-color-default);
 
-  &:hover {
+  &:hover, &:focus, &:active {
     border-color: var(--color-primary);
+    outline: none;
   }
 }
 
@@ -86,11 +113,12 @@
 }
 
 .dialog {
-  background: var(--page-background);
+  background: var(--dialog-background);
   top: 32px;
   bottom: 32px;
   left: 32px;
   right: 32px;
   position: absolute;
   border-radius: var(--border-radius);
+  overflow: auto;
 }

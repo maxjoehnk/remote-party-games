@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import './footer.component.css';
 import background1 from 'url:../../assets/background_1.png';
 import createPersistedState from 'use-persisted-state';
+import i18n from 'es2015-i18n-tag';
 
 const useBackgroundState = createPersistedState('background')
+const useThemeState = createPersistedState('theme')
 
-const backgrounds = [{ color: '#ddd' }, { image: background1 }];
+const backgrounds = [{ color: '#ddd' }, { image: background1, color: '#cd4063' }];
+const themes = ['clean', 'playful'];
 
 const Footer = () => <div className="footer">
   <BackgroundSelector />
+  <ThemeSelector />
+  <div style={{ flex: 1 }}/>
   <Links/>
 </div>;
 
@@ -24,10 +29,12 @@ const BackgroundSelector = () => {
     const isImage = 'image' in background;
     document.body.style.background = convertBackground(background);
     if (isImage) {
-      document.body.style.setProperty('--button-default', 'var(--page-background)');
-      document.body.style.setProperty('--footer-color', 'var(--page-background)');
+      document.body.style.setProperty('--color-primary', background.color);
+      //document.body.style.setProperty('--button-default', 'var(--page-background)');
+      document.body.style.setProperty('--footer-color', 'rgba(255, 255, 255, 0.78)');
     }else {
-      document.body.style.removeProperty('--button-default');
+      document.body.style.removeProperty('--color-primary');
+      //document.body.style.removeProperty('--button-default');
       document.body.style.removeProperty('--footer-color');
     }
   }, [backgroundIndex]);
@@ -39,11 +46,23 @@ const BackgroundSelector = () => {
   </div>;
 };
 
+const ThemeSelector = () => {
+  const [theme, setTheme] = useThemeState(themes[0]);
+
+  useEffect(() => {
+    document.body.className = `body theme--${theme}`;
+  }, [theme]);
+
+  return <select title={i18n`Theme`} className="select theme-selector" onChange={e => setTheme(e.target.value)} value={theme}>
+    {themes.map((theme) => <option key={theme} value={theme}>{theme}</option>)}
+  </select>
+}
+
 function convertBackground(background: { color: string } | { image: string }) {
-  if ('color' in background) {
-    return `${background.color} no-repeat scroll center/cover`;
+  if ('image' in background) {
+    return `transparent url(${background.image}) no-repeat scroll center/cover`;
   }
-  return `transparent url(${background.image}) no-repeat scroll center/cover`;
+  return `${background.color} no-repeat scroll center/cover`;
 }
 
 export default Footer;

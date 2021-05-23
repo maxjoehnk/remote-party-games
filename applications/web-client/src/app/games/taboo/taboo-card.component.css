@@ -1,14 +1,14 @@
 .taboo-card {
   background: var(--card-background);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   width: 200px;
   height: 300px;
   position: relative;
 }
 
 .taboo-card__term {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
   background: var(--color-primary);
   color: var(--text-color-primary);
   height: 48px;

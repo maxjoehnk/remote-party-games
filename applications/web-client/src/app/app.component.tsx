@@ -144,7 +144,9 @@ const App = () => (
       <Router>
         <PlayerSetup>
           <Header />
-          <ApplicationRoutes />
+          <div className="app__content">
+            <ApplicationRoutes />
+          </div>
           <Footer/>
         </PlayerSetup>
       </Router>

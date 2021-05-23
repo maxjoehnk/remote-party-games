@@ -60,6 +60,7 @@
 .pictionary-draw-area {
   display: flex;
   flex-direction: column;
+  grid-gap: 8px;
 }
 
 .pictionary-draw-area__tools {

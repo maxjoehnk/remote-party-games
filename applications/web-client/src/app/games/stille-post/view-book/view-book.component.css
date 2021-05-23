@@ -22,6 +22,8 @@
 
 .game-stille-post-open-book__image {
   width: max-content;
+  background: white;
+  border-radius: var(--border-radius);
 }
 
 .game-stille-post-open-book__text {
