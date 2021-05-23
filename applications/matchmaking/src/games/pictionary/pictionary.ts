@@ -114,6 +114,12 @@ export class Pictionary implements Game {
       player: playerId,
       message: action.message,
     };
+    if (this.state.answers.includes(playerId)) {
+      return;
+    }
+    if (this.state.currentPlayer === playerId) {
+      return;
+    }
     const word = this.state.currentWord.toLowerCase();
     const guess = action.message.toLowerCase();
     if (word === guess) {
