@@ -12,6 +12,7 @@ variables:
   WEB_CLIENT_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/web-client:$CI_COMMIT_SHORT_SHA
   MATCHMAKING_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/matchmaking:$CI_COMMIT_SHORT_SHA
   IMAGES_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/image:$CI_COMMIT_SHORT_SHA
+  SOCKETS_IMAGE: $CI_REGISTRY/maxjoehnk/remote-party-games/sockets:$CI_COMMIT_SHORT_SHA
   TF_ROOT: ${CI_PROJECT_DIR}/deployment
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_ENVIRONMENT_NAME}
   TF_VAR_unleash_url: $UNLEASH_URL
@@ -57,6 +58,18 @@ build-images:
   script:
     - docker build --pull -t "$IMAGES_IMAGE" -f applications/image/Dockerfile .
     - docker push "$IMAGES_IMAGE"
+  only:
+    refs:
+      - master
+#    changes:
+#      - applications/image/**/*
+#      - .gitlab-ci.yml
+
+build-sockets:
+  extends: .build-docker
+  script:
+    - docker build --pull -t "$SOCKETS_IMAGE" -f applications/sockets/Dockerfile .
+    - docker push "$SOCKETS_IMAGE"
   only:
     refs:
       - master

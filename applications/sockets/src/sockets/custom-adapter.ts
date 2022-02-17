@@ -1,6 +1,7 @@
 import { WsAdapter } from '@nestjs/platform-ws';
 import { MessageMappingProperties } from '@nestjs/websockets';
 import { EMPTY, Observable } from 'rxjs';
+import { SocketMessage } from './socket-broadcaster';
 
 export class CustomWsAdapter extends WsAdapter {
   bindMessageHandler(
@@ -9,7 +10,7 @@ export class CustomWsAdapter extends WsAdapter {
     transform: (data: any) => Observable<any>
   ): Observable<any> {
     try {
-      const message = JSON.parse(buffer.data);
+      const message: SocketMessage = JSON.parse(buffer.data);
       console.log('[Socket] Received message', message);
       const messageHandler = handlers.find(handler => handler.message === message.type);
       if (!messageHandler) {

@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: applications/matchmaking/Dockerfile
+    environment:
+      BROKER_URL: amqp://rabbitmq:5672
     image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:latest
     networks:
       - web
@@ -24,6 +26,19 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.party-games-${DEPLOYMENT-live}-matchmaking.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix(`/api`)"
+  sockets:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: applications/sockets/Dockerfile
+    environment:
+      BROKER_URL: amqp://rabbitmq:5672
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/sockets:latest
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-matchmaking.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix(`/api/socket`)"
   image:
     restart: on-failure
     build:
@@ -39,6 +54,22 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.party-games-${DEPLOYMENT-live}-image.rule=Host(`${DOMAIN-party.maxjoehnk.me}`) && PathPrefix(`/api/image`)"
+  rabbitmq:
+    restart: on-failure
+    image: rabbitmq:3-management-alpine
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.party-games-${DEPLOYMENT-live}-rabbit.rule=Host(`${DOMAIN-party.maxjoehnk.me}`)"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  zipkin:
+    restart: on-failure
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
 volumes:
   images:
 

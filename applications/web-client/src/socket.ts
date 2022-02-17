@@ -4,7 +4,7 @@ import { getUserId } from './user-store';
 const isSecure = window.location.protocol === 'https:';
 const wsUrl = `${isSecure ? 'wss' : 'ws'}://${
   window.location.host
-}/api/matchmaking?userId=${getUserId()}`;
+}/api/socket?userId=${getUserId()}`;
 
 const ws = new ReconnectingWebSocket(wsUrl);
 

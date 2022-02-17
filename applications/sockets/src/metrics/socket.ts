@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Counter, Gauge } from 'prom-client';
+import { collectDefaultMetrics, Counter, Gauge, register } from 'prom-client';
 
 @Injectable()
 export class SocketMetrics {
@@ -17,4 +17,12 @@ export class SocketMetrics {
     name: 'websocket_sent_messages',
     help: 'Count of sent socket messages',
   });
+
+  constructor() {
+    collectDefaultMetrics();
+  }
+
+  getMetrics() {
+    return register.metrics();
+  }
 }
