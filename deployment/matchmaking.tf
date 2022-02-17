@@ -6,7 +6,8 @@ resource "docker_container" "matchmaking" {
   env = [
     "UNLEASH_ENVIRONMENT=${var.environment}",
     "UNLEASH_URL=${var.unleash_url}",
-    "UNLEASH_INSTANCE_ID=${var.unleash_instance_id}"
+    "UNLEASH_INSTANCE_ID=${var.unleash_instance_id}",
+    "BROKER_URL=amqp://rabbitmq:5672"
   ]
 
   labels {

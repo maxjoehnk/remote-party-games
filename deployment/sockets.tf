@@ -3,6 +3,10 @@ resource "docker_container" "sockets" {
   name = "remote-party-games-sockets-${var.environment}"
   restart = "always"
 
+  env = [
+    "BROKER_URL=amqp://rabbitmq:5672"
+  ]
+
   labels {
     label = "traefik.enable"
     value = "true"
