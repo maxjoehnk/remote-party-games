@@ -75,5 +75,3 @@ volumes:
 
 networks:
   web:
-    external:
-      name: web
