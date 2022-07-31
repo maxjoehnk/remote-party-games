@@ -35,9 +35,6 @@ build-web-client:
   script:
     - docker build --pull -t "$WEB_CLIENT_IMAGE" -f applications/web-client/Dockerfile .
     - docker push "$WEB_CLIENT_IMAGE"
-  only:
-    refs:
-    - master
 #    changes:
 #    - applications/web-client/**/*
 #    - .gitlab-ci.yml
@@ -47,9 +44,6 @@ build-matchmaking:
   script:
     - docker build --pull -t "$MATCHMAKING_IMAGE" -f applications/matchmaking/Dockerfile .
     - docker push "$MATCHMAKING_IMAGE"
-  only:
-    refs:
-      - master
 #    changes:
 #      - applications/matchmaking/**/*
 #      - .gitlab-ci.yml
@@ -59,9 +53,6 @@ build-images:
   script:
     - docker build --pull -t "$IMAGES_IMAGE" -f applications/image/Dockerfile .
     - docker push "$IMAGES_IMAGE"
-  only:
-    refs:
-      - master
 #    changes:
 #      - applications/image/**/*
 #      - .gitlab-ci.yml
@@ -71,9 +62,6 @@ build-sockets:
   script:
     - docker build --pull -t "$SOCKETS_IMAGE" -f applications/sockets/Dockerfile .
     - docker push "$SOCKETS_IMAGE"
-  only:
-    refs:
-      - master
 #    changes:
 #      - applications/image/**/*
 #      - .gitlab-ci.yml
