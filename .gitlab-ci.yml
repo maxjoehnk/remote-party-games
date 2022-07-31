@@ -69,6 +69,8 @@ build-sockets:
 # Tests
 bdd-tests:
   stage: test
+  variables:
+    TAG: $CI_COMMIT_SHORT_SHA
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker-compose up -d

@@ -1,11 +1,11 @@
-version: '3'
+version: '3.4'
 services:
   web-client:
     restart: on-failure
     build:
       context: .
       dockerfile: applications/web-client/Dockerfile
-    image: registry.gitlab.com/maxjoehnk/remote-party-games/web-client:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/web-client:${TAG-latest}
     networks:
       - web
     labels:
@@ -18,7 +18,7 @@ services:
       dockerfile: applications/matchmaking/Dockerfile
     environment:
       BROKER_URL: amqp://rabbitmq:5672
-    image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:${TAG-latest}
     networks:
       - web
     volumes:
@@ -33,7 +33,7 @@ services:
       dockerfile: applications/sockets/Dockerfile
     environment:
       BROKER_URL: amqp://rabbitmq:5672
-    image: registry.gitlab.com/maxjoehnk/remote-party-games/sockets:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/sockets:${TAG-latest}
     networks:
       - web
     labels:
@@ -44,7 +44,7 @@ services:
     build:
       context: .
       dockerfile: applications/image/Dockerfile
-    image: registry.gitlab.com/maxjoehnk/remote-party-games/image:latest
+    image: registry.gitlab.com/maxjoehnk/remote-party-games/image:${TAG-latest}
     environment:
       MATCHMAKING_URL: http://matchmaking:8090
     networks:
