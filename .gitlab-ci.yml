@@ -69,6 +69,7 @@ build-sockets:
 # Tests
 bdd-tests:
   stage: test
+  image: node:16
   variables:
     TAG: $CI_COMMIT_SHORT_SHA
   before_script:
@@ -87,6 +88,7 @@ cache:
   key: "${TF_ROOT}"
   paths:
     - ${TF_ROOT}/.terraform/
+    - tests/node_modules
 
 prepare-deploy-beta:
   extends: .prepare-deployment
