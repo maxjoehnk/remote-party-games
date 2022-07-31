@@ -19,6 +19,8 @@ services:
     environment:
       BROKER_URL: amqp://rabbitmq:5672
     image: registry.gitlab.com/maxjoehnk/remote-party-games/matchmaking:${TAG-latest}
+    depends_on:
+      - rabbitmq
     networks:
       - web
     volumes:
@@ -34,6 +36,8 @@ services:
     environment:
       BROKER_URL: amqp://rabbitmq:5672
     image: registry.gitlab.com/maxjoehnk/remote-party-games/sockets:${TAG-latest}
+    depends_on:
+      - rabbitmq
     networks:
       - web
     labels:
