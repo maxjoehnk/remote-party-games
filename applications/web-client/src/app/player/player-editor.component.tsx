@@ -53,8 +53,9 @@ export const PlayerEditor = ({
     <div className="player-editor">
       <form className="card player-editor__card" onSubmit={onSubmit}>
         <h2 className="subtitle">{i18n`Player setup`}</h2>
-        <h3>{i18n`Username`}</h3>
+        <h3><label for="username">{i18n`Username`}</label></h3>
         <input
+          id="username"
           autoFocus
           className="input"
           placeholder={i18n`Username`}

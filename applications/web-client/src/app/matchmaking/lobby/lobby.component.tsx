@@ -33,7 +33,7 @@ const GameLobby = () => {
     <div className="lobby">
       <div className="lobby__card lobby__card--settings card">
         <h2 className="subtitle">{i18n`Lobby Settings`}</h2>
-        <LobbySettingsGroup label={i18n`Room Code`}>{code}</LobbySettingsGroup>
+        <LobbySettingsGroup label={i18n`Room Code`}><span data-testid="lobby-code">{code}</span></LobbySettingsGroup>
         <LobbySettingsGroup label={i18n`Link`}>
           {`${window.location.origin}/lobby/${code}`}
         </LobbySettingsGroup>

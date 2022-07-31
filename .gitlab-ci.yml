@@ -4,6 +4,7 @@ services:
 
 stages:
   - build
+  - test
   - prepare-deploy
   - deploy
   - deploy-live
@@ -76,6 +77,19 @@ build-sockets:
 #    changes:
 #      - applications/image/**/*
 #      - .gitlab-ci.yml
+
+# Tests
+bdd-tests:
+  stage: test
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker-compose up -d
+  after_script:
+    - docker-compose down -v
+  script:
+    - cd tests
+    - yarn
+    - yarn test
 
 # Deployment
 
